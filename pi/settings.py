@@ -14,7 +14,7 @@ Settings file for car park sensor.
 WAKEUP_DELAY = 2
 PICTURE_DELAY = 2
 PICTURE_RESOLUTION = (960, 540)
-CAMERA_WINDOW_SIZE = (480, 270, 960, 540)
+CAMERA_WINDOW_SIZE = (0, 0, 960, 540)
 
 # -----------------------------------------------------------------------------
 #  Picture Settings
