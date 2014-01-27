@@ -1,7 +1,5 @@
 # PiPark Car Parking Sensor
-**Installation Instructions and Usage**
-**Version 1 [27/01/2014]**
-By Humphrey Shotton and Nicholas Sanders
+**Installation Instructions and Usage** (Version 1)
 
 ---
 
