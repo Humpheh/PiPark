@@ -36,16 +36,17 @@ def callbackKey(event):
         if key == 'o':
             output_coords()
 		
-	# Swap the type of the box
+	    # Swap the type of the box
         if key == 't':
             Boxes.getCur().swap_type()
 
-	# Clear the current box
+	    # Clear the current box
         if key == 'c':
             Boxes.getCur().clear()
 
         if key == 'q':
             sys.exit()
+            raise SystemExit
         
         # Switch the setting to a new number
         i = int(key)
