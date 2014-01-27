@@ -14,12 +14,12 @@ Once the server software has been installed, download the files from the ```/ser
 *For XAMPP setup, this directory is usually called ```htdocs``` and is found in the install directory. Also ensure that the software is running at this point.*
 
 ### **Step 2** - Create Database
-The next step is to create a database on the server using the script found in ```db.sql```. Make note of the database name and the login details.
+The next step is to create a database on the server using the script found in ```/admin/db.sql```. Make note of the database name and the login details.
 
-*For XAMPP setup, you can create the database by going to ```http://localhost/phpmyadmin/``` and creating a database. You can paste the script found in ```db.sql``` into the SQL tab at the top of the page to create the tables.*
+*For XAMPP setup, you can create the database by going to ```http://localhost/phpmyadmin/``` and creating a database. You can paste the script found in ```/admin/db.sql``` into the SQL tab at the top of the page to create the tables.*
 
 ### **Step 3** - Configure Website
-When the database is created, you need to open the file ```config.php``` located in the root directory of the website. Here you must change the values of DB_HOST, DB_USER, DB_PASS and DB_DATABASE to match the details you used in the previous step. (*For XAMPP, the default USER and PASS are "root" and "" respectively.*)
+When the database is created, you need to open the file ```/config.php``` located in the root directory of the website. Here you must change the values of DB_HOST, DB_USER, DB_PASS and DB_DATABASE to match the details you used in the previous step. (*For XAMPP, the default USER and PASS are "root" and "" respectively.*)
 
 In this file, also change the variables URL_BASE, PI_PASSWORD and TITLE. 
 * **URL_BASE** is the base URL to access the website on the server. 
@@ -36,7 +36,3 @@ The server should now be setup correctly. Heading over to the URL (*http://local
 To add a new car park, click on the 'Park Management' button in the navigation bar. This page will display the current registered on the database. To add a new car park, complete the form at the bottom of the page. Car parks may also be edited or deleted using the buttons to the right.
 
 **NOTE:** The ID on the left in the rows is the *unique* identifier for that car park. This number will be needed when registering the pi's on the database during setup.
-
-
-
-
