@@ -11,6 +11,7 @@ PiPark main program file.
 import urllib
 
 import imageread
+import senddata
 import settings as s
 try:
     import setup_data
@@ -90,9 +91,11 @@ def __main():
 
             #for j, control in enumerate(control_averages):
             if num_controls >= 2:
-                print "INFO: Space", i, "occupied!\n"
+                print "INFO: Space", i, "occupied!"
+                print send_update(i, 1), "\n"
             else:
-                print "INFO: Space", i, "vacant!\n"
+                print "INFO: Space", i, "vacant!"
+                print send_update(i, 0), "\n"
 
         print "INFO: Sleeping for 5s"
         imageread.time.sleep(5)
