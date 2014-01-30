@@ -35,5 +35,5 @@ PI_ID = 1
 PARK_ID = 1
 
 SERVER_PASS = 'pi'
-SERVER_URL = "http://localhost/raspi/"
+SERVER_URL = "http://10.173.33.89/raspi/"
 
