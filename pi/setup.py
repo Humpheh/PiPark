@@ -119,8 +119,9 @@ the numbers 1 - 0 to mark new areas.
         
         
         elif user_choice == '4':
+            raw_input("Press ENTER to run the main PiPark program...")
             main.run_main()
-        
+            break
                                                  
         elif user_choice.lower() in ('h', "help"):
             print """
