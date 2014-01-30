@@ -1,0 +1,1 @@
+Images from sensor operation will be stored in here.
