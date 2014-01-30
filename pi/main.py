@@ -106,6 +106,8 @@ def __main():
                     print "INFO: Space", i[0], "has changed status, sending update to server...\n"
                     num = 1 if is_occupied else 0
                     print senddata.send_update(i[0], num), "\n"
+            else:
+                last_ticks[i[0]] = 1
                 
             # old version    
             """if num_controls >= 2:
