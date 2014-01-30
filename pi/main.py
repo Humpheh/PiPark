@@ -67,8 +67,7 @@ def __main():
             
             space_x, space_y, space_w, space_h = __get_area_values(space)
             
-            print "Space dims:"
-            print "x", space_x, "y", space_y, "w", space_w, "h", space_h
+            print "Space dims:", "x", space_x, "y", space_y, "w", space_w, "h", space_h
 
             space_averages.append(imageread.get_area_average(pixels, space_x, space_y, space_w, space_h))
 
@@ -77,8 +76,7 @@ def __main():
 
             control_x, control_y, control_w, control_h = __get_area_values(control)
 
-            print "Control dims:"
-            print "x", control_x, "y", control_y, "w", control_w, "h", control_h
+            print "Control dims:", "x", control_x, "y", control_y, "w", control_w, "h", control_h
 
             control_averages.append(imageread.get_area_average(pixels, control_x, control_y, control_w, control_h))
             
@@ -98,12 +96,13 @@ def __main():
             print "INFO: Space", i[0], "is", ("occupied" if is_occupied else "vacant"), "\n"
             
             if last_status[i[0]] != is_occupied:
-                print "INFO: Space", i[0], "has been the", ("occupied" if is_occupied else "vacant"), "for", last_ticks[i[0]], "ticks."
+                print "INFO: Detected change in space", i[0]
+                print "INFO: Space", i[0], "has been the", ("occupied" if is_occupied else "vacant"), "for", last_ticks[i[0]], "tick(s).\n"
                 if last_ticks[i[0]] < 3:
                     last_ticks[i[0]] += 1
                 else:
                     last_status[i[0]] = is_occupied
-                    last_ticks[i[0]] = 0
+                    last_ticks[i[0]] = 1
                     print "INFO: Space", i[0], "has changed status, sending update to server...\n"
                     num = 1 if is_occupied else 0
                     print senddata.send_update(i[0], num), "\n"
