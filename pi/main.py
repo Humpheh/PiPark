@@ -94,7 +94,7 @@ def __main():
                 print "INFO: Space", i[0], "occupied!"
                 print senddata.send_update(i[0], 1), "\n"
             else:
-                print "INFO: Space", i, "vacant!"
+                print "INFO: Space", i[0], "vacant!"
                 print senddata.send_update(i[0], 0), "\n"
 
         print "INFO: Sleeping for 5s"
