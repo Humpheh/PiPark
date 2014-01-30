@@ -45,8 +45,8 @@ def callbackKey(event):
             Boxes.getCur().clear()
 
         if key == 'q':
+            SelWindow.master.destroy()
             sys.exit()
-            raise SystemExit
         
         # Switch the setting to a new number
         i = int(key)
