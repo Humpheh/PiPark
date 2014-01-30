@@ -43,10 +43,6 @@ def callbackKey(event):
 	    # Clear the current box
         if key == 'c':
             Boxes.getCur().clear()
-
-        if key == 'q':
-            SelWindow.master.destroy()
-            sys.exit()
         
         # Switch the setting to a new number
         i = int(key)
@@ -68,7 +64,7 @@ def task(cont = False):
     # Update the info text at the top
     SelWindow.w.delete(SelWindow.text)
     SelWindow.text = SelWindow.w.create_text((s.WINDOW_WIDTH/2, 10),
-           		text = str(Boxes.sel) + "selected - O = save output, 1-9 to change box num, T = toggle type, C = clear current box, Q = quit")
+           		text = str(Boxes.sel) + "selected - O = save output, 1-9 to change box num, T = toggle type, C = clear current box, close window to return to setup")
     
     if cont:
         SelWindow.master.after(2000,task)  # reschedule event in 2 seconds
