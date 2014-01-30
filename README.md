@@ -16,7 +16,8 @@ To setup this software, you will need:
 * Raspberry Pi
 * Raspberry Pi Camera
 * Computer to run as the server
-* Power and internet connection to the Pi
+* Power and internet connection to the Pi (wired or wireless)
+* Keyboard and mouse for Pi setup
 
 ### Pi Software
 On the Pi, you will need to have the software for:
