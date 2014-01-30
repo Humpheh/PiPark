@@ -183,3 +183,7 @@ def __setup_box_data():
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
     __main()
+
+# run main from external files
+def run_main():
+    __main()
