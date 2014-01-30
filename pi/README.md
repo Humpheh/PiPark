@@ -1,11 +1,12 @@
+#PiPark ReadMe
 Welcome to PiPark README, here's a quick run-through of the steps to successfully
 setup your PiPark unit.
-            
-  1) Ensure that the PiPark unit is mounted suitable above the cark park so that
+
+  1. Ensure that the PiPark unit is mounted suitable above the cark park so that
      the PiPark's camera is able to look down with a clear view upon the spaces
      that are required to be monitored.
-            
-  2) At the main menu prompt of this setup program enter option '1' to fine tune
+
+  2. At the main menu prompt of this setup program enter option '1' to fine tune
      the direction of the camera so that it is clearly able to view the spaces.
      When you have finalised the position of the camera press ENTER to capture a
      setup image. If everything is correct and you do not wish to recapture the
@@ -14,7 +15,7 @@ setup your PiPark unit.
      
      Note: The setup image does not require the car park to be empty.
 
-  3) Once back at the main menu prompt, enter option '2' to open up the setup
+  3. Once back at the main menu prompt, enter option '2' to open up the setup
      GUI, which will open a new window allowing you to mark parking space areas
      and reference areas on the setup image that was captures as part of step 2.
      
@@ -38,10 +39,10 @@ setup your PiPark unit.
        O -- Output the reference areas to a file.
        1 to 0 -- Change area ID numbers.
 
-  4) The final step to completing the setup is to choose option '3' from the 
+  4. The final step to completing the setup is to choose option '3' from the 
      main menu prompt. When selected the parking spaces will be registered to
      the server, and can now be viewed on the website.
 
-  5) The setup is now complete; at the main menu prompt type 'q' or 'quit' to
+  5. The setup is now complete; at the main menu prompt type 'q' or 'quit' to
      terminate the setup program. Alternatively, choose option 3 to immediately
      run the main PiPark program.
