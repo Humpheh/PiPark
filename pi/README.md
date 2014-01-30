@@ -1,4 +1,4 @@
-#PiPark ReadMe
+#PiPark Setup
 Welcome to PiPark README, here's a quick run-through of the steps to successfully
 setup your PiPark unit.
 
@@ -6,7 +6,7 @@ setup your PiPark unit.
      the PiPark's camera is able to look down with a clear view upon the spaces
      that are required to be monitored.
 
-  2. At the main menu prompt of this setup program enter option '1' to fine tune
+  2. At the main menu prompt of the setup program enter option '1' to fine tune
      the direction of the camera so that it is clearly able to view the spaces.
      When you have finalised the position of the camera press ENTER to capture a
      setup image. If everything is correct and you do not wish to recapture the
