@@ -80,23 +80,22 @@ the numbers 1 - 0 to mark new areas.
         
         
         elif user_choice == '3':
-            # attempt to import the setup data and box data
-            bxs = None
+            # attempt to import the setup data and ensure 'boxes' is a list. If fail,
+            # return to main menu prompt.
             try:
                 import setup_data
-                
-                bxs = setup_data.boxes
-                if not isinstance(bxs, list):
-                    raise ValueError()
+                boxes = setup_data.boxes
+                if not isinstance(boxes, list): raise ValueError()
             except:
-                print "Setup data does not exist. Please run options 1 and 2 first."
+                print "ERROR: Setup data does not exist. Please run options 1 and 2 first."
                 continue
                 
-            # attempt to import the server senddata module
+            # attempt to import the server senddata module. If fail, return to main menu
+            # prompt.
             try:
                 import senddata
             except:
-                print "Could not import send data file."
+                print "ERROR: Could not import send data file."
                 continue
             
             # deregister all areas associated with this pi (start fresh)
@@ -104,18 +103,18 @@ the numbers 1 - 0 to mark new areas.
             
             try:
                 out['error']
-                print "Error in connecting to server. Please update settings.py."
+                print "ERROR: Error in connecting to server. Please update settings.py."
                 continue
             except:
                 pass
             
-            # for each box in boxes
-            for b in bxs:
-                if b[1] == 0:
-                    senddata.register_area(b[0])
-                    print "Registering area", b[0], "on database."
+            # register each box on the server
+            for box in boxes:
+                if box[1] == 0:
+                    senddata.register_area(box[0])
+                    print "INFO: Registering area", box[0], "on server database."
                     
-            print "Registration complete."
+            print "\nRegistration complete."
         
         
         elif user_choice == '4':
