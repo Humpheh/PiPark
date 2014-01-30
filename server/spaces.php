@@ -63,8 +63,13 @@ $query = "SELECT  a.*, c.*
 $query = "SELECT * 
 		FROM spaces a
 		LEFT JOIN (
-			SELECT update_status, update_space_id, MAX( update_time ) max_date
+			SELECT *
 			FROM updates
+			WHERE update_time = (
+				SELECT max( update_time )
+				FROM updates um
+				WHERE um.update_id = update_id
+			)
 			GROUP BY update_space_id
 		) b ON a.space_id = b.update_space_id
 		WHERE space_park_id = ".$id;
@@ -80,7 +85,7 @@ foreach ($rows as $row){
 	<div class="row">
 		<div class="col-xs-3"><?php echo $i; ?></div>
 		<div class="col-xs-4"><?php echo $row['update_status'] == 0 ? '<span class="alert alert-small alert-success">Empty</span>' : '<span class="alert alert-small alert-danger">Filled</span>'; ?></div>
-		<div class="col-xs-4"><?php echo isset($row['max_date']) ? ago($row['max_date']) : 'Never'; ?></div>
+		<div class="col-xs-4"><?php echo isset($row['update_time']) ? ago($row['update_time']) : 'Never'; ?></div>
 		<div class="col-xs-1"><?php echo 'pi'.$row['space_pi_id'].'-'.$row['space_area_code']; ?></div>
 	</div>
 	<?php

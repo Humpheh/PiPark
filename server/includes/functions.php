@@ -19,11 +19,19 @@ function json_error( $message ){
  * Get the query to find the number of spaces in the car park.
  */
 function get_num_space_query($id){
-	return "SELECT count(*) FROM updates a 
-			INNER JOIN ( SELECT update_space_id, MAX(update_time) max_date FROM updates GROUP BY 			update_space_id ) b 
-				ON a.update_space_id = b.update_space_id AND a.update_time = b.max_date 
-			LEFT JOIN spaces c ON space_id = a.update_space_id 
-		WHERE space_park_id = " . intval($id) . " AND update_status <> 0";
+	return "SELECT count(*) 
+		FROM spaces a
+		LEFT JOIN (
+			SELECT *
+			FROM updates
+			WHERE update_time = (
+				SELECT max( update_time )
+				FROM updates um
+				WHERE um.update_id = update_id
+			)
+			GROUP BY update_space_id
+		) b ON a.space_id = b.update_space_id
+		WHERE a.space_park_id = " . ($id) . " AND b.update_status <> 0";
 }
 
 /*
