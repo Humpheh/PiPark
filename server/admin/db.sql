@@ -3,8 +3,6 @@ CREATE TABLE parks (
 	park_id SERIAL,
 	park_name VARCHAR(20) NOT NULL UNIQUE,
 	park_desc TEXT NULL,
-	park_spaces INT(4) DEFAULT 0,
-	park_curspaces INT(4) DEFAULT 0,
 	park_updated TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -31,7 +29,7 @@ CREATE TABLE updates (
 	update_status INT(1) NOT NULL DEFAULT 0,
 	
 	FOREIGN KEY ( update_space_id ) REFERENCES spaces ( space_id )
-		ON DELETE SET NULL
+		ON DELETE CASCADE
 		ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -88,8 +88,7 @@ foreach ($res as $row){
 	<input type="text" id="park_id" name="park_id" class="form-hidden" >
 
 	<input type="text" id="park_name" name="park_name" class="form-control form-control-first" placeholder="Name" required="" autofocus="">
-	<textarea id="park_desc" name="park_description" class="form-control" placeholder="Park Description"></textarea>
-	<input type="text" id="park_spaces" name="park_spaces" class="form-control form-control-last" placeholder="Spaces" required="">
+	<textarea id="park_desc" name="park_description" class="form-control form-control-last" placeholder="Park Description"></textarea>
 	<button class="btn btn-lg btn-primary btn-block" type="submit">
 		Confirm
 	</button>
