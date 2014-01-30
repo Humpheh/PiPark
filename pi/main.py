@@ -68,7 +68,7 @@ def __main():
             print "Space dims:"
             print "x", space_x, "y", space_y, "w", space_w, "h", space_h
 
-            space_averages.append((space_boxes[0], imageread.get_area_average(pixels, space_x, space_y, space_w, space_h)))
+            space_averages.append((space_boxes[0], (imageread.get_area_average(pixels, space_x, space_y, space_w, space_h))))
 
         # setup control
         for control in control_boxes:
