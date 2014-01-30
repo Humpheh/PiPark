@@ -15,6 +15,7 @@ Description:
 import sys
 
 import imageread
+import main
 from PIL import Image
 import setup_selectarea
 
