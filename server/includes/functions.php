@@ -23,11 +23,11 @@ function get_num_space_query($id){
 		FROM spaces a
 		LEFT JOIN (
 			SELECT *
-			FROM updates
+			FROM updates b
 			WHERE update_time = (
 				SELECT max( update_time )
 				FROM updates um
-				WHERE um.update_id = update_id
+				WHERE um.update_space_id = b.update_space_id
 			)
 			GROUP BY update_space_id
 		) b ON a.space_id = b.update_space_id
