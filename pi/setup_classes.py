@@ -81,7 +81,7 @@ class Area:
     		w: TkCanvas to draw the box to.
     	"""
         if self.p1 != [] and self.p2 != []:
-            fillcol = "#472838" if self.type == 0 else "#FF0000"
+            fillcol = "#6633FF" if self.type == 0 else "#CC0000"
             
             self.rect = w.create_rectangle(self.p1[0], self.p1[1],
                                            self.p2[0], self.p2[1],
