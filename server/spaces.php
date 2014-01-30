@@ -13,7 +13,8 @@ require_once ('init.php');
 $id = intval($_GET['id']);
 
 // Check the ID exists and get park information.
-$pstmt = DB::get()->prepare("SELECT *, (SELECT count(*) FROM spaces WHERE space_park_id = park_id) AS ps FROM parks WHERE park_id = ?");
+$pstmt = DB::get()->prepare("SELECT *, (SELECT count(*) FROM spaces WHERE space_park_id = park_id) AS ps, 
+	(".get_num_space_query("park_id").") AS spaces FROM parks WHERE park_id = ?");
 $pstmt->bindValue(1, $id, PDO::PARAM_INT);
 $pstmt->execute();
 
@@ -32,7 +33,7 @@ require_once ('includes/header.php');
 
 <a class="btn btn-default" href="<?php echo Conf::URL_BASE; ?>">Back</a>
 
-<h1><?php print $park['park_name']; ?> <span class="small"><?php print $park['ps']; ?> Spaces</span></h1>
+<h1><?php print $park['park_name']; ?> <span class="small"><?php print $park['ps']; ?> Spaces (<b><?php print $park['ps'] - $park['spaces']; ?> Available)</b></span></h1>
 
 <p><?php print $park['park_desc']; ?></p>
 
