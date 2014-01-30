@@ -86,7 +86,10 @@ class Area:
             self.rect = w.create_rectangle(self.p1[0], self.p1[1],
                                            self.p2[0], self.p2[1],
                                            fill=fillcol, width=0)
-            self.text = w.create_text(self.get_origins(), text = str(self.id))
+
+            suffix = "(space)" if self.type == 0 else "control)"
+                                    
+            self.text = w.create_text(self.get_origins(), text = (str(self.id) + suffix))
         return self
 
     def delete_rect(self, w):
