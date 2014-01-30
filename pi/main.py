@@ -43,6 +43,7 @@ def __main():
     assert num_spaces > 0
     assert num_controls == 3
     
+    last_status = [None for i in range(10)]
     
     # run centralised program loop
     while True:
@@ -89,13 +90,26 @@ def __main():
                 if imageread.compare_area(space, control):
                     num_controls += 1
 
-            #for j, control in enumerate(control_averages):
-            if num_controls >= 2:
+            # Determine if occupied
+            is_occupied = False
+            if num_controls >= 2: is_occupied = True
+            
+            print "INFO: Space", i[0], "is", ("occupied" if is_occupied else "vacant")
+            
+            if last_status[i[0]] != is_occupied:
+                last_status[i[0]] = is_occupied
+                print "INFO: Space", i[0], "has changed status, sending update to server..."
+                num = 1 if is_occupied else 0
+                print senddata.send_update(i[0], num), "\n"
+                
+            # old version    
+            """if num_controls >= 2:
+               # last_status
                 print "INFO: Space", i[0], "occupied!"
                 print senddata.send_update(i[0], 1), "\n"
             else:
                 print "INFO: Space", i[0], "vacant!"
-                print senddata.send_update(i[0], 0), "\n"
+                print senddata.send_update(i[0], 0), "\n" """
 
         print "INFO: Sleeping for 5s"
         imageread.time.sleep(5)
