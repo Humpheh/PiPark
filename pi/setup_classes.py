@@ -87,7 +87,7 @@ class Area:
                                            self.p2[0], self.p2[1],
                                            fill=fillcol, width=0)
 
-            suffix = "(space)" if self.type == 0 else "control)"
+            suffix = " (space)" if self.type == 0 else " (control)"
                                     
             self.text = w.create_text(self.get_origins(), text = (str(self.id) + suffix))
         return self
