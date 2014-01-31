@@ -1,23 +1,32 @@
 """
 Authors: Nicholas Sanders & Humphrey Shotton
 Filename: main.py
-Version: [2014/01/26]
+Version: [2014/01/31]
 
 Description:
-PiPark main program file.
+Main Smart Parking System program, to be run after setup has been completed. 
+
+Detects changes in car parking spaces. After three ticks, the server is 
+updated with the availability of the parking spaces.
 
 """
-
+# -----------------------------------------------------------------------------
+#  Imports
+# -----------------------------------------------------------------------------
+# python
 import urllib
 
+# PiPark
 import imageread
 import senddata
 import settings as s
+
 try:
     import setup_data
 except ImportError:
     print "ERROR: setup_data.py does not exist. Run setup.py first."
     sys.exit()
+
 
 # -----------------------------------------------------------------------------
 #
@@ -25,7 +34,11 @@ except ImportError:
 #
 # -----------------------------------------------------------------------------
 def __main():
-    """Run the main program. """
+    """
+    Run main program loop. Detect changes to parking spaces and update 
+    appropriate availabity of the spaces to the server.
+    
+    """
     
     # setup camera and image save location
     camera = imageread.setup_camera()
@@ -126,6 +139,9 @@ def __main():
 # -----------------------------------------------------------------------------
 def __get_area_values(area):
     """
+    Calculate the co-ordinates and widths of the area values, from the 
+    resolution of the image used.
+    
     Keyword Arguments:
     area -- tuple in form (x1, y1, x2, y2) from setup.py
 
@@ -193,4 +209,5 @@ if __name__ == "__main__":
 
 # run main from external files
 def run_main():
+    """Allow the main function to be run from another file."""
     __main()
