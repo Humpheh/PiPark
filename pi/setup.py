@@ -1,28 +1,36 @@
 """
 Authors: Nicholas Sanders & Humphrey Shotton
 Filename: setup.py
-Version: [2014/01/21]
+Version: [2014/01/31]
 
 Description:
-...
+Setup file for PiPark, allows user to fine-tune camera positioning, mark 
+reference areas for parking spaces and register the PiPark unit with the
+server.
 
 """
 
 # -----------------------------------------------------------------------------
 #  Imports
 # -----------------------------------------------------------------------------
-
+# python
 import sys
 
+# PiPark
 import imageread
 import main
-from PIL import Image
 import setup_selectarea
+
+# Pythonware, Image library
+from PIL import Image
+
 
 # -----------------------------------------------------------------------------
 #  Main Program
 # -----------------------------------------------------------------------------
 def __main():
+    """Main function for setup.py. Contains and handles the menu loop."""
+    
     print """
 --------------------------------------------------------------------------------
     
@@ -191,6 +199,8 @@ setup your PiPark unit.
 #  Main Menu
 # -----------------------------------------------------------------------------
 def __menu_choice():
+    """Print the menu options and return the user choice."""
+    
     print """
 At the promt please type a menu selection. For setup instructions type 'help'.
     
