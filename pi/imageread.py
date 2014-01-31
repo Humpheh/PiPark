@@ -1,25 +1,35 @@
 """
 Author: Humphrey Shotton and Nicholas Sanders
 Filename: imageread.py
-Version: [2014/01/26]
+Version: [2014/01/31]
 
 Description:
-...
+Utility functions for PiPark Smart Parking Sensor programs.
 
 """
 
-# imports
+# -----------------------------------------------------------------------------
+#  Imports
+# -----------------------------------------------------------------------------
+# python
 import sys
 import time
-import settings as s
 
-# ensure user has PIL and PiCamera installed, otherwise quit program
-try:
-    from PIL import Image
+# PiPark
+import settings as s
+try: 
     import picamera
 except ImportError:
-    print "ERROR: Python Image Library and PiCamera need to be installed."
+    print "ERROR: PiCamera Module needs to be installed."
     sys.exit()
+
+# Pythonware, Image Library
+try:
+    from PIL import Image
+except ImportError:
+    print "ERROR: Python Image Library needs to be installed."
+    sys.exit()
+
 
 # -----------------------------------------------------------------------------
 #  Setup Camera
