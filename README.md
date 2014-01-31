@@ -6,6 +6,8 @@
 
 Raspberry Pi car parking sensor with server.
 
+Images of our test setup can be seen [here (http://imgur.com/a/VdfVp)](http://imgur.com/a/VdfVp).
+
 ## Setup Instructions
 To setup server, see `/server/README.md`.
 
