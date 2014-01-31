@@ -36,3 +36,6 @@ The server should now be setup correctly. Heading over to the URL (*http://local
 To add a new car park, click on the 'Park Management' button in the navigation bar. This page will display the current registered on the database. To add a new car park, complete the form at the bottom of the page. Car parks may also be edited or deleted using the buttons to the right.
 
 **NOTE:** The ID on the left in the rows is the *unique* identifier for that car park. This number will be needed when registering the pi's on the database during setup.
+
+### API
+There is a basic API JSON interface built into the website. This can be accessed at ```/api.php``` in the server root. It gives some basic information about the car parks in a JSON format. This could then be used for future applications, such as possibly having sat nav's communicating with this data.
