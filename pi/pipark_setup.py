@@ -98,6 +98,7 @@ class Application(tk.Frame):
                 message = "Error: Failed to setup and start PiCam.")
         
         # capture and save a new setup image when the ENTER key is pressed
+        self.force_focus
         raw_input()
         camera.capture(self.SETUP_IMAGE_ADDRESS)
         
