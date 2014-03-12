@@ -98,6 +98,7 @@ class Application(tk.Frame):
         
         # capture and save a new setup image when the ENTER key is pressed
         # FIXME: Ensure focus isn't lost when camera is initialised.
+        self.focus_set()
         raw_input()
         camera.capture(self.SETUP_IMAGE_ADDRESS)
         
@@ -112,6 +113,7 @@ class Application(tk.Frame):
     def clickQuit(self):
         """Quit terminate the application. """
         
+        # TODO: Add yes/no option after seleciton.
         self.quit()
         self.master.destroy()
 
@@ -161,7 +163,7 @@ class Application(tk.Frame):
         """Open the README file for instructions on GUI use. """
         
         # load external README from command line
-        os.system("open " +"./SETUP_README.txt")
+        os.system("leafpad " +"./SETUP_README.txt")
         
 
     # --------------------------------------------------------------------------
