@@ -34,23 +34,26 @@ except ImportError:
 # -----------------------------------------------------------------------------
 #  Setup Camera
 # -----------------------------------------------------------------------------
-def setup_camera():
-    """Create, setup and return the PiCamera as an object, camera. """
+def setup_camera(is_fullscreen = True):
+    """
+    Setup the PiCam to default PiPark settings, and return the camera as
+    an object.
+    
+    Keyword Arguments:
+    is_fullscreen -- Boolean value. True for fullscreen, false for window.
+    
+    """
     
     # ensure that camera is correctly installed and set it up to output to a
     # window and turn off AWB and exposure modes. If camera does not exist
     # print error message and quit program.
-    try:
-        camera = picamera.PiCamera()
-        camera.resolution = s.PICTURE_RESOLUTION
-        camera.preview_fullscreen = False
-        camera.awb_mode = "off"
-        #camera.exposure_mode = "off"
-        camera.preview_window = s.CAMERA_WINDOW_SIZE
-        time.sleep(s.WAKEUP_DELAY)  # camera wake-up time: 2 s
-    except:
-        print "Error: Unable to setup PiCamera."
-        sys.exit()
+    camera = picamera.PiCamera()
+    camera.resolution = s.PICTURE_RESOLUTION
+    camera.preview_fullscreen = is_fullscreen
+    camera.awb_mode = "off"
+    #camera.exposure_mode = "off"
+    if not is_fullscreen: camera.preview_window = s.CAMERA_WINDOW_SIZE
+    time.sleep(s.WAKEUP_DELAY)  # camera wake-up time: 2 s
     
     return camera
 
