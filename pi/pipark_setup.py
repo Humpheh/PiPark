@@ -90,8 +90,12 @@ class Application(tk.Frame):
             message = "Press the ENTER key to take a new setup image.")
 
         # initialise the camera using the settings in the imageread module
-        camera = imageread.setup_camera(fullscreen = True)
-        camera.start_preview()
+        try:
+            camera = imageread.setup_camera(fullscreen = True)
+            camera.start_preview()
+        except:
+            tkMessageBox.showerror(title = "Error!",
+                message = "Error: Failed to setup and start PiCam.")
         
         # capture and save a new setup image when the ENTER key is pressed
         raw_input()
