@@ -91,7 +91,7 @@ class Application(tk.Frame):
 
         # initialise the camera using the settings in the imageread module
         try:
-            camera = imageread.setup_camera(fullscreen = True)
+            camera = imageread.setup_camera(is_fullscreen = True)
             camera.start_preview()
         except:
             tkMessageBox.showerror(title = "Error!",
