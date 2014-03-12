@@ -99,7 +99,7 @@ class Application(tk.Frame):
         
         # capture and save a new setup image when the ENTER key is pressed
         raw_input()
-        camera.capture(SETUP_IMAGE_ADDRESS)
+        camera.capture(self.SETUP_IMAGE_ADDRESS)
         
         # end the preview and close the camera.
         camera.stop_preview()
