@@ -42,7 +42,6 @@ class Application(tk.Frame):
 
         # TODO: Add load setup image functionality.
         # loadImage(SETUP_IMAGE_ADDRESS)
-        # self.about_text = self.loadText("./about.txt")
 
         # create widgets
         self.createDisplay()
@@ -98,7 +97,7 @@ class Application(tk.Frame):
                 message = "Error: Failed to setup and start PiCam.")
         
         # capture and save a new setup image when the ENTER key is pressed
-        self.force_focus
+        # FIXME: Ensure focus isn't lost when camera is initialised.
         raw_input()
         camera.capture(self.SETUP_IMAGE_ADDRESS)
         
@@ -162,7 +161,7 @@ class Application(tk.Frame):
         """Open the README file for instructions on GUI use. """
         
         # load external README from command line
-        os.system("open " +"./README.txt")
+        os.system("open " +"./SETUP_README.txt")
         
 
     # --------------------------------------------------------------------------
