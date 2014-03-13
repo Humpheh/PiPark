@@ -56,8 +56,8 @@ class Application(tk.Frame):
             
         # if setup image exists then load it, otherwise load the default image
         # TODO: Add load setup image functionality.
-        self.loadImage(self.SETUP_IMAGE, self.display)
-        #   loadImage(self.DEFAULT_IMAGE, self.display)
+        if not self.loadImage(self.SETUP_IMAGE, self.display):
+            self.loadImage(self.DEFAULT_IMAGE, self.display)
         
     
     # --------------------------------------------------------------------------
@@ -86,9 +86,10 @@ class Application(tk.Frame):
             # TODO: load the image into the canvas.
             photo = ImageTk.PhotoImage(Image.open(image_address))
             canvas.create_image(
-                (0,0), 
+                (s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2),
                 image = photo
             )
+            canvas.image = photo
             
             return True
         
@@ -128,7 +129,7 @@ class Application(tk.Frame):
         # FIXME: Ensure focus isn't lost when camera is initialised.
         self.display.focus_set()
         raw_input()
-        camera.capture(self.SETUP_IMAGE_ADDRESS)
+        camera.capture(self.SETUP_IMAGE)
         
         # end the preview and close the camera.
         camera.stop_preview()
@@ -170,9 +171,9 @@ class Application(tk.Frame):
         
         # clear the current image in the GUI, then take a new image using the
         # PiCam, then load the new image into the GUI
-        # TODO: clear current image in GUI
+        self.display.delete(tk.ALL)
         self.newSetupImage()
-        # TODO: load new setup image into GUI
+        self.loadImage(self.SETUP_IMAGE, self.display)
 
     def clickStart(self):
         """
