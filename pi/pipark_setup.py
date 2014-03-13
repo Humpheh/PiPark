@@ -56,14 +56,14 @@ class Application(tk.Frame):
             
         # if setup image exists then load it, otherwise load the default image
         # TODO: Add load setup image functionality.
-        loadImage(self.SETUP_IMAGE, self.display)
+        self.loadImage(self.SETUP_IMAGE, self.display)
         #   loadImage(self.DEFAULT_IMAGE, self.display)
         
     
     # --------------------------------------------------------------------------
     #   Load Setup Image
     # --------------------------------------------------------------------------
-    def loadImage(image_address = "./", canvas = None):
+    def loadImage(self, image_address = "./", canvas = None):
         """
         Load image at image_address. If the load is successful then return True,
         otherwise return False.
