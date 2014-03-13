@@ -17,6 +17,7 @@ from PIL import Image, ImageTk
 
 import imageread
 import main
+import setup_selectarea as ssa
 import settings as s
 
 # ==============================================================================
@@ -83,6 +84,8 @@ class Application(tk.Frame):
             
             # load the image into the canvas
             # TODO: load the image into the canvas.
+            image, image_coords = ssa.get_scaled_image(image_address)
+            canvas.create_image((s.WINDOW_WIDTH/2,s.WINDOW_HEIGHT/2), image = bgimage)
             
             return True
         
@@ -94,14 +97,6 @@ class Application(tk.Frame):
             return False
         except:
             return False
-
-
-    # --------------------------------------------------------------------------
-    #   Key Press Handler
-    # --------------------------------------------------------------------------
-    def returnPressHandler(self, event):
-        print "Return key pressed, innit!"
-        tkMessageBox.showinfo(title = "WOO", message = "Photo Taken, innit!")
         
         
     # --------------------------------------------------------------------------
@@ -128,11 +123,13 @@ class Application(tk.Frame):
         
         # capture and save a new setup image when the ENTER key is pressed
         # FIXME: Ensure focus isn't lost when camera is initialised.
-        self.bind("<Return>", self.returnPressHandler)
+        self.display.focus_set()
+        raw_input()
+        camera.capture(self.SETUP_IMAGE_ADDRESS)
         
         # end the preview and close the camera.
-        #camera.stop_preview()
-        #camera.close()
+        camera.stop_preview()
+        camera.close()
 
     
     # --------------------------------------------------------------------------
@@ -198,7 +195,8 @@ class Application(tk.Frame):
     #   Create Image Display Canvas
     # --------------------------------------------------------------------------
     def createDisplay(self):
-        self.display = tk.Canvas(self, width = 960, height = 540)
+        self.display = tk.Canvas(self, width = s.WINDOW_WIDTH,
+            height = s.WINDOW_HEIGHT)
         self.display.grid(row = 1, column = 0, columnspan = 7)
 
 
