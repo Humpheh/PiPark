@@ -26,8 +26,17 @@ import settings as s
 # ==============================================================================
 class Application(tk.Frame):
 
-    # instance attributes
-    SETUP_IMAGE_ADDRESS = "./images/setup.jpeg"
+    # --------------------------------------------------------------------------
+    #   Instance Attributes
+    # --------------------------------------------------------------------------
+    
+    # print messages to the terminal?
+    __is_verbose = False
+    
+    # image load/save locoations
+    SETUP_IMAGE = "./images/setup.jpeg"
+    DEFAULT_IMAGE = "./images/default.jpeg"
+    
     
     # --------------------------------------------------------------------------
     #   Constructor Method
@@ -39,39 +48,52 @@ class Application(tk.Frame):
         
         # set alignment inside the frame
         self.grid()
-
-        # TODO: Add load setup image functionality.
-        # loadImage(SETUP_IMAGE_ADDRESS)
-
+        
         # create widgets
         self.createDisplay()
         self.createMenu()
-
-
-    # --------------------------------------------------------------------------
-    #   Load Plain Text File
-    # --------------------------------------------------------------------------
-    def loadText(self, text_address = "./about.txt"):
-        try:
-            textfile = open(text_address, 'r').read()
-        except:
-            tkMessageBox.showwarning(title = "Error!",
-                message = "ERROR: No text file found at: " + text_address)
-
-        return textfile
+            
+        # if setup image exists then load it, otherwise load the default image
+        # TODO: Add load setup image functionality.
+        # if not loadImage(self.SETUP_IMAGE, self.display): 
+        #   loadImage(self.DEFAULT_IMAGE, self.display)
+        
     
     # --------------------------------------------------------------------------
     #   Load Setup Image
     # --------------------------------------------------------------------------
-    def loadImage(image_address):
+    def loadImage(image_address = "./", canvas = None):
+        """
+        Load image at image_address. If the load is successful then return True,
+        otherwise return False.
+        
+        Keyword Arguments:
+        image_address -- The address of the image to be loaded (default = './').
+        canvas -- The Tkinter Canvas into which the image is loaded.
+        
+        Returns:
+        Boolean -- True if load successful, False if not.
+        
+        """
+        
         try:
-            # try to load the image
-            return 0
-        except:
+            # guard against incorrect datatypes
+            if not isinstance(canvas, tk.Canvas): raise TypeError
+            if not isinstance(image_address, str): raise TypeError
+            
+            # load the image into the canvas
+            # TODO: load the image into the canvas.
+            
+            return True
+        
+        # TODO: Complete loadImage() exception handling.
+        except TypeError:
             # image failed to load
-            # attempt to load default image
-            # otherwise display blank space
-            return -1
+            if self.__is_verbose: 
+                print "ERROR: loadImage(" + image_address + ") failed to load."
+            return False
+        except:
+            return False
 
 
     # --------------------------------------------------------------------------
@@ -79,6 +101,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     def returnPressHandler(self, event):
         return True
+        
         
     # --------------------------------------------------------------------------
     #   Take New Setup Image
@@ -96,7 +119,7 @@ class Application(tk.Frame):
 
         # initialise the camera using the settings in the imageread module
         try:
-            camera = imageread.setup_camera(is_fullscreen = True)
+            camera = imageread.setup_camera(is_fullscreen = False)
             camera.start_preview()
         except:
             tkMessageBox.showerror(title = "Error!",
@@ -170,7 +193,7 @@ class Application(tk.Frame):
         """Open the README file for instructions on GUI use. """
         
         # load external README from command line
-        os.system("leafpad " +"./SETUP_README.txt")
+        os.system("leafpad " + "./SETUP_README.txt")
         
 
     # --------------------------------------------------------------------------
@@ -187,6 +210,7 @@ class Application(tk.Frame):
     def createMenu(self):
         PADDING = 10;
 
+        # draw a background for the menu on a new canvas
         self.bg = tk.Canvas(self, width = 960, height = 40)
         self.bg.grid(row = 0, column = 0, columnspan = 7)
         self.bg.create_rectangle(0, 0, 960, 50, fill = "grey")
@@ -225,6 +249,16 @@ class Application(tk.Frame):
         self.quit_button = tk.Button(self, text = "Quit",
             command = self.clickQuit, padx = PADDING)
         self.quit_button.grid(row = 0, column = 6)
+
+
+    # --------------------------------------------------------------------------
+    #   Get/Set Is Verbose?
+    # --------------------------------------------------------------------------
+    def getIsVerbose():
+        return self.__is_verbose
+    
+    def setIsVerbose(value):
+        if isinstance(value, bool): __is_verbose = value
 
 
 # ==============================================================================
