@@ -128,8 +128,8 @@ class Application(tk.Frame):
         
         # capture and save a new setup image when the ENTER key is pressed
         # FIXME: Ensure focus isn't lost when camera is initialised.
-        while True:
-            self.bind("<Return>", self.returnPressHandler) 
+        self.focus_set()
+        raw_input() 
             #camera.capture(self.SETUP_IMAGE_ADDRESS)
             #break
         
