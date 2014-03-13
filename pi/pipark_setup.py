@@ -101,7 +101,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     def returnPressHandler(self, event):
         print "Return key pressed, innit!"
-        return True
+        tkMessageBox.showinfo(title = "WOO", message = "Photo Taken, innit!")
         
         
     # --------------------------------------------------------------------------
@@ -128,14 +128,11 @@ class Application(tk.Frame):
         
         # capture and save a new setup image when the ENTER key is pressed
         # FIXME: Ensure focus isn't lost when camera is initialised.
-        self.focus_set()
-        raw_input() 
-            #camera.capture(self.SETUP_IMAGE_ADDRESS)
-            #break
+        self.bind("<Return>", self.returnPressHandler)
         
         # end the preview and close the camera.
-        camera.stop_preview()
-        camera.close()
+        #camera.stop_preview()
+        #camera.close()
 
     
     # --------------------------------------------------------------------------
