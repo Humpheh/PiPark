@@ -75,6 +75,12 @@ class Application(tk.Frame):
 
 
     # --------------------------------------------------------------------------
+    #   Key Press Handler
+    # --------------------------------------------------------------------------
+    def returnPressHandler(self, event):
+        return True
+        
+    # --------------------------------------------------------------------------
     #   Take New Setup Image
     # --------------------------------------------------------------------------
     def newSetupImage(self):
@@ -98,9 +104,10 @@ class Application(tk.Frame):
         
         # capture and save a new setup image when the ENTER key is pressed
         # FIXME: Ensure focus isn't lost when camera is initialised.
-        self.focus_set()
-        raw_input()
-        camera.capture(self.SETUP_IMAGE_ADDRESS)
+        while True:
+            if self.bind(<Return>, returnPressHandler): 
+                camera.capture(self.SETUP_IMAGE_ADDRESS)
+                break
         
         # end the preview and close the camera.
         camera.stop_preview()
