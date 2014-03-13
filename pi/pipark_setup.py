@@ -128,9 +128,9 @@ class Application(tk.Frame):
         # capture and save a new setup image when the ENTER key is pressed
         # FIXME: Ensure focus isn't lost when camera is initialised.
         while True:
-            if self.bind(<Return>, returnPressHandler): 
-                camera.capture(self.SETUP_IMAGE_ADDRESS)
-                break
+            self.bind(<Return>, returnPressHandler) 
+            #camera.capture(self.SETUP_IMAGE_ADDRESS)
+            #break
         
         # end the preview and close the camera.
         camera.stop_preview()
@@ -211,6 +211,7 @@ class Application(tk.Frame):
         PADDING = 10;
 
         # draw a background for the menu on a new canvas
+        
         self.bg = tk.Canvas(self, width = 960, height = 40)
         self.bg.grid(row = 0, column = 0, columnspan = 7)
         self.bg.create_rectangle(0, 0, 960, 50, fill = "grey")
