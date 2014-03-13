@@ -56,7 +56,7 @@ class Application(tk.Frame):
             
         # if setup image exists then load it, otherwise load the default image
         # TODO: Add load setup image functionality.
-        # if not loadImage(self.SETUP_IMAGE, self.display): 
+        loadImage(self.SETUP_IMAGE, self.display)
         #   loadImage(self.DEFAULT_IMAGE, self.display)
         
     
@@ -85,7 +85,10 @@ class Application(tk.Frame):
             # load the image into the canvas
             # TODO: load the image into the canvas.
             image, image_coords = ssa.get_scaled_image(image_address)
-            canvas.create_image((s.WINDOW_WIDTH/2,s.WINDOW_HEIGHT/2), image = bgimage)
+            canvas.create_image(
+                (s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2), 
+                image = bgimage
+            )
             
             return True
         
@@ -195,8 +198,11 @@ class Application(tk.Frame):
     #   Create Image Display Canvas
     # --------------------------------------------------------------------------
     def createDisplay(self):
-        self.display = tk.Canvas(self, width = s.WINDOW_WIDTH,
-            height = s.WINDOW_HEIGHT)
+        self.display = tk.Canvas(
+            self, 
+            width = s.PICTURE_RESOLUTION[0],
+            height = s.PICTURE_RESOLUTION[1]
+        )
         self.display.grid(row = 1, column = 0, columnspan = 7)
 
 
