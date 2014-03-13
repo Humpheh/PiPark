@@ -84,10 +84,10 @@ class Application(tk.Frame):
             
             # load the image into the canvas
             # TODO: load the image into the canvas.
-            image, image_coords = ssa.get_scaled_image(image_address)
+            photo = ImageTk.PhotoImage(Image.open(image_address))
             canvas.create_image(
-                (s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2), 
-                image = bgimage
+                (0,0), 
+                image = photo
             )
             
             return True
