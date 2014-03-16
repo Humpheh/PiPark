@@ -33,10 +33,16 @@ require_once ('includes/header.php');
 
 <a class="btn btn-default" href="<?php echo Conf::URL_BASE; ?>">Back</a>
 
-<h1><?php print $park['park_name']; ?> <span class="small"><?php print $park['ps']; ?> Spaces (<b><?php print $park['ps'] - $park['spaces']; ?> Available)</b></span></h1>
+<h1><?php print $park['park_name']; ?>
+	<span class="small"><b><?php print $park['ps'] - $park['spaces']; ?> Available Spaces</b> (<?php print $park['ps']; ?> Total)</span>
+</h1>
 
 <p><?php print $park['park_desc']; ?></p>
 
+<div class="progress progress-big">
+	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
+			style="width: <?php echo ($park['spaces']/$park['ps'])*100;?>%;"><?php echo round($park['spaces'] * 100 / $park['ps']); ?>% full</div>
+</div>
 
 <div class="row row-header">
 	<div class="col-xs-3">Space</div>

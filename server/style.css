@@ -43,7 +43,8 @@ body {
 }
 
 .row {
-	padding: 5px;
+	padding: 6px;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
 }
 a .row{
 	color: black;
@@ -59,8 +60,19 @@ a .row:hover{
 }
 .row-header {
 	font-weight: bold;
-	background: rgb(205,205,205);
+	background: rgb(210,210,210);
 	border-bottom: 1px solid white;
+	margin-top: 10px;
+}
+.progress.progress-big{
+	height:25px;
+}
+.progress.progress-big .progress-bar{
+	font-size: 16px;
+	padding-top: 2px;
+}
+.progress-bar{
+	text-shadow: 0 1px 0 rgba(0,0,0,0.5);
 }
 
 .alert-small{
