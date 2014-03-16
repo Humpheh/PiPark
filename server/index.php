@@ -47,7 +47,7 @@ foreach ($res as $row){	?>
 		<div class="col-sm-3 col-xs-12">
 			<div class="progress">
 	        	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-	        			style="width: <?php echo ($row['spaces']/$row['ps'])*100;?>%;"><?php echo $row['spaces'].' / '.$row['ps']; ?> used</div>
+	        			style="width: 0;<?php echo ($row['spaces']/$row['ps'])*100;?>%;"><?php echo round($row['spaces'] * 100 / $row['ps']); ?>% full</div>
 	        </div>
 		</div>
 	</div>
