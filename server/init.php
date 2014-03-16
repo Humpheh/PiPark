@@ -1,14 +1,17 @@
 <?php
 
 /** 
- * Initilization file for Raspberry Pi car parking sensor.
+ * Initialization file for Raspberry Pi car parking sensor.
  * 
  * @author	Humphrey Shotton
  * @version	1.0 (2014-01-16)
  */
 
-require('config.php');
-require('includes/functions.php');
+// The directory of the init file.
+$base = dirname(__FILE__);
+ 
+require_once($base . '/config.php');
+require_once($base . '/includes/functions.php');
 
 /**
  * Class for organising database connection 
@@ -24,7 +27,9 @@ class DB {
 		} catch (PDOException $err) {
 			// Catches an error in the login details for the database, and exits.
 			die('Error in connecting to MySQL database.');
-		} 
+		} catch (Exception $err) {
+			die('Error in initialization');
+		}
 	}
 	
 	public static function get(){
