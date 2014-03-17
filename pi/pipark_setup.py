@@ -33,6 +33,7 @@ class Application(tk.Frame):
     
     # print messages to the terminal?
     __is_verbose = False
+    __is_saved = False  # TODO: Implement is saved!
     
     # image load/save locoations
     SETUP_IMAGE = "./images/setup.jpeg"
@@ -126,7 +127,8 @@ class Application(tk.Frame):
                 message = "Error: Failed to setup and start PiCam.")
         
         # capture and save a new setup image when the ENTER key is pressed
-        # FIXME: Ensure focus isn't lost when camera is initialised.
+        # FIXME: Ensure focus isn't lost when camera is initialised. 
+        #        Try implementing entirely into key <Return> event.
         self.display.focus_set()
         raw_input()
         camera.capture(self.SETUP_IMAGE)
@@ -140,12 +142,13 @@ class Application(tk.Frame):
     #   Button Handlers
     # --------------------------------------------------------------------------
     def clickQuit(self):
-        """Quit terminate the application. """
+        """Quit & terminate the application. """
         
-        # ask the user if they wish to quit
-        response = tkMessageBox.askyesno(title = "Quit?",
-            message = "Are you sure you wish to quit?"
-            + " All unsaved setup will be lost.")
+        # if the user hasn't recently saved, ask if they really wish to quit
+        if not __is_saved: 
+            response = tkMessageBox.askyesno(title = "Quit?",
+                message = "Are you sure you wish to quit?"
+                + " All unsaved setup will be lost.")
             
         if response:
             self.quit()
@@ -155,6 +158,7 @@ class Application(tk.Frame):
         """Add/remove parking-space bounding boxes. """
         
         print "ACTION: Clicked 'Add/Remove Spaces'"
+        __is_saved = False
         # add spaces with two clicks (start & end corner points)
         # removal of spaces whilst holding CTRL and click in box
 
@@ -162,6 +166,7 @@ class Application(tk.Frame):
         """Add/remove control points. """
         
         print "ACTION: Clicked 'Add/Remove Control Points'"
+        __is_saved = False
         # add CPs with single click
         # removal of CPs whilst holding CTRL and click
 
@@ -186,12 +191,14 @@ class Application(tk.Frame):
         PiPark program.
 
         """
-
         # if the user is positive, close the setup and run the main program
-        if tkMessageBox.askyesno(title = "Setup Complete",
-                message = "Are you ready to leave setup and run PiPark?"):
+        response = tkMessageBox.askyesno(title = "Setup Complete",
+            message = "Are you ready to leave setup and run PiPark?")
+                
+        if response:   
             self.quit_button.invoke()
             main.run_main()
+            
 
     def clickAbout(self):
         """Open the README file for instructions on GUI use. """
