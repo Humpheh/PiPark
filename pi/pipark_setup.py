@@ -7,7 +7,7 @@ control points and register the car park with the server. The main PiPark
 program can be invoked from the menu.
 
 Author: Nicholas Sanders
-Version: 0.1 [2014/03/12]
+Version: 0.1 [2014/03/17]
 
 """
 import os
@@ -55,7 +55,6 @@ class Application(tk.Frame):
         self.createMenu()
             
         # if setup image exists then load it, otherwise load the default image
-        # TODO: Add load setup image functionality.
         if not self.loadImage(self.SETUP_IMAGE, self.display):
             self.loadImage(self.DEFAULT_IMAGE, self.display)
         
@@ -63,7 +62,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     #   Load Setup Image
     # --------------------------------------------------------------------------
-    def loadImage(self, image_address = "./", canvas = None):
+    def loadImage(self, image_address = None, canvas = None):
         """
         Load image at image_address. If the load is successful then return True,
         otherwise return False.
@@ -83,7 +82,6 @@ class Application(tk.Frame):
             if not isinstance(image_address, str): raise TypeError
             
             # load the image into the canvas
-            # TODO: load the image into the canvas.
             photo = ImageTk.PhotoImage(Image.open(image_address))
             canvas.create_image(
                 (s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2),
@@ -93,13 +91,15 @@ class Application(tk.Frame):
             
             return True
         
-        # TODO: Complete loadImage() exception handling.
         except TypeError:
-            # image failed to load
+            # arguments of incorrect data type
             if self.__is_verbose: 
-                print "ERROR: loadImage(" + image_address + ") failed to load."
+                print "ERROR: loadImage() arguments of incorrect data type."
             return False
         except:
+            # image failed to load
+            if self.__is_verbose: 
+                print "ERROR: loadImage() failed to load image " + image_address
             return False
         
         
@@ -142,9 +142,14 @@ class Application(tk.Frame):
     def clickQuit(self):
         """Quit terminate the application. """
         
-        # TODO: Add yes/no option after seleciton.
-        self.quit()
-        self.master.destroy()
+        # ask the user if they wish to quit
+        response = tkMessageBox.askyesno(title = "Quit?",
+            message = "Are you sure you wish to quit?"
+            + " All unsaved setup will be lost.")
+            
+        if response:
+            self.quit()
+            self.master.destroy()
 
     def clickSpaces(self):
         """Add/remove parking-space bounding boxes. """
