@@ -16,14 +16,14 @@ if (isset($_POST['park_action']) && $_POST['park_action'] == 'add') {
 	foreach ($keys as $key)
 		if (!array_key_exists($key, $_POST))
 			json_error('Incomplete post data.');
-
+	
 	// Register the space on the database.
 	$query2 = "INSERT INTO parks (park_name, park_desc) VALUES (?, ?)";
 	$stmt2 = DB::get() -> prepare($query2);
 	$stmt2 -> bindValue(1, $_POST["park_name"], PDO::PARAM_INT);
 	$stmt2 -> bindValue(2, $_POST["park_description"], PDO::PARAM_INT);
 	$stmt2 -> execute();
-	
+    
 } else if (isset($_POST['park_action']) && $_POST['park_action'] == 'update') {
 	
 	// Checks that all the required keys are present in the post data
@@ -34,9 +34,7 @@ if (isset($_POST['park_action']) && $_POST['park_action'] == 'add') {
 
 	if( is_int ( trim($_POST[ 'park_id' ]) ) )
 		json_error('Park id is not a number. (update)');
-
-	
-
+    
 	// Register the space on the database.
 	$query2 = "UPDATE parks SET park_name = ?, park_desc = ? WHERE park_id = ?";
 	$stmt2 = DB::get() -> prepare($query2);

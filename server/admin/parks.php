@@ -30,7 +30,9 @@ require_once ('../includes/header.php');
 	</div>
 </div>
 <?php
-$stmt = DB::get()->prepare('SELECT * FROM parks');
+
+$stmt = DB::get()->prepare('SELECT *,
+    (SELECT count(*) FROM spaces WHERE space_park_id = park_id) AS park_spaces FROM parks');
 $stmt->execute();
 $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
