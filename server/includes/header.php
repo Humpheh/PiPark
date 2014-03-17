@@ -16,7 +16,9 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="<?php echo Conf::URL_BASE; ?>"><?php echo Conf::TITLE; ?></a>
+					<a href="<?php echo Conf::URL_BASE; ?>">
+                        <img src="<?php echo Conf::URL_BASE; ?>logo.png" class="logo" alt="<?php echo Conf::TITLE; ?>">
+                    </a>
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">

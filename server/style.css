@@ -79,6 +79,12 @@ a .row:hover{
 	padding: 3px 9px;
 }
 
+img.logo{
+    height: 34px;
+    margin-top: 9px;
+    margin-right: 10px;
+}
+
 .footer {
 	padding-top: 19px;
 	margin-top: 20px;
