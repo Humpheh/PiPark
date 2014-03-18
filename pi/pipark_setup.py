@@ -213,6 +213,7 @@ class Application(tk.Frame):
 
     def clickSpaces(self):
         """Add/remove parking-space bounding boxes. """
+        self.spaces_button.toggle()
         return
         # add spaces with two clicks (start & end corner points)?
         # removal of spaces whilst holding CTRL and click in box?
