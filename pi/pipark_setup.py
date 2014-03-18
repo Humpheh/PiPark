@@ -214,32 +214,19 @@ class Application(tk.Frame):
     def clickSpaces(self):
         """Add/remove parking-space bounding boxes. """
         self.spaces_button.toggle()
-        return
+        if self.cps_button.getIsActive(): self.cps_button.setOff()
+        
+        # TODO: add/remove spaces functionality! 
         # add spaces with two clicks (start & end corner points)?
         # removal of spaces whilst holding CTRL and click in box?
 
 
     def clickCPs(self):
         """Add/remove control points. """
+        self.cps_button.toggle()
+        if self.spaces_button.getIsActive(): self.spaces_button.setOff()
         
-        print "ACTION: Clicked 'Add/Remove Control Points'"
-        self.__is_saved = False
-        
-        # toggle the button with gay reused code and comment
-        if self.__add_new_cps:
-            self.__add_new_cps = False
-            self.__add_new_spaces = False
-            
-            self.toggle(cps_button, __add_new_cps)
-            self.toggle(spaces_button, __add_new_spaces)
-            #self.cps_button.config(bg = "grey", fg = "black")
-        else:
-            self.__add_new_cps = True
-            self.__add_new_spaces = False
-            
-            self.toggle(cps_button, __add_new_cps)
-            self.toggle(spaces_button, __add_new_spaces)
-            #self.cps_button.config(bg = "blue", fg = "white")
+        # TODO: add/remove CPs functionality!
         # add CPs with single click?
         # removal of CPs whilst holding CTRL and click?
 
@@ -334,8 +321,8 @@ class Application(tk.Frame):
         self.spaces_button.grid(row = 0, column = 3)
 
         # add/remove control points button
-        self.cps_button = tk.Button(self, text = "Add/Remove Control Points",
-            command = self.clickCPs, padx = PADDING)
+        self.cps_button = ToggleButotn(self)
+        self.cps_button.config(self, text = "Add/Remove Control Points", command = self.clickCPs, padx = PADDING)
         self.cps_button.grid(row = 0, column = 4)
 
         # take new setup image button

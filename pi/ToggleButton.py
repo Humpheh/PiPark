@@ -13,13 +13,17 @@ class ToggleButton(tk.Button):
     
     def toggle(self):
         if self.__is_active:
-            self.__is_active = False
-            self.config(background = self.NORMAL_BG, foreground = self.NORMAL_FG)
-        
+            self.setOff()
         else:
-            self.__is_active = True
-            self.config(background = self.ACTIVE_BG, foreground = self.ACTIVE_FG)
+            self.setOn()
     
+    def setOff(self):
+        self.__is_active = False
+        self.config(background = self.NORMAL_BG, foreground = self.NORMAL_FG)
+        
+    def setOn(self):
+        self.__is_active = True
+        self.config(background = self.ACTIVE_BG, foreground = self.ACTIVE_FG)
+          
     def getIsActive():
         return self.__is_active
-        
