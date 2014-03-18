@@ -19,6 +19,7 @@ import imageread
 import main
 import setup_selectarea as sa  # not currently used
 import settings as s
+from ToggleButton import ToggleButton
 
 # ==============================================================================
 #
@@ -181,7 +182,16 @@ class Application(tk.Frame):
         elif self.__add_new_cps:
             return
 
- 
+    def toggle(self, button, button_state):
+        if not isinstance(button, tk.Button): 
+            if self.__is_verbose:
+                print "ERROR: I can only toggle a button, stupid!"
+            return
+        
+        if button_state:
+            button.config(background = "grey", foreground = "black")
+        else:
+            button.config(background = "blue", foreground = "white")
 # ==============================================================================
 #
 #  Button Handlers
@@ -203,21 +213,7 @@ class Application(tk.Frame):
 
     def clickSpaces(self):
         """Add/remove parking-space bounding boxes. """
-        
-        print "ACTION: Clicked 'Add/Remove Spaces'"
-        self.__is_saved = False
-        
-        # toggle the button with gay reused code
-        if self.__add_new_spaces:
-            self.__add_new_spaces = False
-            self.__add_new_cps = False
-            
-            self.spaces_button.config(bg = "grey", fg = "black")
-        else:
-            self.__add_new_spaces = True
-            self.__add_new_cps = False
-        
-            self.spaces_button.config(bg = "blue", fg = "white")
+        return
         # add spaces with two clicks (start & end corner points)?
         # removal of spaces whilst holding CTRL and click in box?
 
@@ -233,12 +229,16 @@ class Application(tk.Frame):
             self.__add_new_cps = False
             self.__add_new_spaces = False
             
-            self.cps_button.config(bg = "grey", fg = "black")
+            self.toggle(cps_button, __add_new_cps)
+            self.toggle(spaces_button, __add_new_spaces)
+            #self.cps_button.config(bg = "grey", fg = "black")
         else:
             self.__add_new_cps = True
             self.__add_new_spaces = False
-        
-            self.cps_button.config(bg = "blue", fg = "white")
+            
+            self.toggle(cps_button, __add_new_cps)
+            self.toggle(spaces_button, __add_new_spaces)
+            #self.cps_button.config(bg = "blue", fg = "white")
         # add CPs with single click?
         # removal of CPs whilst holding CTRL and click?
 
@@ -328,8 +328,8 @@ class Application(tk.Frame):
         self.about_button.grid(row = 0, column = 5)
 
         # add/remove spaces button
-        self.spaces_button = tk.Button(self, text = "Add/Remove Spaces",
-            command = self.clickSpaces, padx = PADDING)
+        self.spaces_button = ToggleButton(self)
+        self.spaces_button.config(text = "Add/Remove Spaces", command = self.clickSpaces, padx = PADDING)
         self.spaces_button.grid(row = 0, column = 3)
 
         # add/remove control points button
