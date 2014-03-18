@@ -71,11 +71,11 @@ class Application(tk.Frame):
     def clickReturnHandler(self, event):
         self.focus_set()
         
-        if __camera_is_active and __camera:
-            __camera.capture(self.SETUP_IMAGE)
-            __camera.stop_preview()
-            __camera.close()
-            __camera_is_active = False
+        if self.__camera_is_active and __camera:
+            self.__camera.capture(self.SETUP_IMAGE)
+            self.__camera.stop_preview()
+            self.__camera.close()
+            self.__camera_is_active = False
             
             
     # --------------------------------------------------------------------------
@@ -138,9 +138,9 @@ class Application(tk.Frame):
 
         # initialise the camera using the settings in the imageread module
         try:
-            __camera = imageread.setup_camera(is_fullscreen = False)
-            __camera.start_preview()
-            __camera_is_active = True
+            self.__camera = imageread.setup_camera(is_fullscreen = False)
+            self.__camera.start_preview()
+            self.__camera_is_active = True
         except:
             tkMessageBox.showerror(title = "Error!",
                 message = "Error: Failed to setup and start PiCam.")
@@ -164,7 +164,7 @@ class Application(tk.Frame):
         """Quit & terminate the application. """
         
         # if the user hasn't recently saved, ask if they really wish to quit
-        if not __is_saved: 
+        if not self.__is_saved: 
             response = tkMessageBox.askyesno(title = "Quit?",
                 message = "Are you sure you wish to quit?"
                 + " All unsaved setup will be lost.")
@@ -177,7 +177,7 @@ class Application(tk.Frame):
         """Add/remove parking-space bounding boxes. """
         
         print "ACTION: Clicked 'Add/Remove Spaces'"
-        __is_saved = False
+        self.__is_saved = False
         # add spaces with two clicks (start & end corner points)
         # removal of spaces whilst holding CTRL and click in box
 
@@ -185,7 +185,7 @@ class Application(tk.Frame):
         """Add/remove control points. """
         
         print "ACTION: Clicked 'Add/Remove Control Points'"
-        __is_saved = False
+        self.__is_saved = False
         # add CPs with single click
         # removal of CPs whilst holding CTRL and click
 
@@ -293,7 +293,7 @@ class Application(tk.Frame):
         return self.__is_verbose
     
     def setIsVerbose(value):
-        if isinstance(value, bool): __is_verbose = value
+        if isinstance(value, bool): self.__is_verbose = value
 
 
 # ==============================================================================
