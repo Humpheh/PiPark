@@ -215,11 +215,17 @@ class Application(tk.Frame):
         
         print "ACTION: Clicked 'Add/Remove Control Points'"
         self.__is_saved = False
-        self.__add_new_cps = True
-        self.__add_new_spaces = False
         
-        self.cps_button.config(bg = "blue")
-        self.cps_button.config(state = tk.ACTIVE)
+        if self.__add_new_cps:
+            self.__add_new_cps = False
+            self.__add_new_spaces = False
+            
+            self.cps_button.config(bg = "grey")
+        else:
+            self.__add_new_cps = True
+            self.__add_new_spaces = False
+        
+            self.cps_button.config(bg = "blue")
         # add CPs with single click
         # removal of CPs whilst holding CTRL and click
 
