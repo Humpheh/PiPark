@@ -206,8 +206,20 @@ class Application(tk.Frame):
         
         print "ACTION: Clicked 'Add/Remove Spaces'"
         self.__is_saved = False
-        # add spaces with two clicks (start & end corner points)
-        # removal of spaces whilst holding CTRL and click in box
+        
+        # toggle the button with gay reused code
+        if self.__add_new_spaces:
+            self.__add_new_spaces = False
+            self.__add_new_cps = False
+            
+            self.spaces_button.config(bg = "grey", fg = "black")
+        else:
+            self.__add_new_spaces = True
+            self.__add_new_cps = False
+        
+            self.spaces_button.config(bg = "blue", fg = "white")
+        # add spaces with two clicks (start & end corner points)?
+        # removal of spaces whilst holding CTRL and click in box?
 
 
     def clickCPs(self):
@@ -216,18 +228,19 @@ class Application(tk.Frame):
         print "ACTION: Clicked 'Add/Remove Control Points'"
         self.__is_saved = False
         
+        # toggle the button with gay reused code and comment
         if self.__add_new_cps:
             self.__add_new_cps = False
             self.__add_new_spaces = False
             
-            self.cps_button.config(bg = "grey")
+            self.cps_button.config(bg = "grey", fg = "black")
         else:
             self.__add_new_cps = True
             self.__add_new_spaces = False
         
-            self.cps_button.config(bg = "blue")
-        # add CPs with single click
-        # removal of CPs whilst holding CTRL and click
+            self.cps_button.config(bg = "blue", fg = "white")
+        # add CPs with single click?
+        # removal of CPs whilst holding CTRL and click?
 
 
     def clickRegister(self):
