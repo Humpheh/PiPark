@@ -34,6 +34,8 @@ class Application(tk.Frame):
     # print messages to the terminal?
     __is_verbose = False
     __is_saved = False  # TODO: Implement is saved!
+    __camera = None
+    __camera_is_active = False
     
     # image load/save locoations
     SETUP_IMAGE = "./images/setup.jpeg"
@@ -54,12 +56,23 @@ class Application(tk.Frame):
         # create widgets
         self.createDisplay()
         self.createMenu()
+        
+        self.display.bind("<Return>", clickReturnHangler)
             
         # if setup image exists then load it, otherwise load the default image
         if not self.loadImage(self.SETUP_IMAGE, self.display):
             self.loadImage(self.DEFAULT_IMAGE, self.display)
         
-    
+    def clickReturnHandler(self, event):
+        self.display.focus_set()
+        
+        if __camera_is_active and __camera:
+            __camera.capture(self.SETUP_IMAGE)
+            __camera.stop_preview()
+            __camera.close()
+            __camera_is_active = False
+            
+            
     # --------------------------------------------------------------------------
     #   Load Setup Image
     # --------------------------------------------------------------------------
@@ -120,8 +133,9 @@ class Application(tk.Frame):
 
         # initialise the camera using the settings in the imageread module
         try:
-            camera = imageread.setup_camera(is_fullscreen = False)
-            camera.start_preview()
+            __camera = imageread.setup_camera(is_fullscreen = False)
+            __camera.start_preview()
+            __camera_is_active = True
         except:
             tkMessageBox.showerror(title = "Error!",
                 message = "Error: Failed to setup and start PiCam.")
@@ -129,13 +143,13 @@ class Application(tk.Frame):
         # capture and save a new setup image when the ENTER key is pressed
         # FIXME: Ensure focus isn't lost when camera is initialised. 
         #        Try implementing entirely into key <Return> event.
-        self.display.focus_set()
-        raw_input()
-        camera.capture(self.SETUP_IMAGE)
+        #self.display.focus_set()
+        #raw_input()
+        #camera.capture(self.SETUP_IMAGE)
         
         # end the preview and close the camera.
-        camera.stop_preview()
-        camera.close()
+        #camera.stop_preview()
+        #camera.close()
 
     
     # --------------------------------------------------------------------------
