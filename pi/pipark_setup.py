@@ -57,7 +57,7 @@ class Application(tk.Frame):
         self.createDisplay()
         self.createMenu()
         
-        self.bind("<Key>", self.clickReturnHandler)
+        self.bind("<Return>", self.clickReturnHandler)
         self.focus_set()
             
         # if setup image exists then load it, otherwise load the default image
@@ -71,11 +71,12 @@ class Application(tk.Frame):
     def clickReturnHandler(self, event):
         self.focus_set()
         
-        if self.__camera_is_active and __camera:
+        if self.__camera_is_active and self.__camera:
             self.__camera.capture(self.SETUP_IMAGE)
             self.__camera.stop_preview()
             self.__camera.close()
             self.__camera_is_active = False
+            self.loadImage(self.SETUP_IMAGE, self.display)
             
             
     # --------------------------------------------------------------------------
@@ -202,7 +203,6 @@ class Application(tk.Frame):
         # PiCam, then load the new image into the GUI
         self.display.delete(tk.ALL)
         self.newSetupImage()
-        self.loadImage(self.SETUP_IMAGE, self.display)
 
     def clickStart(self):
         """
