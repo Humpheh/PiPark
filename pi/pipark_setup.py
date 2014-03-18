@@ -182,16 +182,7 @@ class Application(tk.Frame):
         elif self.__add_new_cps:
             return
 
-    def toggle(self, button, button_state):
-        if not isinstance(button, tk.Button): 
-            if self.__is_verbose:
-                print "ERROR: I can only toggle a button, stupid!"
-            return
-        
-        if button_state:
-            button.config(background = "grey", foreground = "black")
-        else:
-            button.config(background = "blue", foreground = "white")
+
 # ==============================================================================
 #
 #  Button Handlers
@@ -321,8 +312,8 @@ class Application(tk.Frame):
         self.spaces_button.grid(row = 0, column = 3)
 
         # add/remove control points button
-        self.cps_button = ToggleButotn(self)
-        self.cps_button.config(self, text = "Add/Remove Control Points", command = self.clickCPs, padx = PADDING)
+        self.cps_button = ToggleButton(self)
+        self.cps_button.config(text = "Add/Remove Control Points", command = self.clickCPs, padx = PADDING)
         self.cps_button.grid(row = 0, column = 4)
 
         # take new setup image button
