@@ -7,7 +7,7 @@ control points and register the car park with the server. The main PiPark
 program can be invoked from the menu.
 
 Author: Nicholas Sanders
-Version: 0.1 [2014/03/17]
+Version: 0.1 [2014/03/18]
 
 """
 import os
@@ -17,7 +17,7 @@ from PIL import Image, ImageTk
 
 import imageread
 import main
-import setup_selectarea as ssa
+import setup_selectarea as sa  # not currently used
 import settings as s
 
 # ==============================================================================
@@ -31,9 +31,14 @@ class Application(tk.Frame):
     #   Instance Attributes
     # --------------------------------------------------------------------------
     
-    # print messages to the terminal?
-    __is_verbose = False
+    # booleans
+    __add_new_spaces = False
+    __add_new_cps = False
+    
+    __is_verbose = False  # print messages to terminal
     __is_saved = False  # TODO: Implement is saved!
+    
+    # picamera
     __camera = None
     __camera_is_active = False
     
@@ -57,7 +62,9 @@ class Application(tk.Frame):
         self.createDisplay()
         self.createMenu()
         
-        self.bind("<Return>", self.clickReturnHandler)
+        # create button and key press handlers -> set focus to this frame
+        self.bind("<Return>", self.pressReturnHandler)
+        self.bind("<Button-1>", self.mouseEventHandler)
         self.focus_set()
             
         # if setup image exists then load it, otherwise load the default image
@@ -65,20 +72,11 @@ class Application(tk.Frame):
             self.loadImage(self.DEFAULT_IMAGE, self.display)
     
     
-    # --------------------------------------------------------------------------
-    #   Return Key Press Handler
-    # --------------------------------------------------------------------------
-    def clickReturnHandler(self, event):
-        self.focus_set()
-        
-        if self.__camera_is_active and self.__camera:
-            self.__camera.capture(self.SETUP_IMAGE)
-            self.__camera.stop_preview()
-            self.__camera.close()
-            self.__camera_is_active = False
-            self.loadImage(self.SETUP_IMAGE, self.display)
-            
-            
+# ==============================================================================
+#
+#  Public Application Methods
+#
+# ==============================================================================           
     # --------------------------------------------------------------------------
     #   Load Setup Image
     # --------------------------------------------------------------------------
@@ -121,12 +119,12 @@ class Application(tk.Frame):
             if self.__is_verbose: 
                 print "ERROR: loadImage() failed to load image " + image_address
             return False
-        
-        
+    
+    
     # --------------------------------------------------------------------------
     #   Take New Setup Image
     # --------------------------------------------------------------------------
-    def newSetupImage(self):
+    def turnOnCamera(self):
         """
         Instruct the user to take a new setup image. Then save the image
         to the specified location 'SETUP_IMAGE_ADDRESS', and finally load the
@@ -145,22 +143,50 @@ class Application(tk.Frame):
         except:
             tkMessageBox.showerror(title = "Error!",
                 message = "Error: Failed to setup and start PiCam.")
+    
+    
+# ==============================================================================
+#
+#  Event Handlers
+#
+# ==============================================================================
+    # --------------------------------------------------------------------------
+    #   Return-Key-Press Handler
+    # --------------------------------------------------------------------------
+    def pressReturnHandler(self, event):
+        """Handle Return-key-press events."""
+        # ensure focus on window
+        self.focus_set()
         
-        # capture and save a new setup image when the ENTER key is pressed
-        # FIXME: Ensure focus isn't lost when camera is initialised. 
-        #        Try implementing entirely into key <Return> event.
-        #self.display.focus_set()
-        #raw_input()
-        #camera.capture(self.SETUP_IMAGE)
-        
-        # end the preview and close the camera.
-        #camera.stop_preview()
-        #camera.close()
-
+        # take new setup image
+        if self.__camera_is_active and self.__camera:
+            self.__camera.capture(self.SETUP_IMAGE)
+            self.__camera.stop_preview()
+            self.__camera.close()
+            self.__camera_is_active = False
+            self.loadImage(self.SETUP_IMAGE, self.display)
+    
     
     # --------------------------------------------------------------------------
-    #   Button Handlers
+    #   Mouse Event Handler
     # --------------------------------------------------------------------------
+    def mouseEventHandler(self, event):
+        """Handle Mouse Events."""
+        #ensure focus on window
+        self.focus_set()
+        print "Mouse Clicked!" + event.x + " " + event.y
+        
+        if self.__add_new_spaces:
+            return
+        elif self.__add_new_cps:
+            return
+
+ 
+# ==============================================================================
+#
+#  Button Handlers
+#
+# ==============================================================================
     def clickQuit(self):
         """Quit & terminate the application. """
         
@@ -174,6 +200,7 @@ class Application(tk.Frame):
             self.quit()
             self.master.destroy()
 
+
     def clickSpaces(self):
         """Add/remove parking-space bounding boxes. """
         
@@ -182,13 +209,20 @@ class Application(tk.Frame):
         # add spaces with two clicks (start & end corner points)
         # removal of spaces whilst holding CTRL and click in box
 
+
     def clickCPs(self):
         """Add/remove control points. """
         
         print "ACTION: Clicked 'Add/Remove Control Points'"
         self.__is_saved = False
+        self.__add_new_cps = True
+        self.__add_new_spaces = False
+        
+        self.cps_button.config(bg = "blue")
+        self.cps_button.config(state = tk.ACTIVE)
         # add CPs with single click
         # removal of CPs whilst holding CTRL and click
+
 
     def clickRegister(self):
         """Register the car park with the server. """
@@ -196,13 +230,15 @@ class Application(tk.Frame):
         print("ACTION: Clicked 'Register'")
         # register with the server as per CLI setup
 
+
     def clickNewImage(self):
         """Use PiCam to take new 'setup image' for PiPark setup. """
         
         # clear the current image in the GUI, then take a new image using the
         # PiCam, then load the new image into the GUI
         self.display.delete(tk.ALL)
-        self.newSetupImage()
+        self.turnOnCamera()
+
 
     def clickStart(self):
         """
@@ -218,18 +254,29 @@ class Application(tk.Frame):
             self.quit_button.invoke()
             main.run_main()
             
-
+            
     def clickAbout(self):
         """Open the README file for instructions on GUI use. """
         
         # load external README from command line
         os.system("leafpad " + "./SETUP_README.txt")
         
-
+        
+# ==============================================================================
+#
+#  Application Layout Management
+#
+# ==============================================================================  
     # --------------------------------------------------------------------------
     #   Create Image Display Canvas
     # --------------------------------------------------------------------------
     def createDisplay(self):
+        """
+        Create the display tkinter canvas to hold the images taken by the
+        pi camera.
+        
+        """
+        
         self.display = tk.Canvas(
             self, 
             width = s.PICTURE_RESOLUTION[0],
@@ -242,6 +289,12 @@ class Application(tk.Frame):
     #   Create Options Menu
     # --------------------------------------------------------------------------
     def createMenu(self):
+        """
+        Create the menu tkinter canvas in which to hold the menu buttons.
+        
+        """
+        
+        # padding around buttons
         PADDING = 10;
 
         # draw a background for the menu on a new canvas
@@ -286,8 +339,13 @@ class Application(tk.Frame):
         self.quit_button.grid(row = 0, column = 6)
 
 
+# ==============================================================================
+#
+#   Getters and Setters
+#
+# ==============================================================================  
     # --------------------------------------------------------------------------
-    #   Get/Set Is Verbose?
+    #   Is Verbose?
     # --------------------------------------------------------------------------
     def getIsVerbose():
         return self.__is_verbose
