@@ -57,20 +57,22 @@ class Application(tk.Frame):
         self.createDisplay()
         self.createMenu()
         
-        self.display.bind("<Return>", clickReturnHangler)
+        self.bind("<Key>", self.clickReturnHandler)
             
         # if setup image exists then load it, otherwise load the default image
         if not self.loadImage(self.SETUP_IMAGE, self.display):
             self.loadImage(self.DEFAULT_IMAGE, self.display)
         
     def clickReturnHandler(self, event):
-        self.display.focus_set()
+        #self.display.focus_set()
         
-        if __camera_is_active and __camera:
-            __camera.capture(self.SETUP_IMAGE)
-            __camera.stop_preview()
-            __camera.close()
-            __camera_is_active = False
+        #if __camera_is_active and __camera:
+            #__camera.capture(self.SETUP_IMAGE)
+            #__camera.stop_preview()
+            #__camera.close()
+            #__camera_is_active = False
+        tkMessageBox.showinfo(title = "Hurray", message = "Key pressed")
+        print "Key pressed!"
             
             
     # --------------------------------------------------------------------------
