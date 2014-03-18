@@ -9,7 +9,7 @@ class ToggleButton(tk.Button):
     NORMAL_FG = "black"
     
     def __init__(self, master = None):
-        tk.Button.__init__(master)
+        tk.Button.__init__(self, master)
     
     def toggle(self):
         if __is_active:
