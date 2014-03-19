@@ -72,7 +72,8 @@ class Application(tk.Frame):
         
         # FIXME: parking space implementation
         self.__parking_space = ParkingSpace(1, self.display)
-        self.__parking_spaces = Boxes()
+        self.__parking_spaces = Boxes(self.display)
+        print "INFO: __parking_spaces length:", self.__parking_spaces.getLength()
             
         # if setup image exists then load it, otherwise load the default image
         if not self.loadImage(self.SETUP_IMAGE, self.display):
