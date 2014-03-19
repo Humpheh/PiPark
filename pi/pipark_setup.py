@@ -34,7 +34,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     
     # booleans
-    __is_verbose = False  # print messages to terminal
+    __is_verbose = True  # print messages to terminal
     __is_saved = False  # TODO: Implement is saved!
     
     # FIXME: Parking space implementation
@@ -70,7 +70,7 @@ class Application(tk.Frame):
         self.focus_set()
         
         # FIXME: parking space implementation
-        self.__parking_space = ParkingSpace(1, display)
+        self.__parking_space = ParkingSpace(1, self.display)
             
         # if setup image exists then load it, otherwise load the default image
         if not self.loadImage(self.SETUP_IMAGE, self.display):
