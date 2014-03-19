@@ -170,9 +170,18 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     def mouseEventHandler(self, event):
         """Handle Mouse Events."""
-        #ensure focus on window
+        # ensure focus on display canvas to recieve mouse clicks
         self.display.focus_set()
-        print "INFO: Clicked at", event.x, event.y
+        
+        # print co-ordinates to terminal
+        if self.__is_verbose: print "INFO: Mouse click! @", event.x, event.y
+        
+        if self.cps_button.getIsActive():
+            print "INFO: Add/Remove Control Point"
+        elif self.space_button.getIsActive():
+            print "INFO: Add/Remove Parking Space"
+        else:
+            print "Nothing selected; just clicking merrily"
 
         # return focus to the main frame
         self.focus_set()
