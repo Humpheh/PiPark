@@ -178,7 +178,7 @@ class Application(tk.Frame):
         
         if self.cps_button.getIsActive():
             print "INFO: Add/Remove Control Point"
-        elif self.space_button.getIsActive():
+        elif self.spaces_button.getIsActive():
             print "INFO: Add/Remove Parking Space"
         else:
             print "Nothing selected; just clicking merrily"
