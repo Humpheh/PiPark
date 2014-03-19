@@ -83,12 +83,12 @@ class ParkingSpace:
         y -- y-coordinate of the parking space
         
     	"""
-        if self.__start_point == []:
+        if self.__start_point == [] or self.__end_point != []:
             self.clear()
-            self.setstartPoint(x, y)
+            self.setStartPoint(x, y)
         else:
             self.setEndPoint(x, y)
-            self.drawRectangle(canvas)
+            self.drawRectangle(self.canvas)
     
     
     def drawRectangle(self, canvas):
@@ -109,6 +109,5 @@ class ParkingSpace:
             fill = fill_colour, 
             width = 0
             )
-                                
-        # self.text = w.create_text(self.get_origins(), text = (str(self.id) + suffix))
+        
         return self
