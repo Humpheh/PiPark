@@ -19,6 +19,7 @@ import imageread
 import main
 import setup_selectarea as sa  # not currently used
 import settings as s
+from setup_classes2 import ParkingSpace
 from ToggleButton import ToggleButton
 
 # ==============================================================================
@@ -35,6 +36,9 @@ class Application(tk.Frame):
     # booleans
     __is_verbose = False  # print messages to terminal
     __is_saved = False  # TODO: Implement is saved!
+    
+    # FIXME: Parking space implementation
+    __parking_space = None
     
     # picamera
     __camera = None
@@ -64,6 +68,9 @@ class Application(tk.Frame):
         self.bind("<Return>", self.pressReturnHandler)
         self.display.bind("<Button-1>", self.mouseEventHandler)
         self.focus_set()
+        
+        # FIXME: parking space implementation
+        self.__parking_space = ParkingSpace(1, display)
             
         # if setup image exists then load it, otherwise load the default image
         if not self.loadImage(self.SETUP_IMAGE, self.display):
@@ -157,6 +164,7 @@ class Application(tk.Frame):
         self.focus_set()
         
         # take new setup image
+        # TODO: try/catch statements
         if self.__camera_is_active and self.__camera:
             self.__camera.capture(self.SETUP_IMAGE)
             self.__camera.stop_preview()
@@ -173,15 +181,15 @@ class Application(tk.Frame):
         # ensure focus on display canvas to recieve mouse clicks
         self.display.focus_set()
         
-        # print co-ordinates to terminal
-        if self.__is_verbose: print "INFO: Mouse click! @", event.x, event.y
-        
+        # TODO: draw spaces, control points!
+        # determine which action (if any) to perform on mouse click
         if self.cps_button.getIsActive():
-            print "INFO: Add/Remove Control Point"
+            if self.__is_verbose: print "INFO: Add/Remove Control Point"
         elif self.spaces_button.getIsActive():
-            print "INFO: Add/Remove Parking Space"
+            if self.__is_verbose: print "INFO: Add/Remove Parking Space"
+            self.__parking_space.updatePoints(event.x, event.y)
         else:
-            print "Nothing selected; just clicking merrily"
+            if self.__is_verbose: print "INFO: Just clicking merrily =D"
 
         # return focus to the main frame
         self.focus_set()
