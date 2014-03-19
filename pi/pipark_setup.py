@@ -174,6 +174,9 @@ class Application(tk.Frame):
         self.display.focus_set()
         print "INFO: Clicked at", event.x, event.y
 
+        # return focus to the main frame
+        self.focus_set()
+
 
 # ==============================================================================
 #
