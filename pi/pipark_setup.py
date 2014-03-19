@@ -33,9 +33,6 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     
     # booleans
-    __add_new_spaces = False
-    __add_new_cps = False
-    
     __is_verbose = False  # print messages to terminal
     __is_saved = False  # TODO: Implement is saved!
     
@@ -65,7 +62,7 @@ class Application(tk.Frame):
         
         # create button and key press handlers -> set focus to this frame
         self.bind("<Return>", self.pressReturnHandler)
-        self.bind("<Button-1>", self.mouseEventHandler)
+        self.display.bind("<Button-1>", self.mouseEventHandler)
         self.focus_set()
             
         # if setup image exists then load it, otherwise load the default image
@@ -174,13 +171,8 @@ class Application(tk.Frame):
     def mouseEventHandler(self, event):
         """Handle Mouse Events."""
         #ensure focus on window
-        self.focus_set()
-        print "Mouse Clicked!" + event.x + " " + event.y
-        
-        if self.__add_new_spaces:
-            return
-        elif self.__add_new_cps:
-            return
+        self.display.focus_set()
+        print "INFO: Clicked at", event.x, event.y
 
 
 # ==============================================================================
