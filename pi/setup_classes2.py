@@ -16,6 +16,7 @@ class ParkingSpace:
     __start_point = []
     __end_point = []
     __text = ""
+    __rectangle = None
     canvas = None
     
     def __init__(self, i, canvas = None):
@@ -85,7 +86,7 @@ class ParkingSpace:
     	"""
         if self.__start_point == [] or self.__end_point != []:
             self.clear()
-            self.deleteRectangle()
+            self.deleteRectangle(self.canvas)
             self.setStartPoint(x, y)
         else:
             self.setEndPoint(x, y)
@@ -104,7 +105,7 @@ class ParkingSpace:
             
         fill_colour = "#CC0000"
         
-        self.rect = canvas.create_rectangle(
+        self.__rectangle = canvas.create_rectangle(
             self.__start_point[0], self.__start_point[1],
             self.__end_point[0], self.__end_point[1],
             fill = fill_colour, 
@@ -121,5 +122,5 @@ class ParkingSpace:
     	Keyword Arguments:
         canvas -- TkCanvas from which to delete the rectangle
     	"""
-        canvas.delete(self.rect)
+        canvas.delete(self.__rectangle)
         return self
