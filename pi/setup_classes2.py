@@ -111,7 +111,7 @@ class ParkingSpace:
         
         # set rectangle colour
         fill_colour = "#CC0000"
-        outline_colour = "#66000"
+        outline_colour = "#660000"
         
         # draw the rectangle
         self.__rectangle = canvas.create_rectangle(
@@ -142,25 +142,25 @@ class ParkingSpace:
 class Boxes:
     # TODO: Change 5 to a MAX_NUM final value
     # create a list of 5 parking spaces
-    boxes = [ParkingSpaces(i) for i in range(5)]
+    boxes = []
     current_box = 1
     
-    def __init__(self):
-        # constructor intentionally empty
+    def __init__(self, canvas):
+        self.boxes = [ParkingSpace(i, canvas) for i in range(5)]
         return
     
-    @staticmethod
-    def getCurrentBox():
-        return Boxes.boxes[Boxes.current_box]
+    #@staticmethod
+    def getCurrentBox(self):
+        return self.boxes[self.current_box]
 
-    @staticmethod
-    def get(id):
-        return Boxes.boxes[id]	
+    #@staticmethod
+    def get(self, id):
+        return self.boxes[id]	
 
-    @staticmethod
-    def getLength():
-        return len(Boxes.boxes)
+    #@staticmethod
+    def getLength(self):
+        return len(self.boxes)
 
-    @staticmethod
-    def setCurrentBox(i):
-        Boxes.current_box = i
+    #@staticmethod
+    def setCurrentBox(self, i):
+        self.current_box = i
