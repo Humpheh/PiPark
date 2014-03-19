@@ -85,6 +85,7 @@ class ParkingSpace:
     	"""
         if self.__start_point == [] or self.__end_point != []:
             self.clear()
+            self.deleteRectangle()
             self.setStartPoint(x, y)
         else:
             self.setEndPoint(x, y)
@@ -95,8 +96,8 @@ class ParkingSpace:
     	"""
     	Draw the rectangle for the box on the canvas.
     	
-    	Args: 
-    		w: TkCanvas to draw the box to.
+    	Keyword Arguments: 
+    	canvas -- TkCanvas in which to draw the rectangle
     	"""
         if not isinstance(canvas, tk.Canvas): return
         if self.__start_point == [] or self.__end_point == []: return
@@ -110,4 +111,15 @@ class ParkingSpace:
             width = 0
             )
         
+        return self
+        
+    
+    def deleteRectangle(self, canvas):
+    	"""
+    	Delete the box rectangle from the canvas.
+    	
+    	Keyword Arguments:
+        canvas -- TkCanvas from which to delete the rectangle
+    	"""
+        canvas.delete(self.rect)
         return self
