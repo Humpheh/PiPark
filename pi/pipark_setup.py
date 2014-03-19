@@ -7,7 +7,7 @@ control points and register the car park with the server. The main PiPark
 program can be invoked from the menu.
 
 Author: Nicholas Sanders
-Version: 0.1 [2014/03/18]
+Version: 2.0 [2014/03/19]
 
 """
 import os
@@ -19,7 +19,7 @@ import imageread
 import main
 import setup_selectarea as sa  # not currently used
 import settings as s
-from setup_classes2 import ParkingSpace
+from setup_classes2 import ParkingSpace, Boxes
 from ToggleButton import ToggleButton
 
 # ==============================================================================
@@ -39,6 +39,7 @@ class Application(tk.Frame):
     
     # FIXME: Parking space implementation
     __parking_space = None
+    __parking_spaces = None
     
     # picamera
     __camera = None
@@ -71,6 +72,7 @@ class Application(tk.Frame):
         
         # FIXME: parking space implementation
         self.__parking_space = ParkingSpace(1, self.display)
+        self.__parking_spaces = Boxes()
             
         # if setup image exists then load it, otherwise load the default image
         if not self.loadImage(self.SETUP_IMAGE, self.display):
@@ -187,7 +189,8 @@ class Application(tk.Frame):
             if self.__is_verbose: print "INFO: Add/Remove Control Point"
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Add/Remove Parking Space"
-            self.__parking_space.updatePoints(event.x, event.y)
+            #self.__parking_space.updatePoints(event.x, event.y)
+            self.__parking_spaces.boxes[1].updatePoints(event.x, event.y)
         else:
             if self.__is_verbose: print "INFO: Just clicking merrily =D"
 

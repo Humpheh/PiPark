@@ -1,8 +1,8 @@
 """
 setup_classes2.py
-Update of setup_classes.py to work with new UI.
+Update of setup_classes.py to work with new GUI.
 
-Author: Humphrey Shotton
+Author: Humphrey Shotton and Nicholas Sanders
 Version: 2.0 [2014/03/19]
 
 """
@@ -13,10 +13,11 @@ class ParkingSpace:
     
     # instance attributes
     __id = -1
+    __type = 0  # type '0' is parking space, type '1' is CP
     __start_point = []
     __end_point = []
-    __text = ""
-    __rectangle = None
+    __label = ""  # __rectangle label
+    __rectangle = None  # the drawn rectangle
     canvas = None
     
     def __init__(self, i, canvas = None):
@@ -99,16 +100,25 @@ class ParkingSpace:
     	
     	Keyword Arguments: 
     	canvas -- TkCanvas in which to draw the rectangle
-    	"""
-        if not isinstance(canvas, tk.Canvas): return
-        if self.__start_point == [] or self.__end_point == []: return
-            
-        fill_colour = "#CC0000"
         
+    	"""
+        # guard against illegal data types
+        if not isinstance(canvas, tk.Canvas): return
+        
+        # if either start or end point doesn't exist; a rectangle cannot be
+        # drawn, so return
+        if self.__start_point == [] or self.__end_point == []: return
+        
+        # set rectangle colour
+        fill_colour = "#CC0000"
+        outline_colour = "#66000"
+        
+        # draw the rectangle
         self.__rectangle = canvas.create_rectangle(
             self.__start_point[0], self.__start_point[1],
             self.__end_point[0], self.__end_point[1],
-            fill = fill_colour, 
+            fill = fill_colour,
+            outline = outline_colour, 
             width = 0
             )
         
@@ -121,6 +131,36 @@ class ParkingSpace:
     	
     	Keyword Arguments:
         canvas -- TkCanvas from which to delete the rectangle
+        
     	"""
         canvas.delete(self.__rectangle)
         return self
+
+
+# and now for something completely different...
+
+class Boxes:
+    # TODO: Change 5 to a MAX_NUM final value
+    # create a list of 5 parking spaces
+    boxes = [ParkingSpaces(i) for i in range(5)]
+    current_box = 1
+    
+    def __init__(self):
+        # constructor intentionally empty
+        return
+    
+    @staticmethod
+    def getCurrentBox():
+        return Boxes.boxes[Boxes.current_box]
+
+    @staticmethod
+    def get(id):
+        return Boxes.boxes[id]	
+
+    @staticmethod
+    def getLength():
+        return len(Boxes.boxes)
+
+    @staticmethod
+    def setCurrentBox(i):
+        Boxes.current_box = i
