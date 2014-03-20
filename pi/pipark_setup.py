@@ -62,22 +62,28 @@ class Application(tk.Frame):
         self.grid()
         
         # create widgets
-        self.createDisplay()
-        self.createMenu()
+        self.createDisplay()  # display canvas: holds the image, CPs and spaces
+        self.createMenu()  # menu canvas: holds the buttons and menu bar image
         
-        # create button and key press handlers -> set focus to this frame
-        self.bind("<Return>", self.pressReturnHandler)
-        self.display.bind("<Button-1>", self.mouseEventHandler)
+        # create mouse button and key-press handlers -> set focus to this frame
+        self.bind("<Return>", self.returnPressHandler)
+        self.bind("<Key>", self.keyPressHandler)
+        self.display.bind("<Button-1>", self.leftClickHandler)
+        self.display.bind("<Button-3>", self.rightClickHandler)
         self.focus_set()
         
         # FIXME: parking space implementation
         self.__parking_space = ParkingSpace(1, self.display)
         self.__parking_spaces = Boxes(self.display)
         print "INFO: __parking_spaces length:", self.__parking_spaces.getLength()
-            
+        
+        # load the default background
+        self.loadImage(self.DEFAULT_IMAGE, self.display)
+        
+        # TODO: Remove vvv
         # if setup image exists then load it, otherwise load the default image
-        if not self.loadImage(self.SETUP_IMAGE, self.display):
-            self.loadImage(self.DEFAULT_IMAGE, self.display)
+        #if not self.loadImage(self.SETUP_IMAGE, self.display):
+        #    self.loadImage(self.DEFAULT_IMAGE, self.display)
     
     
 # ==============================================================================
@@ -112,7 +118,7 @@ class Application(tk.Frame):
             canvas.create_image(
                 (s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2),
                 image = photo
-            )
+                )
             canvas.image = photo
             
             return True
@@ -130,13 +136,13 @@ class Application(tk.Frame):
     
     
     # --------------------------------------------------------------------------
-    #   Take New Setup Image
+    #   Activate the Pi Camera
     # --------------------------------------------------------------------------
     def turnOnCamera(self):
         """
-        Instruct the user to take a new setup image. Then save the image
-        to the specified location 'SETUP_IMAGE_ADDRESS', and finally load the
-        new image into the GUI.
+        Instruct the user how to take a new setup image, then activate 
+        the PiCam. If the camera fails to load, catch the exception and present
+        error message.
 
         """
         # show quick dialogue box with basic instruction
@@ -159,42 +165,91 @@ class Application(tk.Frame):
 #
 # ==============================================================================
     # --------------------------------------------------------------------------
-    #   Return-Key-Press Handler
+    #   Key-Press Handlers
     # --------------------------------------------------------------------------
-    def pressReturnHandler(self, event):
-        """Handle Return-key-press events."""
+    def returnPressHandler(self, event):
+        """
+        Handle Return-key-press events. Capture a new setup image when PiCam
+        is active
+        
+        """
         # ensure focus on window
         self.focus_set()
         
         # take new setup image
         # TODO: try/catch statements
         if self.__camera_is_active and self.__camera:
-            self.__camera.capture(self.SETUP_IMAGE)
-            self.__camera.stop_preview()
-            self.__camera.close()
-            self.__camera_is_active = False
+            try:
+                self.__camera.capture(self.SETUP_IMAGE)
+                if self.__is_verbose: print "INFO: New setup image captured. "
+                self.__camera.stop_preview()
+                self.__camera.close()
+                self.__camera_is_active = False
+            
+            except:
+                if __is_verbose: 
+                    print "ERROR: Failed to capture image. "
+                else:
+                    tkMessageBox.showerror(
+                        title = "Error!",
+                        message = "Error: Failed to capture new setup image."
+                        )
+                        
             self.loadImage(self.SETUP_IMAGE, self.display)
     
     
+    def keyPressHandler(self, event):
+        """
+        Handle key-press events. 
+        
+        Uses:
+        Num Keys 1 - 0: Change parking space ID number. 
+        
+        """
+        
+        key = event.char
+        NUM_KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        
+        if key in NUM_KEYS:
+            if self.__is_verbose: print "INFO: Number-key pressed," key
+            #self.__parking_spaces.setCurrentBox(key)
+    
     # --------------------------------------------------------------------------
-    #   Mouse Event Handler
+    #   Mouse Event Handlers
     # --------------------------------------------------------------------------
-    def mouseEventHandler(self, event):
-        """Handle Mouse Events."""
+    def leftClickHandler(self, event):
+        """Handle LMB-click events to add/remove control points & spaces. """
         # ensure focus on display canvas to recieve mouse clicks
         self.display.focus_set()
         
         # TODO: draw spaces, control points!
-        # determine which action (if any) to perform on mouse click
+        # ensure focus is set to the display canvas
         if self.cps_button.getIsActive():
-            if self.__is_verbose: print "INFO: Add/Remove Control Point"
+            if self.__is_verbose: print "INFO: Add Control Point"
         elif self.spaces_button.getIsActive():
-            if self.__is_verbose: print "INFO: Add/Remove Parking Space"
+            if self.__is_verbose: print "INFO: Add Parking Space"
             #self.__parking_space.updatePoints(event.x, event.y)
             self.__parking_spaces.boxes[1].updatePoints(event.x, event.y)
         else:
-            if self.__is_verbose: print "INFO: Just clicking merrily =D"
+            if self.__is_verbose: print "INFO: Just clicking LMB merrily =D"
 
+        # return focus to the main frame
+        self.focus_set()
+        
+    
+    def rightClickHandler(self, event):
+        """Handle RMB-click events to add/remove control points & spaces. """
+        
+        # ensure focus is set to the display canvas
+        self.display.focus_set()
+        
+        if self.cps_button.getIsActive():
+            if self.__is_verbose: print "INFO: Remove Control Point"
+        elif self.spaces_button.getIsActive():
+            if self.__is_verbose: print "INFO: Remove parking space"
+        else:
+            if self.__is_verbose: print "INFO: Just clicking RMB merrily =)"
+        
         # return focus to the main frame
         self.focus_set()
 
