@@ -60,6 +60,7 @@ class Application(tk.Frame):
         
         # set alignment inside the frame
         self.grid()
+        self.
         
         # create widgets
         self.createDisplay()  # display canvas: holds the image, CPs and spaces
@@ -368,15 +369,41 @@ class Application(tk.Frame):
 
         # draw a background for the menu on a new canvas
         
-        self.bg = tk.Canvas(self, width = 960, height = 70, bg = "black")
+        self.bg = tk.Canvas(self, width = 960, height = 70, bg = "grey")
         self.bg.grid(row = 0, column = 0, rowspan = 2, columnspan = 6)
         #self.bg.create_rectangle(0, 0, 960, 50, fill = "grey")
         
-        # about button - display information about PiPark
-        self.about_button = tk.Button(self, text = "Open README",
-            command = self.clickAbout, padx = PADDING)
-        self.about_button.grid(row = 1, column = 5)
-
+        # mock logo
+        # TODO: replace with real logo
+        self.logo_mock = tk.Canvas(self, width = 205, height = 70)
+        self.logo_mock.grid(row = 0, column = 0, rowspan = 2, columnspan = 1)
+        
+        
+        # start the main program
+        self.start_button = tk.Button(self, text = "Start PiPark",
+            command = self.clickStart, padx = PADDING)
+        self.start_button.grid(row = 0, column = 1)
+        
+        # register the car park button
+        self.register_button = tk.Button(self, text = "Register",
+            command = self.clickRegister, padx = PADDING)
+        self.register_button.grid(row = 1, column = 1)
+        
+        
+        # take new setup image button
+        self.image_button = tk.Button(self, text = "New Setup Image",
+            command = self.clickNewImage, padx = PADDING)
+        self.image_button.grid(row = 0, column = 2, rowspan = 1, columnspan = 2)
+        
+        # load setup data
+        self.load_button = tk.Button(self, text = "Load")
+        self.load_button.grid(row = 1, column = 2)
+        
+        # clear all parking spaces and CPs
+        self.clear_button = tk.Button(self, text = "Clear")
+        self.clear_button.grid(row = 1, column = 3)
+        
+        
         # add/remove spaces button
         self.spaces_button = ToggleButton(self)
         self.spaces_button.config(text = "Add/Remove Spaces", command = self.clickSpaces, padx = PADDING)
@@ -386,32 +413,17 @@ class Application(tk.Frame):
         self.cps_button = ToggleButton(self)
         self.cps_button.config(text = "Add/Remove Control Points", command = self.clickCPs, padx = PADDING)
         self.cps_button.grid(row = 1, column = 4)
-
-        # take new setup image button
-        self.image_button = tk.Button(self, text = "Take New Setup Image",
-            command = self.clickNewImage, padx = PADDING)
-        self.image_button.grid(row = 0, column = 2)
-
-        # register the car park button
-        self.register_button = tk.Button(self, text = "Register",
-            command = self.clickRegister, padx = PADDING)
-        self.register_button.grid(row = 0, column = 3)
         
-        self.clear_button = tk.Button(self, text = "Clear")
-        self.clear_button.grid(row = 1, column = 3)
-
-        # start the main program
-        self.start_button = tk.Button(self, text = "Start PiPark",
-            command = self.clickStart, padx = PADDING)
-        self.start_button.grid(row = 0, column = 1, rowspan = 2, columnspan = 1)
         
-        self.load_button = tk.Button(self, text = "Load")
-        self.load_button.grid(row = 1, column = 2)
-
         # quit setup
         self.quit_button = tk.Button(self, text = "Quit",
             command = self.clickQuit, padx = PADDING)
         self.quit_button.grid(row = 0, column = 5)
+        
+        # about button - display information about PiPark
+        self.about_button = tk.Button(self, text = "ReadMe",
+            command = self.clickAbout, padx = PADDING)
+        self.about_button.grid(row = 1, column = 5)
 
 
 # ==============================================================================
