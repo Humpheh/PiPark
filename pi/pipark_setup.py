@@ -6,8 +6,8 @@ Allows the user to perform all setup tasks including: mark parking spaces, set
 control points and register the car park with the server. The main PiPark
 program can be invoked from the menu.
 
-Author: Nicholas Sanders
-Version: 2.0 [2014/03/19]
+Author: Nicholas Sanders and Humphrey Shotton
+Version: 2.0 [2014/03/20]
 
 """
 import os
@@ -216,7 +216,7 @@ class Application(tk.Frame):
         
         if key in NUM_KEYS:
             if self.__is_verbose: print "INFO: Number-key pressed", key
-            #self.__parking_spaces.setCurrentBox(key)
+            self.__parking_spaces.setCurrentBox(key)
     
     # --------------------------------------------------------------------------
     #   Mouse Event Handlers
