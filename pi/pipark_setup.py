@@ -420,7 +420,7 @@ class Application(tk.Frame):
         
         # clear all parking spaces and CPs
         self.clear_button = tk.Button(self, text = "Clear",
-            command - self.clickClear, padx = PADDING)
+            command = self.clickClear, padx = PADDING)
         self.clear_button.grid(row = 1, column = 3,
             sticky = tk.W + tk.E + tk.N + tk.S)
         
