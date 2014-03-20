@@ -62,8 +62,8 @@ class Application(tk.Frame):
         self.grid()
         
         # create widgets
-        self.createDisplay()  # display canvas: holds the image, CPs and spaces
-        self.createMenu()  # menu canvas: holds the buttons and menu bar image
+        self.__createDisplay()  # display canvas: holds the image, CPs and spaces
+        self.__createMenu()  # menu canvas: holds the buttons and menu bar image
         
         # create mouse button and key-press handlers -> set focus to this frame
         self.bind("<Return>", self.returnPressHandler)
@@ -196,6 +196,10 @@ class Application(tk.Frame):
                         )
                         
             self.loadImage(self.SETUP_IMAGE, self.display)
+            
+            # activate buttons if they're disabled
+            self.cps_button.config(state = tk.ACTIVE)
+            self.spaces_button.config(state = tk.ACTIVE)
     
     
     def keyPressHandler(self, event):
@@ -271,6 +275,15 @@ class Application(tk.Frame):
         if response:
             self.quit()
             self.master.destroy()
+    
+    def clickLoad(self):
+        if self.__is_verbose: print "ACTION: Clicked Load!"
+    
+    def clickSave(self):
+        if self.__is_verbose: print "ACTION: Clicked Save!"
+    
+    def clickClear(self):
+        if self.__is_verbose: print "ACTION: Clicked Clear!"
 
 
     def clickSpaces(self):
@@ -339,7 +352,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     #   Create Image Display Canvas
     # --------------------------------------------------------------------------
-    def createDisplay(self):
+    def __createDisplay(self):
         """
         Create the display tkinter canvas to hold the images taken by the
         pi camera.
@@ -357,76 +370,87 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     #   Create Options Menu
     # --------------------------------------------------------------------------
-    def createMenu(self):
+    def __createMenu(self):
         """
         Create the menu tkinter canvas in which to hold the menu buttons.
         
         """
+        # Layout:
+        # -------
+        #  ------------------------------------------------------------------
+        # |   Start  ||   Capture New Image   || Add/Remove Spaces ||  Quit  |
+        #  ------------------------------------------------------------------
+        # | Register || Save || Load || Clear ||  Add/Remove CPs   || ReadMe |
+        #  ------------------------------------------------------------------
         
         # padding around buttons
         PADDING = 10;
-
-        # draw a background for the menu on a new canvas
-        
-        self.bg = tk.Canvas(self, width = 960, height = 70)
-        self.bg.grid(row = 0, column = 0, rowspan = 2, columnspan = 6)
-        #self.bg.create_rectangle(0, 0, 960, 50, fill = "grey")
-        
-        # mock logo
-        # TODO: replace with real logo
-        #self.logo_mock = tk.Canvas(self, width = 205, height = 70)
-        #self.logo_mock.grid(row = 0, column = 0, rowspan = 2, columnspan = 1)
         
         
         # start the main program
         self.start_button = tk.Button(self, text = "Start PiPark",
             command = self.clickStart, padx = PADDING)
-        self.start_button.grid(row = 0, column = 0, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.start_button.grid(row = 0, column = 0,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         # register the car park button
         self.register_button = tk.Button(self, text = "Register",
             command = self.clickRegister, padx = PADDING)
-        self.register_button.grid(row = 1, column = 0, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.register_button.grid(row = 1, column = 0,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         
         # take new setup image button
         self.image_button = tk.Button(self, text = "Capture New Setup Image",
             command = self.clickNewImage, padx = PADDING)
-        self.image_button.grid(row = 0, column = 1, rowspan = 1, columnspan = 3, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.image_button.grid(row = 0, column = 1, rowspan = 1, columnspan = 3,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         # save setup data & image
-        self.save_button = tk.Button(self, text = "Save")
-        self.save_button.grid(row = 1, column = 1, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.save_button = tk.Button(self, text = "Save",
+            command = self.clickSave, padx = PADDING)
+        self.save_button.grid(row = 1, column = 1,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         # load setup data & image
-        self.load_button = tk.Button(self, text = "Load")
-        self.load_button.grid(row = 1, column = 2, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.load_button = tk.Button(self, text = "Load",
+            command = self.clickLoad, padx = PADDING)
+        self.load_button.grid(row = 1, column = 2,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         # clear all parking spaces and CPs
-        self.clear_button = tk.Button(self, text = "Clear")
-        self.clear_button.grid(row = 1, column = 3, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.clear_button = tk.Button(self, text = "Clear",
+            command - self.clickClear, padx = PADDING)
+        self.clear_button.grid(row = 1, column = 3,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         
         # add/remove spaces button
         self.spaces_button = ToggleButton(self)
-        self.spaces_button.config(text = "Add/Remove Spaces", command = self.clickSpaces, padx = PADDING)
-        self.spaces_button.grid(row = 0, column = 4, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.spaces_button.config(text = "Add/Remove Spaces",
+            command = self.clickSpaces, padx = PADDING, state = tk.DISABLED)
+        self.spaces_button.grid(row = 0, column = 4,
+            sticky = tk.W + tk.E + tk.N + tk.S)
 
         # add/remove control points button
         self.cps_button = ToggleButton(self)
-        self.cps_button.config(text = "Add/Remove Control Points", command = self.clickCPs, padx = PADDING)
-        self.cps_button.grid(row = 1, column = 4, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.cps_button.config(text = "Add/Remove Control Points",
+            command = self.clickCPs, padx = PADDING, state = tk.DISABLED)
+        self.cps_button.grid(row = 1, column = 4,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         
         # quit setup
         self.quit_button = tk.Button(self, text = "Quit",
             command = self.clickQuit, padx = PADDING)
-        self.quit_button.grid(row = 0, column = 5, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.quit_button.grid(row = 0, column = 5,
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         # about button - display information about PiPark
         self.about_button = tk.Button(self, text = "Open ReadMe",
             command = self.clickAbout, padx = PADDING)
-        self.about_button.grid(row = 1, column = 5, sticky = tk.W+tk.E+tk.N+tk.S)
+        self.about_button.grid(row = 1, column = 5,
+            sticky = tk.W + tk.E + tk.N + tk.S)
 
 
 # ==============================================================================
