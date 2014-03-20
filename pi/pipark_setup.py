@@ -208,10 +208,10 @@ class Application(tk.Frame):
         """
         
         key = event.char
-        NUM_KEYS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        NUM_KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
         
         if key in NUM_KEYS:
-            if self.__is_verbose: print "INFO: Number-key pressed," key
+            if self.__is_verbose: print "INFO: Number-key pressed", key
             #self.__parking_spaces.setCurrentBox(key)
     
     # --------------------------------------------------------------------------
