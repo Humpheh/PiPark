@@ -60,7 +60,6 @@ class Application(tk.Frame):
         
         # set alignment inside the frame
         self.grid()
-        self.
         
         # create widgets
         self.createDisplay()  # display canvas: holds the image, CPs and spaces
@@ -365,7 +364,7 @@ class Application(tk.Frame):
         """
         
         # padding around buttons
-        PADDING = 10;
+        PADDING = 0;
 
         # draw a background for the menu on a new canvas
         
