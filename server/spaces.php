@@ -27,6 +27,7 @@ if ($pstmt->rowCount() != 1){
 // Get the carpark data
 $park = $pstmt->fetch(PDO::FETCH_ASSOC);
 
+$nav_selected = 2;
 $breadcrumb = '<li class="active">'.$park['park_name'].'</li>';
 require_once ('includes/header.php');
 

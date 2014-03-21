@@ -9,6 +9,7 @@
 
 require_once ('../init.php');
 
+$nav_selected = 1;
 $breadcrumb = '<li class="active">Park Management</li>';
 require_once ('../includes/header.php');
 ?>

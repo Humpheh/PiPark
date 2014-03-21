@@ -22,10 +22,10 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active">
+						<li <?php if(!isset($nav_selected)) echo 'class="active"'; ?>>
 							<a href="<?php echo Conf::URL_BASE; ?>">Home</a>
 						</li>
-						<li>
+						<li <?php if(isset($nav_selected) && $nav_selected == 1) echo 'class="active"'; ?>>
 							<a href="<?php echo Conf::URL_BASE; ?>admin/parks.php">Park Management</a>
 						</li>
 					</ul>
