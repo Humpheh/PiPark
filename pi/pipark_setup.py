@@ -7,7 +7,7 @@ control points and register the car park with the server. The main PiPark
 program can be invoked from the menu.
 
 Author: Nicholas Sanders and Humphrey Shotton
-Version: 2.0 [2014/03/20]
+Version: 2.0 [2014/03/21]
 
 """
 import os
