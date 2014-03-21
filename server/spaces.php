@@ -46,7 +46,7 @@ require_once ('includes/header.php');
 	
 	<?php if(isset($park['park_location']) && $park['park_location'] != null){ ?>
 		<a target="_blank" href="https://www.google.com/maps/search/<?php echo $park['park_location']; ?>" class="col-md-6 col-xs-12 image-float" style="height:300px;padding:0;
-			background:url('http://maps.googleapis.com/maps/api/staticmap?&center=<?php echo $park['park_location']; ?>&maptype=roadmap&markers=color:blue%7Clabel:P%7C<?php echo $park['park_location']; ?>&zoom=15&size=1200x600&key=AIzaSyCxTGtd15r1PXxGyPSA17YjoPcN73ENmPc');
+			background:url('http://maps.googleapis.com/maps/api/staticmap?&center=<?php echo $park['park_location']; ?>&maptype=roadmap&markers=color:blue%7Clabel:P%7C<?php echo $park['park_location']; ?>&zoom=15&size=1200x600&key=<?php echo Conf::MAPS_API_KEY; ?>');
 			background-size:cover;background-position:center;border:1px solid rgb(230,230,230);">
 		</a>
 	<?php } ?>
