@@ -78,12 +78,8 @@ class Application(tk.Frame):
         print "INFO: __parking_spaces length:", self.__parking_spaces.getLength()
         
         # load the default background
-        self.loadImage(self.DEFAULT_IMAGE, self.display)
-        
-        # TODO: Remove vvv
-        # if setup image exists then load it, otherwise load the default image
-        #if not self.loadImage(self.SETUP_IMAGE, self.display):
-        #    self.loadImage(self.DEFAULT_IMAGE, self.display)
+        self.loadImage(self.DEFAULT_IMAGE, self.display, 
+            s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2)
     
     
 # ==============================================================================
@@ -94,7 +90,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     #   Load Setup Image
     # --------------------------------------------------------------------------
-    def loadImage(self, image_address = None, canvas = None):
+    def loadImage(self, image_address, canvas, width, height):
         """
         Load image at image_address. If the load is successful then return True,
         otherwise return False.
@@ -109,22 +105,22 @@ class Application(tk.Frame):
         """
         
         try:
-            # guard against incorrect datatypes
+            # guard against incorrect argument datatypes
             if not isinstance(canvas, tk.Canvas): raise TypeError
             if not isinstance(image_address, str): raise TypeError
+            if not isinstance(width, int): raise TypeError
+            if not isinstance(height, int): raise TypeError
             
             # load the image into the canvas
             photo = ImageTk.PhotoImage(Image.open(image_address))
-            canvas.create_image(
-                (s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2),
-                image = photo
-                )
+            canvas.create_image((width, height), image = photo)
             canvas.image = photo
             
+            # image load successful
             return True
         
         except TypeError:
-            # arguments of incorrect data type
+            # arguments of incorrect data type, load unsuccessful
             if self.__is_verbose: 
                 print "ERROR: loadImage() arguments of incorrect data type."
             return False
@@ -195,7 +191,8 @@ class Application(tk.Frame):
                         message = "Error: Failed to capture new setup image."
                         )
                         
-            self.loadImage(self.SETUP_IMAGE, self.display)
+            self.loadImage(self.SETUP_IMAGE, self.display,
+                s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2)
             
             # activate buttons if they're disabled
             self.cps_button.config(state = tk.ACTIVE)
