@@ -4,7 +4,7 @@
  * File for setting up the car parks or editing them.
  *
  * @author	Humphrey Shotton
- * @version	1.0 (2014-01-17)
+ * @version	1.1 (2014-03-21)
  */
 
 require_once ('../init.php');

@@ -4,7 +4,7 @@
  * Main page for car parking website.
  *
  * @author	Humphrey Shotton
- * @version	1.0 (2014-01-19)
+ * @version	1.1 (2014-03-21)
  */
 
 require_once ('init.php');

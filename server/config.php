@@ -4,7 +4,7 @@
  * Class for storing global variables.
  *
  * @author	Humphrey Shotton
- * @version	1.0 (2014-01-27)
+ * @version	1.1 (2014-03-21)
  */
 
 class Conf{
