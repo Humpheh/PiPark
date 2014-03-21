@@ -178,7 +178,7 @@ class Application(tk.Frame):
         self.focus_set()
         
         # do nothing if camera is not active, or no camera object exists
-        if not self.__camera_is_active or self.__camera: return
+        if not self.__camera_is_active or not self.__camera: return
         
         try:
             # capture new setup image, then close the camera
@@ -188,7 +188,7 @@ class Application(tk.Frame):
             self.__camera_is_active = False
             
             if self.__is_verbose: 
-                print "INFO: New setup image captured. 
+                print "INFO: New setup image captured." 
                 print "INFO: PiCam deactivated."
             
         except:
@@ -216,7 +216,7 @@ class Application(tk.Frame):
         
         if key in NUM_KEYS:
             if self.__is_verbose: print "INFO: Number-key pressed", key
-            self.__parking_spaces.setCurrentBox(key)
+            self.__parking_spaces.setCurrentBox(int(key))
     
     # --------------------------------------------------------------------------
     #   LMB Event Handler
@@ -240,7 +240,7 @@ class Application(tk.Frame):
             # TODO: Add multiple parking spaces, by number key-press event
             # TODO: Delete line v? Shrink line vv!
             #self.__parking_space.updatePoints(event.x, event.y)
-            self.__parking_spaces.boxes[getCurrentBox()].updatePoints(event.x, event.y)
+            self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].updatePoints(event.x, event.y)
             
         # do nothing -- ignore LMB clicks
         else:
