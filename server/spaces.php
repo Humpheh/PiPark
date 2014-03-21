@@ -30,73 +30,85 @@ $park = $pstmt->fetch(PDO::FETCH_ASSOC);
 require_once ('includes/header.php');
 
 ?>
+<a class="btn btn-default" style="margin-bottom:15px;" href="<?php echo Conf::URL_BASE; ?>">Back</a>
 
-<a class="btn btn-default" href="<?php echo Conf::URL_BASE; ?>">Back</a>
+<div class="row block block-spaces-header">
+	<div class="col-md-6 col-xs-12 left">
+			<h1><?php print $park['park_name']; ?></h1>
+			
+			<p style="padding:30px;">
+				<?php print $park['park_desc']; ?>
+			</p>
+			
+			<div style="border-top:1px solid rgb(230,230,230);width:100%;position:absolute;bottom:0;padding:20px 30px;background:rgb(250,250,250);font-size:18px;">
+					<span class="alert alert-small alert-warning" style="color:rgb(150,150,150);margin-left:15px;font-style:italic;float:right;margin:0;"><?php print $park['ps']; ?> Total Spaces</span>
+					<span class="alert alert-small alert-info" style="font-weight:bold;font-size:20px;margin-right:5px;vertical-align:-1px;margin-top:4px;"><?php print $park['ps'] - $park['spaces']; ?></span> Available Spaces 
+			</div>
+	</div>
+	<div class="col-md-6 col-xs-12 image-float" style="height:300px;padding:0;
+		background:url('http://maps.googleapis.com/maps/api/staticmap?center=Exeter,Devon,UK&zoom=13&size=1200x600&key=AIzaSyCxTGtd15r1PXxGyPSA17YjoPcN73ENmPc');background-size:cover;background-position:center;">
 
-<h1><?php print $park['park_name']; ?>
-	<span class="small"><b><?php print $park['ps'] - $park['spaces']; ?> Available Spaces</b> (<?php print $park['ps']; ?> Total)</span>
-</h1>
-
-<p><?php print $park['park_desc']; ?></p>
-
-<div class="progress progress-big">
+	</div>
+	
+</div>
+<div class="progress progress-big block">
 	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
 			style="width: <?php echo ($park['spaces']/$park['ps'])*100;?>%;"><?php echo round($park['spaces'] * 100 / $park['ps']); ?>% full</div>
 </div>
 
-<div class="row row-header">
-	<div class="col-xs-3">Space</div>
-	<div class="col-xs-4">Status</div>
-	<div class="col-xs-4">Last Updated</div>
-	<div class="col-xs-1">ID</div>
+<div class="tbrow block">
+	<div class="row row-header">
+		<div class="col-xs-4">Space</div>
+		<div class="col-xs-4">Status</div>
+		<div class="col-xs-4">Last Updated</div>
+	</div>
+	<?php
+	/*
+	Alternative Query
+	$query = "SELECT  a.*, c.*
+			FROM updates a
+			INNER JOIN
+			(
+				SELECT update_space_id, MAX(update_time) max_date
+				FROM    updates
+				GROUP BY update_space_id
+			) b ON a.update_space_id = b.update_space_id AND
+					a.update_time = b.max_date
+			LEFT JOIN spaces c ON space_id = a.update_space_id
+			WHERE space_park_id = ".$id;*/
+
+	// Get the status of the car parking spaces
+	$query = "SELECT * 
+			FROM spaces a
+			LEFT JOIN (
+				SELECT *
+				FROM updates b
+				WHERE update_time = (
+					SELECT max( update_time )
+					FROM updates um
+					WHERE um.update_space_id = b.update_space_id
+				)
+				GROUP BY b.update_space_id
+			) b ON a.space_id = b.update_space_id
+			WHERE space_park_id = ".$id;
+
+	$stmt = DB::get()->query($query);
+	$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	// Print the information about the spaces
+	$i = 0;
+	foreach ($rows as $row){
+		$i++;
+		?>
+		<div class="row">
+			<div class="col-xs-4"><?php echo $i; ?><span style="float:right;text-shadow:none;" class="badge"><?php echo 'pi'.$row['space_pi_id'].'-'.$row['space_area_code']; ?></span></div>
+			<div class="col-xs-4"><?php echo $row['update_status'] == 0 ? '<span class="alert alert-small alert-success">Empty</span>' : '<span class="alert alert-small alert-danger">Filled</span>'; ?></div>
+			<div class="col-xs-4"><?php echo isset($row['update_time']) ? ago($row['update_time']) : 'Never'; ?></div>
+		</div>
+		<?php
+	} ?>
 </div>
 
 <?php
-/*
-Alternative Query
-$query = "SELECT  a.*, c.*
-		FROM updates a
-        INNER JOIN
-        (
-            SELECT update_space_id, MAX(update_time) max_date
-            FROM    updates
-            GROUP BY update_space_id
-        ) b ON a.update_space_id = b.update_space_id AND
-                a.update_time = b.max_date
-        LEFT JOIN spaces c ON space_id = a.update_space_id
-        WHERE space_park_id = ".$id;*/
-
-// Get the status of the car parking spaces
-$query = "SELECT * 
-		FROM spaces a
-		LEFT JOIN (
-			SELECT *
-			FROM updates b
-			WHERE update_time = (
-				SELECT max( update_time )
-				FROM updates um
-				WHERE um.update_space_id = b.update_space_id
-			)
-			GROUP BY b.update_space_id
-		) b ON a.space_id = b.update_space_id
-		WHERE space_park_id = ".$id;
-
-$stmt = DB::get()->query($query);
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Print the information about the spaces
-$i = 0;
-foreach ($rows as $row){
-	$i++;
-	?>
-	<div class="row">
-		<div class="col-xs-3"><?php echo $i; ?></div>
-		<div class="col-xs-4"><?php echo $row['update_status'] == 0 ? '<span class="alert alert-small alert-success">Empty</span>' : '<span class="alert alert-small alert-danger">Filled</span>'; ?></div>
-		<div class="col-xs-4"><?php echo isset($row['update_time']) ? ago($row['update_time']) : 'Never'; ?></div>
-		<div class="col-xs-1"><?php echo 'pi'.$row['space_pi_id'].'-'.$row['space_area_code']; ?></div>
-	</div>
-	<?php
-}
-
 require_once ('includes/footer.php');
 ?>

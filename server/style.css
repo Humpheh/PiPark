@@ -41,35 +41,38 @@ body {
 .form-signin .form-hidden{
 	display: none;
 }
-
-.row {
-	padding: 6px;
-	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+.row{
+	margin:0;
+	padding: 0;
 }
-a .row{
+
+.tbrow .row {
+	padding: 7px 0;
+	text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+	border-bottom: 1px solid rgb(230,230,230);
+}
+.tbrow a .row{
 	color: black;
 }
-a .row:hover{
+.tbrow a .row:hover{
 	background: rgb(200,200,200);
 }
-.row .progress{
+.tbrow .row .progress{
 	margin-bottom: 0;
 }
-.row:nth-child(even) {
-	background: rgb(225,225,225);
+.tbrow .row:nth-child(even) {
+	background: rgb(240,240,240);
 }
-.row-header {
+.tbrow .row-header {
 	font-weight: bold;
-	background: rgb(210,210,210);
-	border-bottom: 1px solid white;
-	margin-top: 10px;
 }
 .progress.progress-big{
-	height:25px;
+	height: 30px;
+	border-radius: 0;
 }
 .progress.progress-big .progress-bar{
-	font-size: 16px;
-	padding-top: 2px;
+	font-size: 15px;
+	line-height: 30px;
 }
 .progress-bar{
 	text-shadow: 0 1px 0 rgba(0,0,0,0.5);
@@ -90,4 +93,55 @@ img.logo{
 	margin-top: 20px;
 	color: #777;
 	border-top: 1px solid #e5e5e5;
+}
+
+
+.block{
+	box-shadow: 0 3px 5px rgba(0,0,0,0.125);
+	background: white;
+	border: 3px solid rgb(230,230,230);
+	margin-bottom: 20px;
+	box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+}
+.block-spaces-header h1{
+	border-bottom: 1px solid rgb(230,230,230);
+	margin: 0;
+	padding: 30px;
+	background: rgb(245,245,245);
+}
+.block-spaces-header .left{
+	height: 300px;
+	position: relative;
+	padding: 0;
+}
+.block-spaces-header p{
+	padding:30px;
+}
+.block-spaces-header .stats{
+	border-top: 1px solid rgb(230,230,230);
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	padding: 20px 30px;
+	background: rgb(250,250,250);
+	font-size: 18px;"
+}
+.block-spaces-header .stats .total{
+	color: rgb(150,150,150);
+	margin-left: 15px;
+	font-style: italic;
+	float: right;
+	margin: 0;
+}
+.block-spaces-header .stats .available{
+	font-weight: bold;
+	font-size: 20px;
+	margin-right: 5px;
+	vertical-align: -1px;
+	margin-top: 4px;
+}
+.block-spaces-header .image-float{
+	height: 300px;
+	padding:0;
 }
