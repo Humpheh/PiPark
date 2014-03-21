@@ -33,7 +33,7 @@ require_once ('includes/header.php');
 
 ?>
 <div class="row block block-spaces-header">
-	<div class="col-md-6 col-xs-12 left">
+	<div class="col-md-<?php echo (isset($park['park_location']) && $park['park_location'] != null) ? '6' : '12'; ?> col-xs-12 left">
 			<h1><?php print $park['park_name']; ?></h1>
 			
 			<p><?php print $park['park_desc']; ?></p>
@@ -43,10 +43,13 @@ require_once ('includes/header.php');
 					<span class="alert alert-small alert-info available"><?php print $park['ps'] - $park['spaces']; ?></span> Available Spaces 
 			</div>
 	</div>
-	<div class="col-md-6 col-xs-12 image-float" style="height:300px;padding:0;
-		background:url('http://maps.googleapis.com/maps/api/staticmap?center=Exeter,Devon,UK&zoom=13&size=1200x600&key=AIzaSyCxTGtd15r1PXxGyPSA17YjoPcN73ENmPc');background-size:cover;background-position:center;">
-
-	</div>
+	
+	<?php if(isset($park['park_location']) && $park['park_location'] != null){ ?>
+		<a target="_blank" href="https://www.google.com/maps/search/<?php echo $park['park_location']; ?>" class="col-md-6 col-xs-12 image-float" style="height:300px;padding:0;
+			background:url('http://maps.googleapis.com/maps/api/staticmap?&center=<?php echo $park['park_location']; ?>&maptype=roadmap&markers=color:blue%7Clabel:P%7C<?php echo $park['park_location']; ?>&zoom=15&size=1200x600&key=AIzaSyCxTGtd15r1PXxGyPSA17YjoPcN73ENmPc');
+			background-size:cover;background-position:center;border:1px solid rgb(230,230,230);">
+		</a>
+	<?php } ?>
 	
 </div>
 <div class="progress progress-big block">
@@ -99,7 +102,7 @@ require_once ('includes/header.php');
 		$i++;
 		?>
 		<div class="row">
-			<div class="col-xs-4"><?php echo $i; ?><span style="float:right;text-shadow:none;" class="badge"><?php echo 'pi'.$row['space_pi_id'].'-'.$row['space_area_code']; ?></span></div>
+			<div class="col-xs-4"><?php echo $i; ?><span style="float:right;" class="badge"><?php echo 'pi'.$row['space_pi_id'].'-'.$row['space_area_code']; ?></span></div>
 			<div class="col-xs-4"><?php echo $row['update_status'] == 0 ? '<span class="alert alert-small alert-success">Empty</span>' : '<span class="alert alert-small alert-danger">Filled</span>'; ?></div>
 			<div class="col-xs-4"><?php echo isset($row['update_time']) ? ago($row['update_time']) : 'Never'; ?></div>
 		</div>

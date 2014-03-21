@@ -18,6 +18,8 @@ function json_error( $message ){
 
 /**
  * Get the query to find the number of spaces in the car park.
+ * @param $id id of the space to find
+ * @return the query for that space
  */
 function get_num_space_query($id){
 	return "SELECT count(*) 

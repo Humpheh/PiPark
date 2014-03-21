@@ -21,11 +21,14 @@ require_once ('../includes/header.php');
 		<div class="col-xs-1">
 			ID
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-2">
 			Name
 		</div>
-		<div class="col-xs-4">
+		<div class="col-xs-3">
 			Description
+		</div>
+		<div class="col-xs-2">
+			Location
 		</div>
 		<div class="col-xs-2">
 			Spaces
@@ -47,18 +50,21 @@ require_once ('../includes/header.php');
 		<div class="col-xs-1">
 			<?php echo $row['park_id']; ?>
 		</div>
-		<div class="col-xs-3">
+		<div class="col-xs-2">
 			<?php echo $row['park_name']; ?>
 		</div>
-		<div class="col-xs-4">
+		<div class="col-xs-3">
 			<?php echo $row['park_desc']; ?>
+		</div>
+		<div class="col-xs-2">
+			<?php echo $row['park_location'] == null ? '<span class="badge">not set</span>' : $row['park_location']; ?>
 		</div>
 		<div class="col-xs-2">
 			<?php echo $row['park_spaces']; ?>
 		</div>
 		<div class="col-xs-2">
-			<button type="button" onclick="updateParkField(<?php echo $row['park_id']; ?>, '<?php echo $row['park_name']; ?>', '<?php echo $row['park_desc']; ?>',
-			<?php echo $row['park_spaces']; ?>)" class="btn btn-xs btn-default">
+			<button type="button" onclick="updateParkField(<?php echo $row['park_id']; ?>, '<?php echo $row['park_name']; ?>', '<?php echo $row['park_desc']; ?>', 
+			<?php echo $row['park_spaces']; ?>, '<?php echo $row['park_location']; ?>')" class="btn btn-xs btn-default">
 				Edit
 			</button>
 			<button type="button" onclick="$('#del-confirm-<?php echo $row['park_id']; ?>').show();" class="btn btn-xs btn-danger">
@@ -79,11 +85,12 @@ require_once ('../includes/header.php');
 </div>
 
 <script type="text/javascript">
-	function updateParkField(id, name, desc, spaces) {
+	function updateParkField(id, name, desc, spaces, location) {
 		$('#park_id').val(id);
 		$('#park_name').val(name);
 		$('#park_desc').val(desc);
 		$('#park_spaces').val(spaces);
+		$('#park_location').val(location);
 		$('#park_action').val('update');
 		$('#park_form_title').html('Edit Park #' + id);
 	}
@@ -97,6 +104,9 @@ require_once ('../includes/header.php');
 
 	<input type="text" id="park_name" name="park_name" class="form-control form-control-first" placeholder="Name" required="" autofocus="">
 	<textarea id="park_desc" name="park_description" class="form-control form-control-last" placeholder="Park Description"></textarea>
+	
+	<input type="text" id="park_location" name="park_location" class="form-control form-control-first form-control-last" placeholder="Location">
+	
 	<button class="btn btn-lg btn-primary btn-block" type="submit">
 		Confirm
 	</button>
