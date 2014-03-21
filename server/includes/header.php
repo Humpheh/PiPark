@@ -5,6 +5,7 @@
 		<link href="<?php echo Conf::URL_BASE; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<title><?php echo Conf::TITLE; ?></title>
 		<link href="<?php echo Conf::URL_BASE; ?>style.css" rel="stylesheet">
+		<link rel="icon" type="image/png" href="<?php echo Conf::URL_BASE; ?>favicon.png">
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
