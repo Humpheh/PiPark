@@ -18,7 +18,7 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a href="<?php echo Conf::URL_BASE; ?>">
-                        <img src="<?php echo Conf::URL_BASE; ?>logo.png" class="logo" alt="<?php echo Conf::TITLE; ?>">
+                        <img src="<?php echo Conf::URL_BASE; ?>logo.png" class="logo" title="<?php echo Conf::TITLE; ?> - Car Parking Sensor" alt="<?php echo Conf::TITLE; ?>">
                     </a>
 				</div>
 				<div class="collapse navbar-collapse">
