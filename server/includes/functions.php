@@ -9,6 +9,7 @@
 
 /**
  * To throw a json error with a message
+ * @param $message message to display in the JSON
  */
 function json_error( $message ){
 	echo '{"error": "', $message, '"}';
@@ -34,9 +35,12 @@ function get_num_space_query($id){
 		WHERE a.space_park_id = " . ($id) . " AND b.update_status <> 0";
 }
 
-/*
+/**
  * Print the time ago in a friendly format.
  * Function thanks to http://css-tricks.com/snippets/php/time-ago-function/
+ *
+ * @param $time time string to get the ago of
+ * @return string of the time passed since the input
  */
 function ago($time) {
 	if(is_string($time)) 
@@ -64,5 +68,15 @@ function ago($time) {
 	
 	return "$difference $periods[$j] ago";
 } 
+
+/**
+ * Makes strings safer for MySql and XSS.
+ * @param $variable variable to make safe.
+ * @return safe variable with escaped chars
+ */
+function make_safe($variable) {
+   $variable = strip_tags(mysql_real_escape_string(trim($variable)));
+   return $variable; 
+}
 
 ?>
