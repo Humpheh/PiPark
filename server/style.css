@@ -68,7 +68,7 @@ body {
 }
 .progress.progress-big{
 	height: 30px;
-	border-radius: 0;
+	border-radius: 3px;
 }
 .progress.progress-big .progress-bar{
 	font-size: 15px;
@@ -95,20 +95,27 @@ img.logo{
 	border-top: 1px solid #e5e5e5;
 }
 
+.breadcrumb{
+	border-radius: 3px;
+	box-shadow: 0 2px 4px rgba(0,0,0,0.125);
+}
 
 .block{
 	box-shadow: 0 3px 5px rgba(0,0,0,0.125);
 	background: white;
-	border: 3px solid rgb(230,230,230);
 	margin-bottom: 20px;
 	box-sizing: content-box;
 	-webkit-box-sizing: content-box;
+	border-radius: 3px;
+	overflow: hidden;
 }
-.block-spaces-header h1{
-	border-bottom: 1px solid rgb(230,230,230);
+.block h1{
 	margin: 0;
 	padding: 30px;
 	background: rgb(245,245,245);
+}
+.block-spaces-header h1{
+	border-bottom: 1px solid rgb(230,230,230);
 }
 .block-spaces-header .left{
 	height: 300px;

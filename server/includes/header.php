@@ -7,7 +7,7 @@
 		<link href="<?php echo Conf::URL_BASE; ?>style.css" rel="stylesheet">
 	</head>
 	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,6 +31,10 @@
 					</ul>
 				</div><!--/.nav-collapse -->
 			</div>
-		</div>
+		</nav>
 
 		<div class="container">
+			<ol class="breadcrumb">
+			  <li><a href="<?php echo Conf::URL_BASE; ?>">Home</a></li>
+			  <?php if(isset($breadcrumb)) echo $breadcrumb; ?>
+			</ol>

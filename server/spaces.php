@@ -27,22 +27,19 @@ if ($pstmt->rowCount() != 1){
 // Get the carpark data
 $park = $pstmt->fetch(PDO::FETCH_ASSOC);
 
+$breadcrumb = '<li class="active">'.$park['park_name'].'</li>';
 require_once ('includes/header.php');
 
 ?>
-<a class="btn btn-default" style="margin-bottom:15px;" href="<?php echo Conf::URL_BASE; ?>">Back</a>
-
 <div class="row block block-spaces-header">
 	<div class="col-md-6 col-xs-12 left">
 			<h1><?php print $park['park_name']; ?></h1>
 			
-			<p style="padding:30px;">
-				<?php print $park['park_desc']; ?>
-			</p>
+			<p><?php print $park['park_desc']; ?></p>
 			
-			<div style="border-top:1px solid rgb(230,230,230);width:100%;position:absolute;bottom:0;padding:20px 30px;background:rgb(250,250,250);font-size:18px;">
-					<span class="alert alert-small alert-warning" style="color:rgb(150,150,150);margin-left:15px;font-style:italic;float:right;margin:0;"><?php print $park['ps']; ?> Total Spaces</span>
-					<span class="alert alert-small alert-info" style="font-weight:bold;font-size:20px;margin-right:5px;vertical-align:-1px;margin-top:4px;"><?php print $park['ps'] - $park['spaces']; ?></span> Available Spaces 
+			<div class="stats">
+					<span class="alert alert-small alert-warning total"><?php print $park['ps']; ?> Total Spaces</span>
+					<span class="alert alert-small alert-info available"><?php print $park['ps'] - $park['spaces']; ?></span> Available Spaces 
 			</div>
 	</div>
 	<div class="col-md-6 col-xs-12 image-float" style="height:300px;padding:0;
