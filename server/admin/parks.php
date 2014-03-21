@@ -13,66 +13,69 @@ $breadcrumb = '<li class="active">Park Management</li>';
 require_once ('../includes/header.php');
 ?>
 
-<h1>Car Park Management</h1>
-<div class="row row-header">
-	<div class="col-xs-1">
-		ID
-	</div>
-	<div class="col-xs-3">
-		Name
-	</div>
-	<div class="col-xs-4">
-		Description
-	</div>
-	<div class="col-xs-2">
-		Spaces
-	</div>
-	<div class="col-xs-2">
-		Action
-	</div>
-</div>
-<?php
+<h1><span class="glyphicon glyphicon-wrench"></span> Car Park Management</h1>
 
-$stmt = DB::get()->prepare('SELECT *,
-    (SELECT count(*) FROM spaces WHERE space_park_id = park_id) AS park_spaces FROM parks');
-$stmt->execute();
-$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+<div class="tbrow block">
+	<div class="row row-header">
+		<div class="col-xs-1">
+			ID
+		</div>
+		<div class="col-xs-3">
+			Name
+		</div>
+		<div class="col-xs-4">
+			Description
+		</div>
+		<div class="col-xs-2">
+			Spaces
+		</div>
+		<div class="col-xs-2">
+			Action
+		</div>
+	</div>
+	<?php
 
-foreach ($res as $row){
-?>
-<div class="row">
-	<div class="col-xs-1">
-		<?php echo $row['park_id']; ?>
-	</div>
-	<div class="col-xs-3">
-		<?php echo $row['park_name']; ?>
-	</div>
-	<div class="col-xs-4">
-		<?php echo $row['park_desc']; ?>
-	</div>
-	<div class="col-xs-2">
-		<?php echo $row['park_spaces']; ?>
-	</div>
-	<div class="col-xs-2">
-		<button type="button" onclick="updateParkField(<?php echo $row['park_id']; ?>, '<?php echo $row['park_name']; ?>', '<?php echo $row['park_desc']; ?>',
-		<?php echo $row['park_spaces']; ?>)" class="btn btn-xs btn-default">
-			Edit
-		</button>
-		<button type="button" onclick="$('#del-confirm-<?php echo $row['park_id']; ?>').show();" class="btn btn-xs btn-danger">
-			Delete
-		</button>
-		<form id="del-confirm-<?php echo $row['park_id']; ?>"  style="display:none;" action="parkaction.php" method="POST">
-			<input type="text" value="<?php echo $row['park_id']; ?>" name="park_id" class="form-hidden" style="display:none;">
-			<input type="text"  name="park_action" value="delete" style="display:none;">
-			<button type="button" onclick="submit();" class="btn btn-xs btn-danger" >
-				Confirm Delete
+	$stmt = DB::get()->prepare('SELECT *,
+		(SELECT count(*) FROM spaces WHERE space_park_id = park_id) AS park_spaces FROM parks');
+	$stmt->execute();
+	$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	foreach ($res as $row){
+	?>
+	<div class="row">
+		<div class="col-xs-1">
+			<?php echo $row['park_id']; ?>
+		</div>
+		<div class="col-xs-3">
+			<?php echo $row['park_name']; ?>
+		</div>
+		<div class="col-xs-4">
+			<?php echo $row['park_desc']; ?>
+		</div>
+		<div class="col-xs-2">
+			<?php echo $row['park_spaces']; ?>
+		</div>
+		<div class="col-xs-2">
+			<button type="button" onclick="updateParkField(<?php echo $row['park_id']; ?>, '<?php echo $row['park_name']; ?>', '<?php echo $row['park_desc']; ?>',
+			<?php echo $row['park_spaces']; ?>)" class="btn btn-xs btn-default">
+				Edit
 			</button>
-		</form>
+			<button type="button" onclick="$('#del-confirm-<?php echo $row['park_id']; ?>').show();" class="btn btn-xs btn-danger">
+				Delete
+			</button>
+			<form id="del-confirm-<?php echo $row['park_id']; ?>"  style="display:none;" action="parkaction.php" method="POST">
+				<input type="text" value="<?php echo $row['park_id']; ?>" name="park_id" class="form-hidden" style="display:none;">
+				<input type="text"  name="park_action" value="delete" style="display:none;">
+				<button type="button" onclick="submit();" class="btn btn-xs btn-danger" >
+					Confirm Delete
+				</button>
+			</form>
+		</div>
 	</div>
+	<?php
+	}
+	?>
 </div>
-<?php
-}
-?>
 
 <script type="text/javascript">
 	function updateParkField(id, name, desc, spaces) {

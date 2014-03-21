@@ -10,7 +10,9 @@
 require_once ('init.php');
 require_once ('includes/header.php');
 ?>
-<h1>Car Parks</h1>
+
+<h1><span class="glyphicon glyphicon-home"></span> Car Parks</h1>
+
 <div class="tbrow block">
 	<div class="row row-header">
 		<div class="col-sm-3 col-xs-4">
@@ -34,8 +36,7 @@ require_once ('includes/header.php');
 	$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 	foreach ($res as $row){	?>
-		<a href="<?php echo Conf::URL_BASE; ?>spaces.php?id=<?php echo $row['park_id']; ?>">
-		<div class="row">
+		<a class="row" href="<?php echo Conf::URL_BASE; ?>spaces.php?id=<?php echo $row['park_id']; ?>">
 			<div class="col-sm-3 col-xs-4">
 				<?php echo $row['park_name']; ?>
 			</div>
@@ -48,10 +49,9 @@ require_once ('includes/header.php');
 			<div class="col-sm-3 col-xs-12">
 				<div class="progress">
 					<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-							style="width: 0;<?php echo ($row['spaces']/$row['ps'])*100;?>%;"><?php echo round($row['spaces'] * 100 / $row['ps']); ?>% full</div>
+							style="width: <?php echo ($row['spaces']/$row['ps'])*100;?>%;"><?php echo round($row['spaces'] * 100 / $row['ps']); ?>% full</div>
 				</div>
 			</div>
-		</div>
 		</a>
 </div>
 <?php
