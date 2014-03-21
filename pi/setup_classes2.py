@@ -140,18 +140,21 @@ class ParkingSpace:
 # and now for something completely different...
 
 class Boxes:
-    # TODO: Change 5 to a MAX_NUM final value
-    # create a list of 5 parking spaces
+    # create a list of 10 parking spaces
     boxes = []
     current_box = 1
+    MAX_SPACES = 10
     
     def __init__(self, canvas):
-        self.boxes = [ParkingSpace(i, canvas) for i in range(5)]
+        self.boxes = [ParkingSpace(i, canvas) for i in range(self.MAX_SPACES)]
         return
     
     #@staticmethod
+    #def getCurrentBox(self):
+    #    return self.boxes[self.current_box]
+
     def getCurrentBox(self):
-        return self.boxes[self.current_box]
+        return self.current_box
 
     #@staticmethod
     def get(self, id):
