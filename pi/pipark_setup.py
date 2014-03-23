@@ -343,7 +343,7 @@ class Application(tk.Frame):
         # clear the Tkinter display canvas, and all related setupdata. Then
         # turn on PiCam to allow for new image to be taken.
         self.display.delete(tk.ALL)
-        self.__parking_spaces.clearAll(self.display)
+        self.clear_button.invoke()
         self.turnOnCamera()
     
     def clickSave(self):
@@ -369,16 +369,12 @@ class Application(tk.Frame):
                 + " Please ensure setup image exists as ./image/setup_image.jpeg.")
         
         # clear all previous data, and activate buttons
-        self.__parking_spaces.clearAll(self.display)
+        self.clear_button.invoke()
         self.cps_button.config(state = tk.ACTIVE)
         self.spaces_button.config(state = tk.ACTIVE)
     
     def clickClear(self):
         if self.__is_verbose: print "ACTION: Clicked 'Clear'"
-        
-        # turn off toggle buttons
-        self.spaces_button.setOff()
-        self.cps_button.setOff()
         
         # clear all data points, to start afresh
         self.__parking_spaces.clearAll(self.display)
