@@ -223,8 +223,8 @@ class Application(tk.Frame):
             if self.spaces_button.getIsActive():
                 self.__parking_spaces.setCurrentBox(int(key))
             if self.cps_button.getIsActive():
-                if not in [1, 2, 3]: return
-                self.__control_points.setCurrentBox(int(key))
+                if key not in ['1', '2', '3']: return
+                self.__control_points.setCurrentBox(int(key) - 1)
     
     # --------------------------------------------------------------------------
     #   LMB Event Handler
@@ -240,7 +240,6 @@ class Application(tk.Frame):
         # add new control points (max = 3)
         if self.cps_button.getIsActive():
             if self.__is_verbose: print "INFO: Add Control Point"
-            # TODO: Add CPs on click
             self.__control_points.boxes[self.__control_points.getCurrentBox()].updatePoints(event.x, event.y)
         
         # add new parking space
