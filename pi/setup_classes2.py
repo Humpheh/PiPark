@@ -276,7 +276,8 @@ class ControlPoint:
             width = 0
             )
         
-        self.__label = canvas.create_text([self.__start_point[0], self.__start_point[1]), text = (str(self.__id) + "(control"))
+        display_id = str(self.__id + 1)
+        self.__label = canvas.create_text([self.__start_point[0], self.__start_point[1]], text = display_id + "(control)")
         return self
         
     
@@ -339,10 +340,10 @@ class Boxes:
         self.current_box = i
     
     def clearAll(self, canvas):
+
+        if self.__type == 0: self.setCurrentBox(1)
+        elif self.__type == 1: self.setCurrentBox(0)
+
         for box in self.boxes:
-            if isinstance(box, ParkingSpace):
-                box.clear()
-                box.deleteRectangle(canvas)
-            if isinstance(box, ControlPoint):
-                box.clear()
-                box.deleteRectangle(canvas)
+            box.clear()
+            box.deleteRectangle(canvas)
