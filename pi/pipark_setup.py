@@ -220,10 +220,18 @@ class Application(tk.Frame):
         
         if key in NUM_KEYS:
             if self.__is_verbose: print "INFO: Number-key pressed", key
+            
             if self.spaces_button.getIsActive():
                 self.__parking_spaces.setCurrentBox(int(key))
+                
             if self.cps_button.getIsActive():
+                # ignore all other numbers, but 1, 2 and 3 as 3 is the maximum
+                # number of control points allowed.
                 if key not in ['1', '2', '3']: return
+                
+                # NB: -1 from key press, because list indices are [0, 1, 2],
+                # but for ease of user selection the numbers 1, 2, 3 are used 
+                # for input
                 self.__control_points.setCurrentBox(int(key) - 1)
     
     # --------------------------------------------------------------------------
@@ -270,10 +278,16 @@ class Application(tk.Frame):
         # perform correct operation, dependent on which toggle button is active
         if self.cps_button.getIsActive():
             if self.__is_verbose: print "INFO: Remove Control Point"
-            # TODO: Remove CPs
+            
+            self.__control_points[self.__control_points.getCurrentBox()].clear()
+            self.__control_points[self.__control_points.getCurrentBox()].deleteRectangle()
+            
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Remove parking space"
-            # TODO: Remove Parking spaces
+            
+            self.__parking_spaces[self.__parking_spaces.getCurrentBox()].clear()
+            self.__parking_spaces[self.__parking_spaces.getCurrentBox()].deleteRectangle()
+            
         else:
             if self.__is_verbose: print "INFO: Just clicking RMB merrily =)"
         
@@ -345,6 +359,11 @@ class Application(tk.Frame):
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
+        
+        try:
+            self.loadImage(self.SETUP_IMAGE, self.display, 
+                s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2)
+        except: pass
     
     def clickClear(self):
         if self.__is_verbose: print "ACTION: Clicked 'Clear'"
