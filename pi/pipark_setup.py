@@ -189,7 +189,7 @@ class Application(tk.Frame):
             
             if cp != None:
                 o = (i)
-                print f1, cp, ','
+                print >> f1, cp, ','
                 
         print >> f1, ']'
             
