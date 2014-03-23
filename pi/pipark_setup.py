@@ -283,6 +283,8 @@ class Application(tk.Frame):
         PiPark program.
 
         """
+        if self.__is_verbose: print "ACTION: Clicked 'Start'"
+        
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
@@ -293,46 +295,51 @@ class Application(tk.Frame):
                 
         if response:   
             self.quit_button.invoke()
+            if self.__is_verbose: print "INFO: Setup application terminated. "
             main.run_main()
     
     def clickRegister(self):
         """Register the car park with the server. """
+        if self.__is_verbose: print "ACTION: Clicked 'Register'"
         
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
         
-        if self.__is_verbose: print "ACTION: Clicked 'Register'"
         # TODO: Register carpark with the server as per CLI setup.
             
     
     def clickNewImage(self):
         """Use PiCam to take new 'setup image' for PiPark setup. """
+        if self.__is_verbose: print "ACTION: Clicked 'Capture New Image'"
         
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
         
-        # clear the current image in the GUI, then take a new image using the
-        # PiCam, then load the new image into the GUI
+        # clear the Tkinter display canvas, and all related setupdata. Then
+        # turn on PiCam to allow for new image to be taken.
         self.display.delete(tk.ALL)
-        #TODO: self.__parking_spaces.clearAll()
+        self.__parking_spaces.clearAll(self.display)
         self.turnOnCamera()
     
     def clickSave(self):
         if self.__is_verbose: print "ACTION: Clicked Save'"
+        
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
     
     def clickLoad(self):
         if self.__is_verbose: print "ACTION: Clicked 'Load'"
+        
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
     
     def clickClear(self):
         if self.__is_verbose: print "ACTION: Clicked 'Clear'"
+        
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
@@ -343,6 +350,7 @@ class Application(tk.Frame):
 
     def clickSpaces(self):
         """Add/remove parking-space bounding boxes. """
+        if self.__is_verbose: print "ACTION: Clicked 'Add/Remove Spaces'"
         
         # toggle the button, and turn off other toggle buttons
         self.spaces_button.toggle()
@@ -354,6 +362,7 @@ class Application(tk.Frame):
 
     def clickCPs(self):
         """Add/remove control points. """
+        if self.__is_verbose: print "ACTION: Clicked 'Add/Remove CPs'"
         
         # toggle the button, and turn off other toggle buttons
         self.cps_button.toggle()
@@ -366,6 +375,7 @@ class Application(tk.Frame):
         
     def clickQuit(self):
         """Quit & terminate the application. """
+        if self.__is_verbose: print "ACTION: Clicked 'Quit'"
         
         # turn off toggle buttons
         self.spaces_button.setOff()
@@ -387,6 +397,7 @@ class Application(tk.Frame):
     
     def clickAbout(self):
         """Open the README file for instructions on GUI use. """
+        if self.__is_verbose: print "ACTION: Clicked 'Open README'"
         
         # turn off toggle buttons
         self.spaces_button.setOff()
@@ -395,6 +406,7 @@ class Application(tk.Frame):
         # load external README from command line
         # TODO: Put this in new Tkinter window with scroll bar
         os.system("leafpad " + "./SETUP_README.txt")
+        if self.__is_verbose: print "INFO: Opened ./SETUP_README.txt in leafpad."
         
         
 # ==============================================================================
