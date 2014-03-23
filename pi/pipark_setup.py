@@ -220,7 +220,11 @@ class Application(tk.Frame):
         
         if key in NUM_KEYS:
             if self.__is_verbose: print "INFO: Number-key pressed", key
-            self.__parking_spaces.setCurrentBox(int(key))
+            if self.spaces_button.getIsActive():
+                self.__parking_spaces.setCurrentBox(int(key))
+            if self.cps_button.getIsActive():
+                if int(key) > 2: return
+                self.__control_points.setCurrentBox(int(key))
     
     # --------------------------------------------------------------------------
     #   LMB Event Handler
@@ -238,7 +242,6 @@ class Application(tk.Frame):
             if self.__is_verbose: print "INFO: Add Control Point"
             # TODO: Add CPs on click
             self.__control_points.boxes[self.__control_points.getCurrentBox()].updatePoints(event.x, event.y)
-            self.__control_points.nextBox()
         
         # add new parking space
         elif self.spaces_button.getIsActive():
