@@ -38,8 +38,10 @@ class Application(tk.Frame):
     __is_saved = False  # TODO: Implement is saved!
     
     # FIXME: Parking space implementation
-    __parking_space = None
+    __parking_space = None  # FIXME: <- is this needed?
+    __control_point = None  # FIXME: <- is this needed?
     __parking_spaces = None
+    __control_points = None
     
     # picamera
     __camera = None
@@ -73,9 +75,11 @@ class Application(tk.Frame):
         self.focus_set()
         
         # FIXME: parking space implementation
-        self.__parking_space = ParkingSpace(1, self.display)
-        self.__parking_spaces = Boxes(self.display)
+        self.__parking_space = ParkingSpace(1, self.display) # FIXME: <- is this line needed?
+        self.__parking_spaces = Boxes(self.display, type = 0)
+        self.__control_points = Boxes(self.display, type = 1)
         print "INFO: __parking_spaces length:", self.__parking_spaces.getLength()
+        print "INFO: __control_points length:", self.__control_points.getLength()
         
         # load the default background
         self.loadImage(self.DEFAULT_IMAGE, self.display, 
@@ -233,14 +237,17 @@ class Application(tk.Frame):
         if self.cps_button.getIsActive():
             if self.__is_verbose: print "INFO: Add Control Point"
             # TODO: Add CPs on click
+            self.__control_points.boxes[self.__control_points.getCurrentBox()].updatePoints(event.x, event.y)
+            self.__control_points.nextBox()
         
         # add new parking space
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Add Parking Space"
-            # TODO: Add multiple parking spaces, by number key-press event
             # TODO: Delete line v? Shrink line vv!
             #self.__parking_space.updatePoints(event.x, event.y)
-            self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].updatePoints(event.x, event.y)
+            this_space_id = self.__parking_spaces.getCurrentBox()
+            this_space = self.__parking_spaces.boxes[this_space_id]
+            this_space.updatePoints(event.x, event.y)
             
         # do nothing -- ignore LMB clicks
         else:

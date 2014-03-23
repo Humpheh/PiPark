@@ -8,6 +8,11 @@ Version: 2.0 [2014/03/23]
 """
 import Tkinter as tk
 
+# ==============================================================================
+#
+#   Parking Space Class
+#
+# ==============================================================================
 class ParkingSpace:
     # replacement for setup_classes.Area
     
@@ -111,7 +116,7 @@ class ParkingSpace:
         
         # set rectangle colour
         fill_colour = "#CC0000"
-        outline_colour = "#660000"
+        outline_colour = "#990000"
         
         # draw the rectangle
         self.__rectangle = canvas.create_rectangle(
@@ -137,29 +142,163 @@ class ParkingSpace:
         return self
 
 
-
+# ==============================================================================
+#
+#   Control Point Class
+#
+# ==============================================================================
 class ControlPoint:
     # replacement for setup_clases.Area
     
-    def __init__(self, i, canvas = None):
+    # instance attributes
+    __id = -1
+    __type = 1  # type '1' is parking space, type '1' is CP
+    __start_point = []
+    __end_point = []
+    __label = ""  # __rectangle label
+    __rectangle = None  # the drawn rectangle
+    canvas = None
+    
+    def __init__(self, i, canvas):
+        self.__id = i
+        self.canvas = canvas
         return
+    
+    def clear(self):
+    	"""Clear the coordinates of the space. """
+        self.__start_point = []
+        self.__end_point = []
+        
+        return self
+    
+    def setStartPoint(self, x, y):
+    	"""
+    	Set the start point of the control point.
+    	
+    	Keyword Arguments: 
+    	x -- x-coordinate of the control point
+        y -- y-coordinate of the control point
+        
+        Returns:
+        self -- The control point
+        
+    	"""
+        # guard against invalid arguments
+        if not isinstance(x, int) and not isinstance(y, int):
+            print "ERROR: Cannot set start point: x & y must be integers."
+        
+        # set the start point and return the space   
+        self.__start_point = [x, y]
+        return self
+    
+    
+    def setEndPoint(self, x, y):
+    	"""
+    	Set the end point of the control point.
+    	
+    	Keyword Arguments: 
+    	x -- x-coordinate of the control point
+        y -- y-coordinate of the control point
+        
+        Returns:
+        self -- The control point
+        
+    	"""
+        # guard against invalid arguments
+        if not isinstance(x, int) and not isinstance(y, int):
+            print "ERROR: Cannot set end point: x & y must be integers."
+        
+        # set the end point and return the space   
+        self.__end_point = [x, y]
+        return self
+    
+    
+    def updatePoints(self, x, y):
+    	"""
+    	Update the values of the control point co-ordinates.
+    	
+    	Keyword Arguments: 
+    	x -- x-coordinate of the control point
+        y -- y-coordinate of the control point
+        
+    	"""
+        x1 = x - 25
+        y1 = y - 25
+        x2 = x + 25
+        y2 = y + 25
+        
+        self.clear()
+        self.deleteRectangle(self.canvas)
+        self.setStartPoint(x1, y1)
+        self.setEndPoint(x2, y2)
+        self.drawRectangle(self.canvas)
+        
+    def drawRectangle(self, canvas):
+    	"""
+    	Draw the rectangle for the box on the canvas.
+    	
+    	Keyword Arguments: 
+    	canvas -- TkCanvas in which to draw the rectangle
+        
+    	"""
+        # guard against illegal data types
+        if not isinstance(canvas, tk.Canvas): return
+        
+        # if either start or end point doesn't exist; a rectangle cannot be
+        # drawn, so return
+        if self.__start_point == [] or self.__end_point == []: return
+        
+        # set rectangle colour
+        fill_colour = "#006633"
+        outline_colour = "#003366"
+        
+        # draw the rectangle
+        self.__rectangle = canvas.create_rectangle(
+            self.__start_point[0], self.__start_point[1],
+            self.__end_point[0], self.__end_point[1],
+            fill = fill_colour,
+            outline = outline_colour, 
+            width = 0
+            )
+        
+        return self
+        
+    
+    def deleteRectangle(self, canvas):
+    	"""
+    	Delete the box rectangle from the canvas.
+    	
+    	Keyword Arguments:
+        canvas -- TkCanvas from which to delete the rectangle
+        
+    	"""
+        canvas.delete(self.__rectangle)
+        return self
         
 
 
 # and now for something completely different...
 
+# ==============================================================================
+#
+#   Boxes Class
+#
+# ==============================================================================
 class Boxes:
     boxes = []
     
     current_box = 1
+    __type = 0
     
     MAX_SPACES = 10
     MAX_CPS = 3
     
     def __init__(self, canvas, type = 0):
         if type == 0:
+            self.__type = 0
             self.boxes = [ParkingSpace(i, canvas) for i in range(self.MAX_SPACES)]
         elif type == 1:
+            self.__type = 1
             self.boxes = [ControlPoint(j, canvas) for j in range(self.MAX_CPS)]
         else:
             print "ERROR: setup_classes2.Boxes requires type 0 or 1."
@@ -173,7 +312,19 @@ class Boxes:
         return self.current_box
 
     def get(self, id):
-        return self.boxes[id]	
+        return self.boxes[id]
+        
+    def nextBox(self):
+        if self.__type == 0: return
+        
+        if self.current_box < self.MAX_CPS:
+            self.current_box += 1
+    
+    def prevBox(self):
+        if self.__type == 0: return
+        
+        if self.current_box > 0:
+            self.current_box -= 1
 
     def getLength(self):
         return len(self.boxes)
