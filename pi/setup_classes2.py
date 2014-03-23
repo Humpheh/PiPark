@@ -24,6 +24,7 @@ class ParkingSpace:
     __label = ""  # __rectangle label
     __rectangle = None  # the drawn rectangle
     canvas = None
+    __label = None
     
     def __init__(self, i, canvas = None):
         # set space id number
@@ -127,6 +128,7 @@ class ParkingSpace:
             width = 0
             )
         
+        self.__label = canvas.create_text(self.getOrigins(), text = (str(self.id) + "(space)"))
         return self
         
     
@@ -139,8 +141,20 @@ class ParkingSpace:
         
     	"""
         canvas.delete(self.__rectangle)
+        canvas.delete(self.__label)
         return self
 
+    def getOrigins(self):
+    	"""Gets the most upper left co-ordinate of the box. """
+        result = []
+        
+        if self.__start_point[0] < self.__end_point[0]: result.append(self.__start_point[0])
+        else: result.append(self.__end_point[0])
+        
+        if self.__start_point[1] < self.__end_point[1]: result.append(self.__start_point[1])
+        else: result.append(self.__end_point[1])
+        
+        return result
 
 # ==============================================================================
 #
