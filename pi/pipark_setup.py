@@ -223,7 +223,7 @@ class Application(tk.Frame):
             if self.spaces_button.getIsActive():
                 self.__parking_spaces.setCurrentBox(int(key))
             if self.cps_button.getIsActive():
-                if int(key) > 2: return
+                if not in [1, 2, 3]: return
                 self.__control_points.setCurrentBox(int(key))
     
     # --------------------------------------------------------------------------
