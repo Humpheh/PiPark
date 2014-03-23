@@ -125,7 +125,8 @@ class ParkingSpace:
             self.__end_point[0], self.__end_point[1],
             fill = fill_colour,
             outline = outline_colour, 
-            width = 0
+            width = 0,
+            stipple = "gray50"
             )
         
         self.__label = canvas.create_text(self.getOrigins(), text = (str(self.__id) + "(space)"))
