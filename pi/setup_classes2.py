@@ -3,7 +3,7 @@ setup_classes2.py
 Update of setup_classes.py to work with new GUI.
 
 Author: Humphrey Shotton and Nicholas Sanders
-Version: 2.0 [2014/03/19]
+Version: 2.0 [2014/03/23]
 
 """
 import Tkinter as tk
@@ -137,16 +137,32 @@ class ParkingSpace:
         return self
 
 
+
+class ControlPoint:
+    # replacement for setup_clases.Area
+    
+    def __init__(self, i, canvas = None):
+        return
+        
+
+
 # and now for something completely different...
 
 class Boxes:
-    # create a list of 10 parking spaces
     boxes = []
-    current_box = 1
-    MAX_SPACES = 10
     
-    def __init__(self, canvas):
-        self.boxes = [ParkingSpace(i, canvas) for i in range(self.MAX_SPACES)]
+    current_box = 1
+    
+    MAX_SPACES = 10
+    MAX_CPS = 3
+    
+    def __init__(self, canvas, type = 0):
+        if type == 0:
+            self.boxes = [ParkingSpace(i, canvas) for i in range(self.MAX_SPACES)]
+        elif: type == 1:
+            self.boxes = [ControlPoint(j, canvas) for j in range(self.MAX_CPS)]
+        else:
+            print "ERROR: setup_classes2.Boxes requires type 0 or 1."
         return
     
     #@staticmethod
@@ -156,20 +172,20 @@ class Boxes:
     def getCurrentBox(self):
         return self.current_box
 
-    #@staticmethod
     def get(self, id):
         return self.boxes[id]	
 
-    #@staticmethod
     def getLength(self):
         return len(self.boxes)
 
-    #@staticmethod
     def setCurrentBox(self, i):
         self.current_box = i
     
     def clearAll(self, canvas):
         for box in self.boxes:
             if isinstance(box, ParkingSpace):
+                box.clear()
+                box.deleteRectangle(canvas)
+            if isinstance(box, ControlPoint):
                 box.clear()
                 box.deleteRectangle(canvas)
