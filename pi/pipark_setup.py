@@ -396,13 +396,14 @@ class Application(tk.Frame):
         self.spaces_button.setOff()
         self.cps_button.setOff()
         
-        try:
-            self.loadImage(self.SETUP_IMAGE, self.display, 
-                s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2)
-        except:
-            tkMessageBox.showerror(title = "Error!",
+        if not self.loadImage(self.SETUP_IMAGE, self.display, 
+                s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2):
+                
+                tkMessageBox.showerror(title = "Error!",
                 message = "Error loading setup image."
                 + " Please ensure setup image exists as ./image/setup_image.jpeg.")
+                
+                return
         
         # clear all previous data, and activate buttons
         self.clear_button.invoke()
