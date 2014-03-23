@@ -156,6 +156,29 @@ class ParkingSpace:
         else: result.append(self.__end_point[1])
         
         return result
+        
+    def getOutput(self):
+    	"""
+    	Gets the output to be saved in a file.
+    		
+    	Returns:
+    	Tuple of (id, type, x1, y1, x2, y2) or None if box is not present/complete.
+        
+    	"""
+        
+        if self.__start_point != [] and self.__end_point != []:
+            space = (
+                self.__id, 
+                self.__type,
+                self.__start_point[0],
+                self.__start_point[1],
+                self.__end_point[0],
+                self.__end_point[1]
+                )
+
+            return space
+        else:
+            return None
 
 # ==============================================================================
 #

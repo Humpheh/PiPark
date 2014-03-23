@@ -163,7 +163,39 @@ class Application(tk.Frame):
             tkMessageBox.showerror(title = "Error!",
                 message = "Error: Failed to setup and start PiCam.")
     
-    
+    # --------------------------------------------------------------------------
+    #   Save Data
+    # --------------------------------------------------------------------------
+    def saveData():
+        # Open the file to output the co-ordinates to
+        f1 = open('./setup_data.py', 'w+')
+
+        # Print the dictionary data to the file
+        print >> f1, 'boxes = ['
+        
+        for i in range(self.__parking_spaces.length()):
+            
+            space = self.__parking_spaces.get(i).getOutput()
+            
+            if space != None:
+                o = (i)
+                print >> f1, space, ','
+        
+        
+        for j in range(self.__control_points.length()):
+            cp = self.__control_points.get(j).getOutput()
+            
+            if cp != None:
+                o = (i)
+                print f1, cp, ','
+                
+        print >> f1, ']'
+            
+        if self.__is_verbose: print 'INFO: Data saved in file setup_data.py.'
+        tkMessageBox.showinfo(title = "PiPark Setup", 
+            message = "Data saved successfully.")
+        
+        
 # ==============================================================================
 #
 #  Event Handlers
