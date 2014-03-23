@@ -196,6 +196,25 @@ class Application(tk.Frame):
         if self.__is_verbose: print 'INFO: Data saved in file setup_data.py.'
         tkMessageBox.showinfo(title = "PiPark Setup", 
             message = "Data saved successfully.")
+    
+    # --------------------------------------------------------------------------
+    #   Load Data
+    # --------------------------------------------------------------------------        
+    def loadData(self):
+        # TODO: implement set methods in setup_classes2.py to set data loaded
+        # from setup_data.py
+        
+        try:
+            from setup_data import boxes
+        except:
+            if self.__is_verbose: 
+                print "ERROR: Problem loading data from setup_data.py"
+            else: 
+                tkMessageBox.showerror(
+                    title = "Error!", 
+                    message = "Problem loading data from setup_data.py"
+                    )
+        
         
         
 # ==============================================================================
