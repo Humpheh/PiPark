@@ -1,4 +1,3 @@
-<<<<<<< Local Changes
 #!/usr/bin/env python
 """
 Tkinter GUI for PiPark setup.
@@ -578,5 +577,4 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Application(master = root)
     app.master.title("PiPark Setup")
-    app.mainloop()=======
->>>>>>> External Changes
+    app.mainloop()
