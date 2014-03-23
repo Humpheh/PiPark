@@ -16,7 +16,7 @@ import tkMessageBox
 from PIL import Image, ImageTk
 
 import imageread
-import main
+#import main
 import setup_selectarea as sa  # not currently used
 import settings as s
 from setup_classes2 import ParkingSpace, Boxes
@@ -78,8 +78,10 @@ class Application(tk.Frame):
         self.__parking_space = ParkingSpace(1, self.display) # FIXME: <- is this line needed?
         self.__parking_spaces = Boxes(self.display, type = 0)
         self.__control_points = Boxes(self.display, type = 1)
-        print "INFO: __parking_spaces length:", self.__parking_spaces.getLength()
-        print "INFO: __control_points length:", self.__control_points.getLength()
+
+        if self.__is_verbose:
+            print "INFO: __parking_spaces length:", self.__parking_spaces.length()
+            print "INFO: __control_points length:", self.__control_points.length()
         
         # load the default background
         self.loadImage(self.DEFAULT_IMAGE, self.display, 
@@ -166,7 +168,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     #   Save Data
     # --------------------------------------------------------------------------
-    def saveData():
+    def saveData(self):
         # Open the file to output the co-ordinates to
         f1 = open('./setup_data.py', 'w+')
 
@@ -384,6 +386,8 @@ class Application(tk.Frame):
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
+
+        self.saveData()
     
     def clickLoad(self):
         if self.__is_verbose: print "ACTION: Clicked 'Load'"
