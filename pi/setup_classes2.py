@@ -159,7 +159,7 @@ class Boxes:
     def __init__(self, canvas, type = 0):
         if type == 0:
             self.boxes = [ParkingSpace(i, canvas) for i in range(self.MAX_SPACES)]
-        elif: type == 1:
+        elif type == 1:
             self.boxes = [ControlPoint(j, canvas) for j in range(self.MAX_CPS)]
         else:
             print "ERROR: setup_classes2.Boxes requires type 0 or 1."
