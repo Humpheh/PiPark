@@ -171,6 +171,7 @@ class ControlPoint:
     __end_point = []
     __label = ""  # __rectangle label
     __rectangle = None  # the drawn rectangle
+    __label = None
     canvas = None
     
     def __init__(self, i, canvas):
@@ -263,8 +264,8 @@ class ControlPoint:
         if self.__start_point == [] or self.__end_point == []: return
         
         # set rectangle colour
-        fill_colour = "#006633"
-        outline_colour = "#003366"
+        fill_colour = "#0066CC"
+        outline_colour = "#003399"
         
         # draw the rectangle
         self.__rectangle = canvas.create_rectangle(
@@ -275,6 +276,7 @@ class ControlPoint:
             width = 0
             )
         
+        self.__label = canvas.create_text([self.__start_point[0], self.__start_point[1]), text = (str(self.__id) + "(control"))
         return self
         
     
@@ -287,6 +289,7 @@ class ControlPoint:
         
     	"""
         canvas.delete(self.__rectangle)
+        canvas.delete(self.__label)
         return self
         
 
