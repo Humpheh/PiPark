@@ -279,14 +279,14 @@ class Application(tk.Frame):
         if self.cps_button.getIsActive():
             if self.__is_verbose: print "INFO: Remove Control Point"
             
-            self.__control_points[self.__control_points.getCurrentBox()].clear()
-            self.__control_points[self.__control_points.getCurrentBox()].deleteRectangle()
+            self.__control_points.boxes[self.__control_points.getCurrentBox()].clear()
+            self.__control_points.boxes[self.__control_points.getCurrentBox()].deleteRectangle()
             
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Remove parking space"
             
-            self.__parking_spaces[self.__parking_spaces.getCurrentBox()].clear()
-            self.__parking_spaces[self.__parking_spaces.getCurrentBox()].deleteRectangle()
+            self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].clear()
+            self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].deleteRectangle()
             
         else:
             if self.__is_verbose: print "INFO: Just clicking RMB merrily =)"
@@ -363,7 +363,15 @@ class Application(tk.Frame):
         try:
             self.loadImage(self.SETUP_IMAGE, self.display, 
                 s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2)
-        except: pass
+        except:
+            tkMessageBox.showerror(title = "Error!",
+                message = "Error loading setup image."
+                + " Please ensure setup image exists as ./image/setup_image.jpeg.")
+        
+        # clear all previous data, and activate buttons
+        self.__parking_spaces.clearAll(self.display)
+        self.cps_button.config(state = tk.ACTIVE)
+        self.spaces_button.config(state = tk.ACTIVE)
     
     def clickClear(self):
         if self.__is_verbose: print "ACTION: Clicked 'Clear'"
