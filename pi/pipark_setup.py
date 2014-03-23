@@ -1,3 +1,4 @@
+<<<<<<< Local Changes
 #!/usr/bin/env python
 """
 Tkinter GUI for PiPark setup.
@@ -382,6 +383,7 @@ class Application(tk.Frame):
         
         # clear all data points, to start afresh
         self.__parking_spaces.clearAll(self.display)
+        self.__control_points.clearAll(self.display)
 
 
     def clickSpaces(self):
@@ -576,4 +578,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Application(master = root)
     app.master.title("PiPark Setup")
-    app.mainloop()
+    app.mainloop()=======
+>>>>>>> External Changes
