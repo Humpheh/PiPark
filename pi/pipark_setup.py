@@ -280,13 +280,13 @@ class Application(tk.Frame):
             if self.__is_verbose: print "INFO: Remove Control Point"
             
             self.__control_points.boxes[self.__control_points.getCurrentBox()].clear()
-            self.__control_points.boxes[self.__control_points.getCurrentBox()].deleteRectangle()
+            self.__control_points.boxes[self.__control_points.getCurrentBox()].deleteRectangle(self.display)
             
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Remove parking space"
             
             self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].clear()
-            self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].deleteRectangle()
+            self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].deleteRectangle(self.display)
             
         else:
             if self.__is_verbose: print "INFO: Just clicking RMB merrily =)"
