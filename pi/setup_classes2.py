@@ -128,7 +128,7 @@ class ParkingSpace:
             width = 0
             )
         
-        self.__label = canvas.create_text(self.getOrigins(), text = (str(self.id) + "(space)"))
+        self.__label = canvas.create_text(self.getOrigins(), text = (str(self.__id) + "(space)"))
         return self
         
     
