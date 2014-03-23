@@ -274,7 +274,8 @@ class ControlPoint:
             self.__end_point[0], self.__end_point[1],
             fill = fill_colour,
             outline = outline_colour, 
-            width = 0
+            width = 0,
+            stipple = "gray50"
             )
         
         display_id = str(self.__id + 1)
