@@ -167,3 +167,9 @@ class Boxes:
     #@staticmethod
     def setCurrentBox(self, i):
         self.current_box = i
+    
+    def clearAll(self, canvas):
+        for box in boxes:
+            if isinstance(box, ParkingSpace):
+                box.clear()
+                box.deleteRectangle(canvas)

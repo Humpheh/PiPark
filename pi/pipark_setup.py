@@ -336,6 +336,9 @@ class Application(tk.Frame):
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
+        
+        # clear all data points, to start afresh
+        self.__parking_spaces.clearAll(self.display)
 
 
     def clickSpaces(self):
