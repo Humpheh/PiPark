@@ -219,23 +219,21 @@ class Application(tk.Frame):
     #   Register Data
     # --------------------------------------------------------------------------
     def register(self):
-        # attempt to import the setup data and ensure 'boxes' is a list. If fail,
-        # return to main menu prompt.
+        # attempt to import the setup data and ensure 'boxes' is a list
         try:
             import setup_data
             boxes = setup_data.boxes
             if not isinstance(boxes, list): raise ValueError()
         except:
             print "ERROR: Setup data does not exist. Please run options 1 and 2 first."
-            #continue
+            return
             
-        # attempt to import the server senddata module. If fail, return to main menu
-        # prompt.
+        # attempt to import the server senddata module
         try:
             import senddata
         except:
             print "ERROR: Could not import send data file."
-            #continue
+            return
         
         # deregister all areas associated with this pi (start fresh)
         out = senddata.deregister_pi()
@@ -243,7 +241,7 @@ class Application(tk.Frame):
         try:
             out['error']
             print "ERROR: Error in connecting to server. Please update settings.py."
-            #continue
+            return
         except:
             pass
         
@@ -252,13 +250,14 @@ class Application(tk.Frame):
             if box[1] == 0:
                 output = senddata.register_area(box[0])
                 if "error" in output.keys():
-                    print "ERROR:", output["error"]
+                    if self.__is_verbose: print "ERROR:", output["error"]
                     return
                 else:
-                    print "INFO: Registering area", box[0], "on server database."
-                
+                    if self.__is_verbose:
+                        print "INFO: Registering area", box[0], "on server."
+         
+        # print success message if verbose        
         if self.__is_verbose: print "\nINFO: Server registration successful."
-        
         
         
 # ==============================================================================
