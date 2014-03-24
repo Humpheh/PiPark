@@ -214,6 +214,46 @@ class Application(tk.Frame):
                     title = "Error!", 
                     message = "Problem loading data from setup_data.py"
                     )
+                    
+    # --------------------------------------------------------------------------
+    #   Load Data
+    # --------------------------------------------------------------------------
+    def register(self):
+        # attempt to import the setup data and ensure 'boxes' is a list. If fail,
+        # return to main menu prompt.
+        try:
+            import setup_data
+            boxes = setup_data.boxes
+            if not isinstance(boxes, list): raise ValueError()
+        except:
+            print "ERROR: Setup data does not exist. Please run options 1 and 2 first."
+            continue
+            
+        # attempt to import the server senddata module. If fail, return to main menu
+        # prompt.
+        try:
+            import senddata
+        except:
+            print "ERROR: Could not import send data file."
+            continue
+        
+        # deregister all areas associated with this pi (start fresh)
+        out = senddata.deregister_pi()
+        
+        try:
+            out['error']
+            print "ERROR: Error in connecting to server. Please update settings.py."
+            continue
+        except:
+            pass
+        
+        # register each box on the server
+        for box in boxes:
+            if box[1] == 0:
+                senddata.register_area(box[0])
+                print "INFO: Registering area", box[0], "on server database."
+                
+        print "\nRegistration complete."
         
         
         
@@ -381,6 +421,8 @@ class Application(tk.Frame):
         # turn off toggle buttons
         self.spaces_button.setOff()
         self.cps_button.setOff()
+        
+        self.register()
         
         # TODO: Register carpark with the server as per CLI setup.
             
