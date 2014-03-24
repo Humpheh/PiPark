@@ -104,7 +104,7 @@ require_once ('includes/header.php');
 		$i++;
 		?>
 		<div class="row">
-			<div class="col-xs-4"><?php echo $i; ?><span style="float:right;" class="badge"><?php echo 'pi'.$row['space_pi_id'].'-'.$row['space_area_code']; ?></span></div>
+			<div class="col-xs-4"><?php echo $i; ?><span style="float:right;" class="piinfo badge"><?php echo 'pi'.$row['space_pi_id'].'-'.$row['space_area_code']; ?></span></div>
 			<div class="col-xs-4"><?php echo $row['update_status'] == 0 ? '<span class="alert alert-small alert-success">Empty</span>' : '<span class="alert alert-small alert-danger">Filled</span>'; ?></div>
 			<div class="col-xs-4"><?php echo isset($row['update_time']) ? ago($row['update_time']) : 'Never'; ?></div>
 		</div>

@@ -130,8 +130,10 @@ h1 .glyphicon{
 	vertical-align: 1px;
 }
 @media (max-width: 978px) {
-    .block-spaces-header {
+    .block-spaces-header .left{
         font-size: 1em;
+        height: auto !important;
+        padding-bottom: 60px !important;
     }
     .block-spaces-header h1{
         font-size: 30px;
@@ -147,6 +149,9 @@ h1 .glyphicon{
     }
     .logo{
         margin-left: 15px;
+    }
+    .piinfo {
+        display: none;
     }
 }
 .block-spaces-header h1{
