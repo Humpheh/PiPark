@@ -90,8 +90,13 @@ def __main():
 
         # setup control
         for control in control_boxes:
+            
+            control_x = control[2]
+            control_y = control[3]
+            control_w = abs(control[4] - control[2])
+            control_h = abs(control[5] - control[3])
 
-            control_x, control_y, control_w, control_h = __get_area_values(control)
+            #control_x, control_y, control_w, control_h = __get_area_values(control)
 
             print "Control dims:", "x", control_x, "y", control_y, "w", control_w, "h", control_h
 
