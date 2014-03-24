@@ -1,7 +1,15 @@
-# Pi Car Park sensor server communication module
-# @author Humphrey Shotton
-# @version 1.0 (2014-01-17)
+"""
+Author: Humphrey Shotton
+Filename: senddata.py
+Version: 1.0 (2014-01-17)
 
+Description:
+Pi Car Park sensor server communication module.
+
+Used to send update data about changed in the car parking spaces
+to a central server.
+
+"""
 import urllib
 import urllib2
 import json
