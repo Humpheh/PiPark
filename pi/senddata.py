@@ -88,16 +88,12 @@ def register_area(area_id):
 def deregister_pi():
     """
     Deregisters all areas associated with this pi.
-
-    Args:
-        area_id: The area id to register.
-
+    
     Returns:
         Dictionary of elements from the JSON response.
     """
     # Create the post data
     vals = {"deregister_password" : s.SERVER_PASS,
-            "deregister_park_id" : s.PARK_ID,
             "deregister_pi_id" : s.PI_ID}
 
     return post_request(vals, s.SERVER_URL + "deregister.php")
