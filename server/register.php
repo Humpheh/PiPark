@@ -20,7 +20,7 @@ foreach( $keys as $key )
 
 // Check that the password is correct
 if( $_POST[ 'register_password' ] != Conf::PI_PASSWORD )
-	json_error( 'Password incorrect.' );
+	json_error( 'PI password incorrect.' );
 
 // Check that the space does not already exist
 $query = "SELECT space_id FROM spaces WHERE space_park_id = ? AND space_pi_id = ? AND space_area_code = ?";
@@ -45,7 +45,7 @@ $stmt->execute();
 
 // If there is a row, cannot continue
 if( $stmt->rowCount() != 1 )
-	json_error( 'This park does not exist, or there are two of them, which is wrong.' );
+	json_error( 'This car park ID does not exist.' );
 
 // Register the space on the database.
 $query2 = "INSERT INTO spaces (space_park_id, space_pi_id, space_area_code) VALUES (?, ?, ?)";
