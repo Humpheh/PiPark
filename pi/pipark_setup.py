@@ -216,7 +216,7 @@ class Application(tk.Frame):
                     )
                     
     # --------------------------------------------------------------------------
-    #   Load Data
+    #   Register Data
     # --------------------------------------------------------------------------
     def register(self):
         # attempt to import the setup data and ensure 'boxes' is a list. If fail,
@@ -227,7 +227,7 @@ class Application(tk.Frame):
             if not isinstance(boxes, list): raise ValueError()
         except:
             print "ERROR: Setup data does not exist. Please run options 1 and 2 first."
-            continue
+            #continue
             
         # attempt to import the server senddata module. If fail, return to main menu
         # prompt.
@@ -235,7 +235,7 @@ class Application(tk.Frame):
             import senddata
         except:
             print "ERROR: Could not import send data file."
-            continue
+            #continue
         
         # deregister all areas associated with this pi (start fresh)
         out = senddata.deregister_pi()
@@ -243,7 +243,7 @@ class Application(tk.Frame):
         try:
             out['error']
             print "ERROR: Error in connecting to server. Please update settings.py."
-            continue
+            #continue
         except:
             pass
         
