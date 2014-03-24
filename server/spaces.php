@@ -34,18 +34,20 @@ require_once ('includes/header.php');
 ?>
 <div class="row block block-spaces-header">
 	<div class="col-md-<?php echo (isset($park['park_location']) && $park['park_location'] != null) ? '6' : '12'; ?> col-xs-12 left">
-			<h1><?php print $park['park_name']; ?></h1>
+        <h1><?php print $park['park_name']; ?></h1>
 			
-			<p><?php print $park['park_desc']; ?></p>
+        <p><?php print $park['park_desc']; ?></p>
 			
-			<div class="stats">
-					<span class="alert alert-small alert-warning total"><?php print $park['ps']; ?> Total Spaces</span>
-					<span class="alert alert-small alert-info available"><?php print $park['ps'] - $park['spaces']; ?></span> Available Spaces 
-			</div>
+        <div class="stats">
+            <span class="alert alert-small alert-warning total"><?php print $park['ps']; ?> Total Spaces</span>
+            <span class="alert alert-small alert-info available"><?php print $park['ps'] - $park['spaces']; ?></span>
+            Available Spaces 
+        </div>
 	</div>
 	
 	<?php if(isset($park['park_location']) && $park['park_location'] != null){ ?>
-		<a target="_blank" href="https://www.google.com/maps/search/<?php echo $park['park_location']; ?>" class="col-md-6 col-xs-12 image-float" style="height:300px;padding:0;
+		<a target="_blank" href="https://www.google.com/maps/search/<?php echo $park['park_location']; ?>" 
+            class="col-md-6 col-xs-12 image-float" style="height:300px;padding:0;
 			background:url('http://maps.googleapis.com/maps/api/staticmap?&center=<?php echo $park['park_location']; ?>&maptype=roadmap&markers=color:blue%7Clabel:P%7C<?php echo $park['park_location']; ?>&zoom=15&size=1200x600&key=<?php echo Conf::MAPS_API_KEY; ?>');
 			background-size:cover;background-position:center;border:1px solid rgb(230,230,230);">
 		</a>
