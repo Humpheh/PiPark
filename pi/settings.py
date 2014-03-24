@@ -35,5 +35,5 @@ PI_ID = 1
 PARK_ID = 2
 
 SERVER_PASS = 'pi'
-SERVER_URL = "http://10.173.33.89/PiPark/server/"
+SERVER_URL = "http://10.173.33.111/pipark/server/"
 
