@@ -250,10 +250,14 @@ class Application(tk.Frame):
         # register each box on the server
         for box in boxes:
             if box[1] == 0:
-                senddata.register_area(box[0])
-                print "INFO: Registering area", box[0], "on server database."
+                output = senddata.register_area(box[0])
+                if "error" in output.keys():
+                    print "ERROR:", output["error"]
+                    return
+                else:
+                    print "INFO: Registering area", box[0], "on server database."
                 
-        print "\nRegistration complete."
+        if self.__is_verbose: print "\nINFO: Server registration successful."
         
         
         

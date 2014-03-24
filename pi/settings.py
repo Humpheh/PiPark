@@ -32,7 +32,7 @@ WINDOW_HEIGHT = 800
 #  Server Settings and Pi Identification
 # -----------------------------------------------------------------------------
 PI_ID = 1
-PARK_ID = 40000
+PARK_ID = 4
 
 SERVER_PASS = 'pi'
 SERVER_URL = "http://10.173.33.111/pipark/server/"
