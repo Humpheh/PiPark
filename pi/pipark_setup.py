@@ -222,6 +222,7 @@ class Application(tk.Frame):
         # attempt to import the setup data and ensure 'boxes' is a list
         try:
             import setup_data
+            reload(setup_data)
             boxes = setup_data.boxes
             if not isinstance(boxes, list): raise ValueError()
         except:
@@ -235,6 +236,7 @@ class Application(tk.Frame):
             print "ERROR: Could not import send data file."
             return
         
+
         # deregister all areas associated with this pi (start fresh)
         out = senddata.deregister_pi()
         
