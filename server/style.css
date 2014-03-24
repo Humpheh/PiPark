@@ -1,6 +1,7 @@
 body {
 	padding-top: 70px;
 	background-color: #eee;
+    padding-bottom: 15px;
 }
 .badge{
 	text-shadow: none;
@@ -128,6 +129,26 @@ h1 .glyphicon{
 	margin-right: 10px;
 	vertical-align: 1px;
 }
+@media (max-width: 978px) {
+    .block-spaces-header {
+        font-size: 1em;
+    }
+    .block-spaces-header h1{
+        font-size: 30px;
+        padding: 20px !important;
+    }
+
+    .block-spaces-header p{
+    	padding: 20px !important;
+    }
+    .block-spaces-header .stats{
+        padding: 20px !important;
+        font-size: 15px !important;
+    }
+    .logo{
+        margin-left: 15px;
+    }
+}
 .block-spaces-header h1{
 	padding: 30px;
 	border-bottom: 1px solid rgb(230,230,230);
@@ -140,7 +161,7 @@ h1 .glyphicon{
 	padding: 0;
 }
 .block-spaces-header p{
-	padding:30px;
+	padding: 30px;
 }
 .block-spaces-header .stats{
 	border-top: 1px solid rgb(230,230,230);
@@ -149,7 +170,7 @@ h1 .glyphicon{
 	bottom: 0;
 	padding: 20px 30px;
 	background: rgb(250,250,250);
-	font-size: 18px;"
+	font-size: 18px;
 }
 .block-spaces-header .stats .total{
 	color: rgb(150,150,150);

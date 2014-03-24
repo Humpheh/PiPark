@@ -51,7 +51,9 @@ require_once ('../includes/header.php');
 			<?php echo $row['park_id']; ?>
 		</div>
 		<div class="col-xs-2">
-			<?php echo $row['park_name']; ?>
+			<a href="<?php echo Conf::URL_BASE; ?>spaces.php?id=<?php echo $row['park_id']; ?>">
+                <?php echo $row['park_name']; ?>
+            </a>
 		</div>
 		<div class="col-xs-3">
 			<?php echo $row['park_desc']; ?>
