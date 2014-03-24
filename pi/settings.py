@@ -7,6 +7,8 @@ Description:
 Settings file for car park sensor.
 
 """
+from uuid import getnode as get_mac
+PI_ID = get_mac() # Creates a unique ID for the PI
 
 # -----------------------------------------------------------------------------
 #  Camera Settings
@@ -31,8 +33,7 @@ WINDOW_HEIGHT = 800
 # -----------------------------------------------------------------------------
 #  Server Settings and Pi Identification
 # -----------------------------------------------------------------------------
-PI_ID = 1
-PARK_ID = 4
+PARK_ID = 1
 
 SERVER_PASS = 'pi'
 SERVER_URL = "http://10.173.33.111/pipark/server/"

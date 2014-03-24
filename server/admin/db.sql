@@ -10,13 +10,10 @@ CREATE TABLE parks (
 CREATE TABLE spaces (
 	space_id SERIAL,
 	space_park_id BIGINT UNSIGNED,
-	space_pi_id INT NOT NULL,
+	space_pi_id BIGINT NOT NULL,
 	space_area_code INT NOT NULL,
 	space_status_id INT NOT NULL DEFAULT 0,
 	space_time_added TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	space_x INT NOT NULL,
-	space_y INT NOT NULL,
-	space_rot INT(1) NOT NULL,
 	
 	FOREIGN KEY ( space_park_id ) REFERENCES parks ( park_id )
 		ON DELETE SET NULL
