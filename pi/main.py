@@ -77,8 +77,12 @@ def __main():
 
         # setup spaces
         for space in space_boxes:
+            space_x = space[2]
+            space_y = space[3]
+            space_w = abs(space[4] - space[2])
+            space_h = abs(space[5] - space[3])
             
-            space_x, space_y, space_w, space_h = __get_area_values(space)
+            #space_x, space_y, space_w, space_h = __get_area_values(space)
             
             print "Space dims:", "x", space_x, "y", space_y, "w", space_w, "h", space_h
 
