@@ -37,11 +37,9 @@ class Application(tk.Frame):
     __is_verbose = True  # print messages to terminal
     __is_saved = False  # TODO: Implement is saved!
     
-    # FIXME: Parking space implementation
-    __parking_space = None  # FIXME: <- is this needed?
-    __control_point = None  # FIXME: <- is this needed?
-    __parking_spaces = None
-    __control_points = None
+    # lists to hold parking space and control point references
+    __parking_spaces = Boxes(self.display, type = 0)
+    __control_points = Boxes(self.display, type = 1)
     
     # picamera
     __camera = None
@@ -56,6 +54,7 @@ class Application(tk.Frame):
     #   Constructor Method
     # --------------------------------------------------------------------------
     def __init__(self, master = None):
+        """Application constructor method. """
 
         # run super constructor method
         tk.Frame.__init__(self, master)
@@ -73,11 +72,6 @@ class Application(tk.Frame):
         self.display.bind("<Button-1>", self.leftClickHandler)
         self.display.bind("<Button-3>", self.rightClickHandler)
         self.focus_set()
-        
-        # FIXME: parking space implementation
-        self.__parking_space = ParkingSpace(1, self.display) # FIXME: <- is this line needed?
-        self.__parking_spaces = Boxes(self.display, type = 0)
-        self.__control_points = Boxes(self.display, type = 1)
 
         if self.__is_verbose:
             print "INFO: __parking_spaces length:", self.__parking_spaces.length()
@@ -169,28 +163,33 @@ class Application(tk.Frame):
     #   Save Data
     # --------------------------------------------------------------------------
     def saveData(self):
+        """Save the CP and parking space reference data to ./setup_data.py. """
+        
         # Open the file to output the co-ordinates to
         f1 = open('./setup_data.py', 'w+')
 
         # Print the dictionary data to the file
         print >> f1, 'boxes = ['
         
+        # for every parking space, save the data to ./setup_data.py
         for i in range(self.__parking_spaces.length()):
-            
             space = self.__parking_spaces.get(i).getOutput()
             
+            # ignore the space if no data present
             if space != None:
                 o = (i)
                 print >> f1, space, ','
         
-        
+        # for every control point, save the data to ./setup_data.py
         for j in range(self.__control_points.length()):
             cp = self.__control_points.get(j).getOutput()
             
+            # ignore the CP if no data present
             if cp != None:
                 o = (i)
                 print >> f1, cp, ','
-                
+        
+        # save to ./setup_data.py        
         print >> f1, ']'
             
         if self.__is_verbose: print 'INFO: Data saved in file setup_data.py.'
@@ -205,15 +204,18 @@ class Application(tk.Frame):
         # from setup_data.py
         
         try:
-            from setup_data import boxes
+            # load the setup data, reload to refresh the data
+            import setup_data 
+            reload(setup_data)
         except:
             if self.__is_verbose: 
                 print "ERROR: Problem loading data from setup_data.py"
-            else: 
-                tkMessageBox.showerror(
-                    title = "Error!", 
-                    message = "Problem loading data from setup_data.py"
-                    )
+            tkMessageBox.showerror(
+                title = "Error!", 
+                message = "Problem loading data from setup_data.py"
+                )
+        
+        return setup_data.boxes
                     
     # --------------------------------------------------------------------------
     #   Register Data
@@ -303,7 +305,6 @@ class Application(tk.Frame):
             s.PICTURE_RESOLUTION[0]/2, s.PICTURE_RESOLUTION[1]/2)
         
         # activate buttons if they're disabled
-        # TODO: add if statement. If self.cps_button.state == tk.DISABLED?
         self.cps_button.config(state = tk.ACTIVE)
         self.spaces_button.config(state = tk.ACTIVE)
     
@@ -346,13 +347,14 @@ class Application(tk.Frame):
         # add new control points (max = 3)
         if self.cps_button.getIsActive():
             if self.__is_verbose: print "INFO: Add Control Point"
-            self.__control_points.boxes[self.__control_points.getCurrentBox()].updatePoints(event.x, event.y)
+            this_cp_id = self.__control_points.getCurrentBox()
+            this_cp = self.__control_points.boxes[this_cp_id]
+            this_cp.updatePoints(event.x, event.y)
+            #self.__control_points.boxes[self.__control_points.getCurrentBox()].updatePoints(event.x, event.y)
         
         # add new parking space
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Add Parking Space"
-            # TODO: Delete line v? Shrink line vv!
-            #self.__parking_space.updatePoints(event.x, event.y)
             this_space_id = self.__parking_spaces.getCurrentBox()
             this_space = self.__parking_spaces.boxes[this_space_id]
             this_space.updatePoints(event.x, event.y)
@@ -428,8 +430,6 @@ class Application(tk.Frame):
         self.cps_button.setOff()
         
         self.register()
-        
-        # TODO: Register carpark with the server as per CLI setup.
             
     
     def clickNewImage(self):
@@ -491,10 +491,6 @@ class Application(tk.Frame):
         # toggle the button, and turn off other toggle buttons
         self.spaces_button.toggle()
         if self.cps_button.getIsActive(): self.cps_button.setOff()
-        
-        # TODO: add/remove spaces functionality! 
-        # add spaces with two clicks (start & end corner points)?
-        # removal of spaces whilst holding CTRL and click in box?
 
     def clickCPs(self):
         """Add/remove control points. """
@@ -503,10 +499,6 @@ class Application(tk.Frame):
         # toggle the button, and turn off other toggle buttons
         self.cps_button.toggle()
         if self.spaces_button.getIsActive(): self.spaces_button.setOff()
-        
-        # TODO: add/remove CPs functionality!
-        # add CPs with single click?
-        # removal of CPs whilst holding CTRL and click?
         
         
     def clickQuit(self):
