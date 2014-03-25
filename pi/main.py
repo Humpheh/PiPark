@@ -1,39 +1,37 @@
 """
 Authors: Nicholas Sanders & Humphrey Shotton
 Filename: main.py
-Version: [2014/01/31]
+Version: 2.0 [2014/03/25]
 
 Description:
-Main Smart Parking System program, to be run after setup has been completed. 
+PiPark Smart Sparking Sensor. PiPark detects changes in car parking spaces as 
+specified by user after running the setup script (./pipark_setup.py). 
 
-Detects changes in car parking spaces. After three ticks, the server is 
-updated with the availability of the parking spaces.
+When changes are consistent over three ticks, the server is updated with the 
+present availability of each parking space.
 
 """
-# -----------------------------------------------------------------------------
-#  Imports
-# -----------------------------------------------------------------------------
-# python
+
 import urllib
 
-# PiPark
 import imageread
 import senddata
 import settings as s
 
 try:
+    # check setup_data exists
     import setup_data
 except ImportError:
-    print "ERROR: setup_data.py does not exist. Run setup.py first."
+    print "ERROR: setup_data.py does not exist. Run ./pipark_setup.py first."
     sys.exit()
 
 
-# -----------------------------------------------------------------------------
+# ==============================================================================
 #
 #       Main Program
 #
-# -----------------------------------------------------------------------------
-def __main():
+# ==============================================================================
+def main():
     """
     Run main program loop. Detect changes to parking spaces and update 
     appropriate availabity of the spaces to the server.
@@ -214,9 +212,4 @@ def __setup_box_data():
 #  Run Program
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    __main()
-
-# run main from external files
-def run_main():
-    """Allow the main function to be run from another file."""
-    __main()
+    main()
