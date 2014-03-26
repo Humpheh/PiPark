@@ -308,8 +308,9 @@ class Application(tk.Frame):
             # data invalid, so display message and return
             tkMessageBox.showinfo(
                 title = "PiPark Setup",
-                message = "Saved data is invalid. Ensure there are 3 "
-                + "control points and at least 1 parking spaces marked."
+                message = "Registration not complete.\n\nSaved data is "
+                + "invalid. Please ensure that there are 3 control points and "
+                + "at least 1 parking spaces marked."
                 )
             return
                 
@@ -541,8 +542,9 @@ class Application(tk.Frame):
                 # data invalid, so display message and return
                 tkMessageBox.showinfo(
                     title = "PiPark Setup",
-                    message = "Saved data is invalid. Ensure there are 3 "
-                    + "control points and at least 1 parking space marked."
+                    message = "Saved data is invalid. Please ensure that "
+                    + "there are 3 control points and at least 1 parking "
+                    + "space marked."
                     )
                 return
                     
