@@ -92,7 +92,7 @@ class Application(tk.Frame):
 #
 # ==============================================================================           
     # --------------------------------------------------------------------------
-    #   Load Setup Image
+    #   Load Image
     # --------------------------------------------------------------------------
     def loadImage(self, image_address, canvas, width, height):
         """
@@ -214,13 +214,69 @@ class Application(tk.Frame):
             reload(setup_data)
         except:
             if self.__is_verbose: 
-                print "ERROR: Problem loading data from setup_data.py"
+                print "ERROR: Problem loading data from ./setup_data.py"
             tkMessageBox.showerror(
                 title = "Error!", 
                 message = "Problem loading data from setup_data.py"
                 )
         self.__is_saved = True
         return setup_data.boxes
+        
+    # --------------------------------------------------------------------------
+    #   Check Data
+    # --------------------------------------------------------------------------
+    def checkData(self):
+        """
+        Check that the setup data meets the following criteria:
+        
+            1) There is at least 1 parking space.
+            2) There are exactly 3 control points.
+            
+        Returns:
+        Boolean -- True if criteria is met, False if not.
+            
+        """
+        
+        # get the boxes data to check from setup_data
+        try:
+            # load the setup data
+            import setup_data
+            reload(setup_data)
+            
+            # ensure that boxes exists and is not empty
+            box_data = setup_data.boxes
+            if not box_data: raise ValueError
+            
+        except ImportError:
+            if self.__is_verbose: 
+                print "ERROR: Problem loading data from ./setup_data.py"
+        except ValueError:
+            if self.__is_verbose:
+                print "ERROR: ./setup_data.py 'boxes' is empty."
+        except:
+            if self.__is_verbose:
+                print "ERROR: ./setup_data.py does not contain 'boxes'."
+               
+        # create lists to hold data of each type
+        space_boxes = []
+        control_boxes = []
+        
+        # append the box data to space or control list as appropriate
+        for data_set in box_data:
+            if data_set[1] == 0: 
+                space_boxes.append(data_set)
+            elif data_set[1] == 1: 
+                control_boxes.append(data_set)
+            elif self.__is_verbose:
+                print "ERROR: Box-type not set to either 0 or 1."
+        
+        # data is valid if there is at least 1 space and exactly 3 control points
+        if len(space_boxes) > 0 and len(control_boxes) == 3: 
+            valid_data = True
+        else:
+            valid_data = False
+        
+        return valid_data
                     
     # --------------------------------------------------------------------------
     #   Register Data
@@ -441,17 +497,26 @@ class Application(tk.Frame):
         self.spaces_button.setOff()
         self.cps_button.setOff()
         
+        
+        # ensure that most recent changes to data have been saved
         if not self.__is_saved:
-            response = tkMessageBox.askyesno(title = "Save Setup",
+            response1 = tkMessageBox.askyesno(title = "Save Setup",
                 message = "Most recent changes to setup haven't been saved. "
                 + "Would you like to save and run PiPark?")
         else:
             # if the user is positive, close the setup and run the main program
-            response = tkMessageBox.askyesno(title = "Setup Complete",
+            response2 = tkMessageBox.askyesno(title = "Setup Complete",
                 message = "Are you ready to leave setup and run PiPark?")
+        
+        if response1: self.saveData()
+        if response1 or response2:
+            
+            # final check that data is valid
+            if not self.checkData():
+                tkMessage.showinfo(title = "PiPark Setup",
+                    message = "Saved data is invalid. Ensure there are 3 "
+                    + "control points and at least 1 parking space marked.")
                 
-        if response:
-            self.saveData()   
             self.quit_button.invoke()
             if self.__is_verbose: print "INFO: Setup application terminated. "
             main.main()
