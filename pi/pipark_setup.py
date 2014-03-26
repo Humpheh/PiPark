@@ -110,6 +110,8 @@ class Application(tk.Frame):
         Boolean -- True if load successful, False if not.
         
         """
+        # clear the old canvas
+        canvas.delete(tk.ALL)
         
         try:
             # guard against incorrect argument datatypes
@@ -150,7 +152,8 @@ class Application(tk.Frame):
         """
         # show quick dialogue box with basic instruction
         tkMessageBox.showinfo(title = "",
-            message = "Press the ENTER key to take a new setup image.")
+            message = "Press the ENTER key to take a new setup image "
+            + "or the ESCAPE key to cancel.")
 
         
         try:
@@ -470,7 +473,6 @@ class Application(tk.Frame):
             this_cp_id = self.__control_points.getCurrentBox()
             this_cp = self.__control_points.boxes[this_cp_id]
             this_cp.updatePoints(event.x, event.y)
-            #self.__control_points.boxes[self.__control_points.getCurrentBox()].updatePoints(event.x, event.y)
         
         # add new parking space
         elif self.spaces_button.getIsActive():
@@ -599,7 +601,6 @@ class Application(tk.Frame):
         
         # clear the Tkinter display canvas, and all related setupdata. Then
         # turn on PiCam to allow for new image to be taken.
-        self.display.delete(tk.ALL)
         self.__parking_spaces.clearAll(self.display)
         self.__control_points.clearAll(self.display)
         self.turnOnCamera()
