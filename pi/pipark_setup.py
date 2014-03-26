@@ -73,7 +73,7 @@ class Application(tk.Frame):
         # create mouse button and key-press handlers -> set focus to this frame
         self.bind("<Return>", self.returnPressHandler)
         self.bind("<Key>", self.keyPressHandler)
-        self.bind("<Esc>", self.escapePressHandler)
+        self.bind("<Escape>", self.escapePressHandler)
         self.display.bind("<Button-1>", self.leftClickHandler)
         self.display.bind("<Button-3>", self.rightClickHandler)
         self.focus_set()
