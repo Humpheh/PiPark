@@ -38,8 +38,8 @@ class Application(tk.Frame):
     __is_saved = False  # TODO: Implement is saved!
     
     # lists to hold parking space and control point references
-    __parking_spaces = Boxes(self.display, type = 0)
-    __control_points = Boxes(self.display, type = 1)
+    __parking_spaces = None
+    __control_points = None
     
     # picamera
     __camera = None
@@ -65,6 +65,10 @@ class Application(tk.Frame):
         # create widgets
         self.__createDisplay()  # display canvas: holds the image, CPs and spaces
         self.__createMenu()  # menu canvas: holds the buttons and menu bar image
+        
+        # lists to hold parking space and control point references
+        self.__parking_spaces = Boxes(self.display, type = 0)
+        self.__control_points = Boxes(self.display, type = 1)
         
         # create mouse button and key-press handlers -> set focus to this frame
         self.bind("<Return>", self.returnPressHandler)
