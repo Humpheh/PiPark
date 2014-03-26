@@ -10,8 +10,6 @@
 
 
 Welcome to PiPark setup, here's a quick run-through of the steps to successfully setup your PiPark unit.
-
-Before continuing with the setup
             
 1) After appropriately mounting the PiPark unit its positioning may need to be fine-tuned. To do this, click on the 'Capture New Setup Image' button and then 'Yes' when the dialogue box appears. A full-screen display of the unit's image feed will now be shown. Fine-tune the positioning of the unit, and once this has been finalised press the ENTER key to take a new setup image. Note: If at any time you wish to cancel the image feed without taking a new setup image press the ESCAPE button.
      
