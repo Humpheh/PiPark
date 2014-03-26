@@ -499,6 +499,9 @@ class Application(tk.Frame):
         self.spaces_button.setOff()
         self.cps_button.setOff()
         
+        # set initial responses
+        response1 = False
+        response2 = False
         
         # ensure that most recent changes to data have been saved
         if not self.__is_saved:
