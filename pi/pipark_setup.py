@@ -424,7 +424,7 @@ class Application(tk.Frame):
         except:
             # image failed to close for some reason, show error message
             if self.__is_verbose:
-                print: "ERROR: PiCam failed to close correctly."
+                print "ERROR: PiCam failed to close correctly."
     
     # --------------------------------------------------------------------------
     #   Key-press Event Handler
