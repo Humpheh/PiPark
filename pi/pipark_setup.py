@@ -302,6 +302,17 @@ class Application(tk.Frame):
                     message = "Registration not completed.")
                 return
                 
+        # check that most recent saved data is valid (#CPs == 3, #Spaces > 0)
+        if not self.checkData():
+
+            # data invalid, so display message and return
+            tkMessage.showinfo(
+                title = "PiPark Setup",
+                message = "Saved data is invalid. Ensure there are 3 "
+                + "control points and at least 1 parking spaces marked."
+                )
+            return
+                
         # attempt to import the setup data and ensure 'boxes' is a list
         try:
             import setup_data
