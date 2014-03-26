@@ -236,6 +236,7 @@ class Application(tk.Frame):
         Boolean -- True if criteria is met, False if not.
             
         """
+        if self.__is_verbose: print "INFO: Data is being checked for validity."
         
         # get the boxes data to check from setup_data
         try:
@@ -276,6 +277,7 @@ class Application(tk.Frame):
         else:
             valid_data = False
         
+        if self.__is_verbose: print "INFO: Data checked. Data is", valid_data
         return valid_data
                     
     # --------------------------------------------------------------------------
