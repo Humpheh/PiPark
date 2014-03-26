@@ -518,7 +518,7 @@ class Application(tk.Frame):
             
             # final check that data is valid
             if not self.checkData():
-                tkMessage.showinfo(title = "PiPark Setup",
+                tkMessageBox.showinfo(title = "PiPark Setup",
                     message = "Saved data is invalid. Ensure there are 3 "
                     + "control points and at least 1 parking space marked.")
                 
