@@ -73,6 +73,7 @@ class Application(tk.Frame):
         # create mouse button and key-press handlers -> set focus to this frame
         self.bind("<Return>", self.returnPressHandler)
         self.bind("<Key>", self.keyPressHandler)
+        self.bind("<Esc>", self.escapePressHandler)
         self.display.bind("<Button-1>", self.leftClickHandler)
         self.display.bind("<Button-3>", self.rightClickHandler)
         self.focus_set()
@@ -400,6 +401,30 @@ class Application(tk.Frame):
         # activate buttons if they're disabled
         self.cps_button.config(state = tk.ACTIVE)
         self.spaces_button.config(state = tk.ACTIVE)
+    
+    # --------------------------------------------------------------------------
+    #   Escape-key-press Event Handler
+    # --------------------------------------------------------------------------
+    def escapePressHandler(self, event):
+        # ensure focus on window
+        self.focus_set()
+        
+        # do nothing if camera is not active, or no camera object exists
+        if not self.__camera_is_active or not self.__camera: return
+        
+        try:
+            # close the camera without taking new image
+            self.__camera.stop_preview()
+            self.__camera.close()
+            self.__camera_is_active = False
+            
+            if self.__is_verbose: 
+                print "INFO: PiCam deactivated."
+            
+        except:
+            # image failed to close for some reason, show error message
+            if self.__is_verbose:
+                print: "ERROR: PiCam failed to close correctly."
     
     # --------------------------------------------------------------------------
     #   Key-press Event Handler
