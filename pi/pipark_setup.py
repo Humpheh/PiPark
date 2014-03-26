@@ -614,6 +614,7 @@ class Application(tk.Frame):
         self.spaces_button.setOff()
         self.cps_button.setOff()
         
+        response = True
         # if the user hasn't recently saved, ask if they really wish to quit
         if not self.__is_saved: 
             response = tkMessageBox.askyesno(
