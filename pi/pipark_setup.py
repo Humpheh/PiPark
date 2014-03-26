@@ -235,11 +235,11 @@ class Application(tk.Frame):
             # register the pi
             if response: 
                 self.saveData()
-                continue
             else:
                 tkMessageBox.showinfo(title = "PiPark Setup",
                     message = "Registration not completed.")
                 return
+                
         # attempt to import the setup data and ensure 'boxes' is a list
         try:
             import setup_data
