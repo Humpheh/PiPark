@@ -500,28 +500,40 @@ class Application(tk.Frame):
         self.cps_button.setOff()
         
         # set initial responses
+        response = False
         response1 = False
         response2 = False
         
-        # ensure that most recent changes to data have been saved
+        # if setup data has not been saved. Ask user if they would like to save
+        # before continuing.
         if not self.__is_saved:
-            response1 = tkMessageBox.askyesno(title = "Save Setup",
-                message = "Most recent changes to setup haven't been saved. "
-                + "Would you like to save and run PiPark?")
-        else:
-            # if the user is positive, close the setup and run the main program
-            response2 = tkMessageBox.askyesno(title = "Setup Complete",
-                message = "Are you ready to leave setup and run PiPark?")
-        
-        if response1: self.saveData()
-        if response1 or response2:
+            response = tkMessageBox.askyesno(
+                title = "Save Setup",
+                type = tkMessageBox.YESNOCANCEL,
+                message = "Most recent changes to setup have not been saved."
+                + "Would you like to save before running PiPark?"
+                )
+            if response: self.saveData()
             
-            # final check that data is valid
+        # data is saved, ask the user if they are sure they wish to quit.
+        else:
+            response = tkMessageBox.askyesno(
+                title = "Save Setup",
+                message = "Are you ready to leave setup and run PiPark?"
+                )
+        
+        # user wishes to quit setup and run pipark, so do it!
+        if response:
+            # ensure data is valid before continuing
             if not self.checkData():
-                tkMessage.showinfo(title = "PiPark Setup",
+                # data invalid, so display message and return
+                tkMessage.showinfo(
+                    title = "PiPark Setup",
                     message = "Saved data is invalid. Ensure there are 3 "
-                    + "control points and at least 1 parking space marked.")
-                
+                    + "control points and at least 1 parking space marked."
+                    )
+                return
+                    
             self.quit_button.invoke()
             if self.__is_verbose: print "INFO: Setup application terminated. "
             main.main()
