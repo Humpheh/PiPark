@@ -10,6 +10,8 @@ Test main application
 import Tkinter as tk
 import tkMessageBox
 import imageread
+import thread
+import time
     
 # ==============================================================================
 #
@@ -27,6 +29,7 @@ class MainApplication(tk.Frame):
     
     def __init__(self, master = None, camera = None):
         """Application constructor method. """
+        print "INFO: Constructor called."
 
         # run super constructor method
         tk.Frame.__init__(self, master)
@@ -36,14 +39,14 @@ class MainApplication(tk.Frame):
         self.__camera = camera
         
         # populate the application
-        self.createWidgets()
+        self.createWidgets(), (self)
         
         # create key-press handlers -> set focus to this frame
         self.bind("<Escape>", self.escapePressHandler)
         self.focus_set()
         
         # run the test app
-        #self.run()
+        #thread.start_new_thread(self.run(), ())
         
     def escapePressHandler(self, event):
         if self.__is_verbose: print "ACTION: Escape key pressed."
@@ -121,7 +124,8 @@ def main():
     appropriate availabity of the spaces to the server.
     
     """
-    
+    import imageread
+    print "INFO: main()"
     # setup camera
     camera = imageread.setup_camera(is_fullscreen = True)
     
@@ -131,16 +135,33 @@ def main():
     app.master.title("PiPark 2014")
     app.mainloop()
 
+def run():
         
+    # >>>>>>>>>>
+    # Replace main() code from here!!
+    # <<<<<<<<<<
+    import imageread
+    print "INFO: run()"
+    
+    # image save location
+    image_location = "./images/testimage.jpeg"
+        
+    while True:
+        #self.__camera.capture(image_location)
+        print "INFO: New image captured."
+    
+        print "INFO: Going to sleep for 5 seconds"
+        imageread.time.sleep(5)
+             
 # -----------------------------------------------------------------------------
 #  Run Program
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    # setup camera
-    camera = imageread.setup_camera(is_fullscreen = True)
+    try:
+        thread.start_new_thread(main, ())
+        thread.start_new_thread(run, ())
+    except:
+        print "ERROR: Unable to start threads"
     
-    # create the application
-    root = tk.Tk()
-    app = MainApplication(master = root, camera = camera)
-    app.master.title("PiPark 2014")
-    app.mainloop()
+    
+
