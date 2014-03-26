@@ -7,7 +7,7 @@ control points and register the car park with the server. The main PiPark
 program can be invoked from the menu.
 
 Author: Nicholas Sanders and Humphrey Shotton
-Version: 2.0 [2014/03/23]
+Version: 2.1 [2014/03/26]
 
 """
 import os
@@ -191,6 +191,7 @@ class Application(tk.Frame):
         
         # save to ./setup_data.py        
         print >> f1, ']'
+        self.__is_saved = True
             
         if self.__is_verbose: print 'INFO: Data saved in file setup_data.py.'
         tkMessageBox.showinfo(title = "PiPark Setup", 
@@ -214,13 +215,31 @@ class Application(tk.Frame):
                 title = "Error!", 
                 message = "Problem loading data from setup_data.py"
                 )
-        
+        self.__is_saved = True
         return setup_data.boxes
                     
     # --------------------------------------------------------------------------
     #   Register Data
     # --------------------------------------------------------------------------
     def register(self):
+        """Register the Pi with the server. """
+        
+        # if setup hasn't been saved recently since last change, ask the if 
+        # user to save first
+        if not self.__is_saved:
+            response = tkMessageBox.askokcancel(title = "Save Setup",
+                message = "Setup data must be saved before the registration"
+                + " process can be completed. Would you like to save now?")
+                
+            # if user selects 'yes' save the data and continue, else do not 
+            # register the pi
+            if response: 
+                self.saveData()
+                continue
+            else:
+                tkMessageBox.showinfo(title = "PiPark Setup",
+                    message = "Registration not completed.")
+                return
         # attempt to import the setup data and ensure 'boxes' is a list
         try:
             import setup_data
@@ -347,6 +366,8 @@ class Application(tk.Frame):
         # add new control points (max = 3)
         if self.cps_button.getIsActive():
             if self.__is_verbose: print "INFO: Add Control Point"
+            self.__is_saved = False
+            
             this_cp_id = self.__control_points.getCurrentBox()
             this_cp = self.__control_points.boxes[this_cp_id]
             this_cp.updatePoints(event.x, event.y)
@@ -355,6 +376,8 @@ class Application(tk.Frame):
         # add new parking space
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Add Parking Space"
+            self.__is_saved = False
+            
             this_space_id = self.__parking_spaces.getCurrentBox()
             this_space = self.__parking_spaces.boxes[this_space_id]
             this_space.updatePoints(event.x, event.y)
@@ -378,12 +401,14 @@ class Application(tk.Frame):
         # perform correct operation, dependent on which toggle button is active
         if self.cps_button.getIsActive():
             if self.__is_verbose: print "INFO: Remove Control Point"
+            self.__is_saved = False
             
             self.__control_points.boxes[self.__control_points.getCurrentBox()].clear()
             self.__control_points.boxes[self.__control_points.getCurrentBox()].deleteRectangle(self.display)
             
         elif self.spaces_button.getIsActive():
             if self.__is_verbose: print "INFO: Remove parking space"
+            self.__is_saved = False
             
             self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].clear()
             self.__parking_spaces.boxes[self.__parking_spaces.getCurrentBox()].deleteRectangle(self.display)
@@ -412,14 +437,20 @@ class Application(tk.Frame):
         self.spaces_button.setOff()
         self.cps_button.setOff()
         
-        # if the user is positive, close the setup and run the main program
-        response = tkMessageBox.askyesno(title = "Setup Complete",
-            message = "Are you ready to leave setup and run PiPark?")
+        if not self.__is_saved:
+            response = tkMessageBox.askyesno(title = "Save Setup",
+                message = "Most recent changes to setup haven't been saved. "
+                + "Would you like to save and run PiPark?")
+        else:
+            # if the user is positive, close the setup and run the main program
+            response = tkMessageBox.askyesno(title = "Setup Complete",
+                message = "Are you ready to leave setup and run PiPark?")
                 
-        if response:   
+        if response:
+            self.saveData()   
             self.quit_button.invoke()
             if self.__is_verbose: print "INFO: Setup application terminated. "
-            main.run_main()
+            main.main()
     
     def clickRegister(self):
         """Register the car park with the server. """
@@ -435,6 +466,7 @@ class Application(tk.Frame):
     def clickNewImage(self):
         """Use PiCam to take new 'setup image' for PiPark setup. """
         if self.__is_verbose: print "ACTION: Clicked 'Capture New Image'"
+        self.__is_saved = False
         
         # turn off toggle buttons
         self.spaces_button.setOff()
@@ -443,7 +475,8 @@ class Application(tk.Frame):
         # clear the Tkinter display canvas, and all related setupdata. Then
         # turn on PiCam to allow for new image to be taken.
         self.display.delete(tk.ALL)
-        self.clear_button.invoke()
+        self.__parking_spaces.clearAll(self.display)
+        self.__control_points.clearAll(self.display)
         self.turnOnCamera()
     
     def clickSave(self):
@@ -478,6 +511,7 @@ class Application(tk.Frame):
     
     def clickClear(self):
         if self.__is_verbose: print "ACTION: Clicked 'Clear'"
+        self.__is_saved = False
         
         # clear all data points, to start afresh
         self.__parking_spaces.clearAll(self.display)
