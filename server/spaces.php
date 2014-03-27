@@ -111,7 +111,22 @@ require_once ('includes/header.php');
 		<?php
 	} ?>
 </div>
-
+    <?php if(isset($_GET['refresh'])){ ?>
+        <a class="btn btn-danger" href="?id=<?php echo $park['park_id']; ?>">
+            <span class="glyphicon glyphicon-refresh" style="margin-right:5px;"></span>
+            Turn off Auto Refresh</a>
+        <script>
+         function refresh() {
+             window.location.reload(true);
+         }
+     
+         setTimeout(refresh, 5000);
+         </script>
+    <?php } else { ?>
+        <a class="btn btn-success" href="?id=<?php echo $park['park_id']; ?>&refresh">
+            <span class="glyphicon glyphicon-refresh" style="margin-right:5px;"></span>
+            Turn on Auto Refresh</a>
+    <?php } ?>
 <?php
 require_once ('includes/footer.php');
 ?>

@@ -13,6 +13,8 @@ $base = dirname(__FILE__);
 require_once($base . '/config.php');
 require_once($base . '/includes/functions.php');
 
+date_default_timezone_set('Europe/London');
+
 /**
  * Class for organising database connection 
  */
