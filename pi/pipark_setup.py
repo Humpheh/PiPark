@@ -17,6 +17,7 @@ from PIL import Image, ImageTk
 
 import imageread
 import main
+import main2
 import setup_selectarea as sa  # not currently used
 import settings as s
 from setup_classes2 import ParkingSpace, Boxes
@@ -577,7 +578,7 @@ class Application(tk.Frame):
                     
             self.quit_button.invoke()
             if self.__is_verbose: print "INFO: Setup application terminated. "
-            main.main()
+            main2.main()
     
     def clickRegister(self):
         """Register the car park with the server. """
