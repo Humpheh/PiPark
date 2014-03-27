@@ -67,6 +67,11 @@ class MainApplication(tk.Frame):
         # populate the application WITH W-W-W-WWIDDDDGEETTSS
         self.__createWidgets()
         
+        # create canvas to display logo
+        self.logo = tk.Canvas(self, width = 400, height = 148)
+        self.logo.grid(row = 0, column = 0, rowspan = 1, columnspan = 2)
+        self.loadImage("./images/logo_main.jpeg", self.logo, 400, 148)
+        
         # create key-press handlers -> set focus to this frame
         self.bind("<Escape>", self.escapePressHandler)
         self.focus_set()
@@ -129,11 +134,6 @@ class MainApplication(tk.Frame):
         """Create the widgets. """
         if self.__is_verbose: print "INFO: Creating Widgets!"
         
-        # create canvas to display logo
-        self.logo = tk.Canvas(self, width = 400, height = 148)
-        self.logo.grid(row = 0, column = 0, rowspan = 1, columnspan = 2)
-        self.loadImage("./images/logo_main.jpg", self.logo, 400, 148)
-        
         # create show preview button
         self.preview_button = tk.Button(self, text = "Show Camera Feed",
             command = self.clickStartPreview)
@@ -166,6 +166,9 @@ class MainApplication(tk.Frame):
         """
         # clear the old canvas
         canvas.delete(tk.ALL)
+        
+        if self.__is_verbose:
+            print: "INFO: Tkinter Canvas cleared. Read to load new image. "
         
         try:
             # guard against incorrect argument datatypes
