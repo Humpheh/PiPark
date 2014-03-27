@@ -34,7 +34,7 @@ class Application(tk.Frame):
     # --------------------------------------------------------------------------
     
     # booleans
-    __is_verbose = False  # print messages to terminal
+    __is_verbose = s.IS_VERBOSE  # print messages to terminal
     __is_saved = False
     
     # lists to hold parking space and control point references
