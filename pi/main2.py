@@ -262,7 +262,74 @@ def main():
     # do not end main thread until user 
     while not has_quit:
     	pass
-           
+
+
+# -----------------------------------------------------------------------------
+#  Get Area Values
+# -----------------------------------------------------------------------------
+def __get_area_values(area):
+    """
+    Calculate the co-ordinates and widths of the area values, from the 
+    resolution of the image used.
+    
+    Keyword Arguments:
+    area -- tuple in form (x1, y1, x2, y2) from setup.py
+
+    Returns:
+    x, y, width, height
+    """
+
+    try:
+        assert isinstance(area, tuple)
+    except AssertionError:
+        print "ERROR: Area must be tuple data type [__get_area_values()]."
+
+    min_x_percent = area[2] if area[2] < area[4] else area[4]
+    min_y_percent = area[3] if area[3] < area[5] else area[5]
+    width_percent = abs(area[2] - area[4])
+    height_percent = abs(area[3] - area[5])
+
+    min_x = int(min_x_percent * s.PICTURE_RESOLUTION[0])
+    min_y = int(min_y_percent * s.PICTURE_RESOLUTION[1])
+    width = int(width_percent * s.PICTURE_RESOLUTION[0])
+    height = int(height_percent * s.PICTURE_RESOLUTION[1])
+
+    return min_x, min_y, width, height
+
+# -----------------------------------------------------------------------------
+#  Setup Box Data
+# -----------------------------------------------------------------------------
+def __setup_box_data():
+    """Import and return the boxes dictionary from setup_data.py. """
+    
+    # attempt to load dictionary from setup_data.py, if file does not exist
+    # print error message and quit the program
+    try:
+        box_data = setup_data.boxes
+        print "INFO: box_data successfully created."
+    except:
+        print "ERROR: setup_data.py does not contain the variable 'boxes'."
+        sys.exit()
+    
+    # setup_data.py exists, check that dictionary contains items, if dicionary
+    # is empty print error message and quit the program
+    if not box_data:
+        print "ERROR: boxes in setup_data.py is empty!"
+        sys.exit()
+    else:
+        print "INFO: box_data contains data!"
+
+    space_boxes = []
+    control_boxes = []
+    
+    for data_set in box_data:
+        if data_set[1] == 0: space_boxes.append(data_set)
+        elif data_set[1] == 1: control_boxes.append(data_set)
+        else: print "ERROR: Box-type not set to either 0 or 1."
+
+    print "space boxes:", space_boxes, "\ncontrol boxes:", control_boxes
+    return space_boxes, control_boxes
+        
 # -----------------------------------------------------------------------------
 #  Run Program
 # -----------------------------------------------------------------------------
