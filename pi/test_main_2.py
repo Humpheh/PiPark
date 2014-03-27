@@ -12,7 +12,9 @@ import tkMessageBox
 import imageread
 import thread
 import time
-    
+
+camera = imageread.setup_camera(is_fullscreen = False)
+
 # ==============================================================================
 #
 #       Tkinter Application
@@ -39,7 +41,7 @@ class MainApplication(tk.Frame):
         self.__camera = camera
         
         # populate the application
-        self.createWidgets(), (self)
+        self.createWidgets()
         
         # create key-press handlers -> set focus to this frame
         self.bind("<Escape>", self.escapePressHandler)
@@ -89,10 +91,7 @@ class MainApplication(tk.Frame):
         self.quit_button.grid()
             
             
-    # get/set __is_verbose
-    def setIsVerbose(value):
-        if isinstance(value, bool): self.__is_verbose = value
-        
+    # get __is_verbose
     def getIsVerbose():
         return self.__is_verbose
         
@@ -124,10 +123,12 @@ def main():
     appropriate availabity of the spaces to the server.
     
     """
+    
     import imageread
     print "INFO: main()"
     # setup camera
-    camera = imageread.setup_camera(is_fullscreen = True)
+    global camera
+    #camera = imageread.setup_camera(is_fullscreen = False)
     
     # create the application
     root = tk.Tk()
@@ -142,12 +143,13 @@ def run():
     # <<<<<<<<<<
     import imageread
     print "INFO: run()"
+    global camera
     
     # image save location
     image_location = "./images/testimage.jpeg"
         
     while True:
-        #self.__camera.capture(image_location)
+        camera.capture(image_location)
         print "INFO: New image captured."
     
         print "INFO: Going to sleep for 5 seconds"
@@ -157,11 +159,16 @@ def run():
 #  Run Program
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
+    
+    time.sleep(3)
+    
     try:
         thread.start_new_thread(main, ())
         thread.start_new_thread(run, ())
     except:
-        print "ERROR: Unable to start threads"
+    	print "ERROR: Failed to start new thread"
+    while True:
+    	pass
     
     
 
