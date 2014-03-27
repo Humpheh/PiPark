@@ -14,6 +14,8 @@ import thread
 import time
 import urllib
 
+from PIL import Image, ImageTk
+
 import senddata
 import imageread
 import settings as s
