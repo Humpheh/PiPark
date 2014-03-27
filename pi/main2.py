@@ -13,6 +13,16 @@ import tkMessageBox
 import imageread
 import thread
 import time
+import senddata
+import urllib
+import settings as s
+
+try:
+    # check setup_data exists
+    import setup_data
+except ImportError:
+    print "ERROR: setup_data.py does not exist. Run ./pipark_setup.py first."
+    sys.exit()
 
 # global variables
 camera = imageread.setup_camera(is_fullscreen = False)
