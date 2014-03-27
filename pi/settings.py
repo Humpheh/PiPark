@@ -36,5 +36,5 @@ WINDOW_HEIGHT = 800
 PARK_ID = 1
 
 SERVER_PASS = 'pi'
-SERVER_URL = "http://10.173.33.111/pipark/server/"
+SERVER_URL = "http://10.173.33.129/pipark/server/"
 
