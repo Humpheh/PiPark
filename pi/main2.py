@@ -24,7 +24,9 @@ except ImportError:
     print "ERROR: setup_data.py does not exist. Run ./pipark_setup.py first."
     sys.exit()
 
-
+# global variables
+camera = None
+has_quit = False
 
 # ==============================================================================
 #
@@ -254,8 +256,11 @@ def run():
         imageread.time.sleep(5)
 
 def main():
-    # use global variable DUN DUN DUNNN!
+    # use global variables DUN DUN DUNNN!
     global has_quit
+    global camera
+    
+    camera = imageread.setup_camera(is_fullscreen = False)
     
     # sleep for 3 seconds to ensure camera has loaded before continuing.
     time.sleep(3)
@@ -342,11 +347,6 @@ def __setup_box_data():
 #  Run Program
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    
-    # global variables
-    camera = imageread.setup_camera(is_fullscreen = False)
-    has_quit = False
-    
     main()
     
     
