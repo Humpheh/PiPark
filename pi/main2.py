@@ -1,28 +1,30 @@
 """
 Authors: Nicholas Sanders & Humphrey Shotton
 Filename: main2.py
-Version: 2.0 [2014/03/27]
+Version: 2.1 [2014/03/27]
 
-Main application. Spins two threads, one to deal with GUI and inputs, and the
-other to handle the pipark detection software.
+Main application. Two threads are created, one to deal with GUI and inputs, and
+the other to handle the PiPark Smart Parking System detection software.
 
 """
 # les importations
 import Tkinter as tk
 import tkMessageBox
-import imageread
 import thread
 import time
-import senddata
 import urllib
+
+import senddata
+import imageread
 import settings as s
 
 try:
     # check setup_data exists
     import setup_data
 except ImportError:
+    # oh noes, it doesn't =(
     print "ERROR: setup_data.py does not exist. Run ./pipark_setup.py first."
-    sys.exit()
+    sys.exit(1)
 
 # global variables
 camera = None
@@ -34,45 +36,65 @@ has_quit = False
 #
 # ==============================================================================
 class MainApplication(tk.Frame):
+    # ------------------------------------------------------------------------------
+    #  Instance Attributes
+    # ------------------------------------------------------------------------------
     
     # output messages to the terminal?
-    __is_verbose = True
+    __is_verbose = s.IS_VERBOSE
     
     # pi camera
     __camera = None
     __preview_is_active = False
     
-    def __init__(self, master = None, camera = None):
+    # --------------------------------------------------------------------------
+    #  Constructor Method
+    # --------------------------------------------------------------------------
+    def __init__(self, master = None):
         """Application constructor method. """
-        print "INFO: Constructor called."
+        if self.__is_verbose: print "INFO: Application constructor called."
 
         # run super constructor method
         tk.Frame.__init__(self, master)
-
+        
+        # apply grid layout
         self.grid()
         
+        # give application a reference to the global camera object
+        global camera
         self.__camera = camera
         
-        # populate the application
-        self.createWidgets()
+        # populate the application WITH W-W-W-WWIDDDDGEETTSS
+        self.__createWidgets()
         
         # create key-press handlers -> set focus to this frame
         self.bind("<Escape>", self.escapePressHandler)
         self.focus_set()
-        
-        # run the test app
-        #thread.start_new_thread(self.run(), ())
-        
+      
+    # --------------------------------------------------------------------------
+    #  Key Event Handlers
+    # --------------------------------------------------------------------------
     def escapePressHandler(self, event):
-        if self.__is_verbose: print "ACTION: Escape key pressed."
+        """Handle ESCAPE key events. """
+        
+        if self.__is_verbose: print "ACTION: ESCAPE key pressed."
+        
         
         # if the camera is previewing -> stop the preview
         if self.__camera and self.__preview_is_active:
             self.__camera.stop_preview()
             self.__preview_is_active = False
+            if self.__is_verbose: print "INFO: Camera preview stopped. "
+            
+            # reset focus to application frame
             self.focus_set()
     
+    # --------------------------------------------------------------------------
+    #  Button Press Events
+    # --------------------------------------------------------------------------
     def clickStartPreview(self):
+        """Handle 'Start Preview' button click events. """
+        if self.__is_verbose: print "ACTION: 'Start Preview' clicked! "
         
         # turn on the camera preview
         if self.__camera and not self.__preview_is_active:
@@ -84,154 +106,266 @@ class MainApplication(tk.Frame):
             
             self.__camera.start_preview()
             self.__preview_is_active = True
+            if self.__is_verbose: print "INFO: Camera preview started. "
+            
+            # reset foucs to the application frame
             self.focus_set()
     
+    
     def clickQuit(self):
+        """Handle 'Quit' button click events. """
+        
+        # use global variable 'has_quit'
         global has_quit
         
         self.quit()
         self.master.destroy()
-        has_quit = True
+        has_quit = True  # trigger exit of program
     
-    def createWidgets(self):
+    # --------------------------------------------------------------------------
+    #  Create Widgets
+    # --------------------------------------------------------------------------
+    def __createWidgets(self):
+        """Create the widgets. """
         if self.__is_verbose: print "INFO: Creating Widgets!"
+        
+        # create canvas to display logo
+        self.logo = tk.Canvas(self, width = 400, height = 148)
+        self.logo.grid(row = 0, column = 0, rowspan = 1, columnspan = 2)
+        self.loadImage("./images/logo_main.jpg", self.logo, 400, 148)
         
         # create show preview button
         self.preview_button = tk.Button(self, text = "Show Camera Feed",
             command = self.clickStartPreview)
-        self.preview_button.grid()
+        self.preview_button.grid(row = 1, column = 0, 
+            sticky = tk.W + tk.E + tk.N + tk.S)
         
         # create quit button
         self.quit_button = tk.Button(self, text = "Quit",
             command = self.clickQuit)
-        self.quit_button.grid()
+        self.quit_button.grid(row = 1, column = 1, 
+            sticky = tk.W + tk.E + tk.N + tk.S)
+    
+    # --------------------------------------------------------------------------
+    #   Load Image
+    # --------------------------------------------------------------------------
+    def loadImage(self, image_address, canvas, width, height):
+        """
+        Load image at image_address. If the load is successful then return True,
+        otherwise return False.
+        
+        Keyword Arguments:
+        image_address -- The address of the image to be loaded (default = './').
+        canvas -- The Tkinter Canvas into which the image is loaded.
+        width -- Width of the image to load.
+        height -- Height of the image to load.
+        
+        Returns:
+        Boolean -- True if load successful, False if not.
+        
+        """
+        # clear the old canvas
+        canvas.delete(tk.ALL)
+        
+        try:
+            # guard against incorrect argument datatypes
+            if not isinstance(canvas, tk.Canvas): raise TypeError
+            if not isinstance(image_address, str): raise TypeError
+            if not isinstance(width, int): raise TypeError
+            if not isinstance(height, int): raise TypeError
             
+            # load the image into the canvas
+            photo = ImageTk.PhotoImage(Image.open(image_address))
+            canvas.create_image((width, height), image = photo)
+            canvas.image = photo
             
-    # get __is_verbose
+            # image load successful
+            return True
+        
+        except TypeError:
+            # arguments of incorrect data type, load unsuccessful
+            if self.__is_verbose: 
+                print "ERROR: loadImage() arguments of incorrect data type."
+            return False
+        except:
+            # image failed to load
+            if self.__is_verbose: 
+                print "ERROR: loadImage() failed to load image " + image_address
+            return False
+            
+    
+    # --------------------------------------------------------------------------
+    #  Getter(s)
+    # --------------------------------------------------------------------------
+    # is verbose
     def getIsVerbose():
+        """Retrun boolean whether application is verbose or not. """
         return self.__is_verbose
         
-    def run(self):
-        
-        # >>>>>>>>>>
-        # Replace main() code from here!!
-        # <<<<<<<<<<
 
-        # image save location
-        image_location = "./images/testimage.jpeg"
-        
-        while True:
-            self.__camera.capture(image_location)
-            print "INFO: New image captured."
-    
-            print "INFO: Going to sleep for 5 seconds"
-            imageread.time.sleep(5)
-        
 
 # ==============================================================================
 #
-#       Main Program
+#       Main Program Functions
 #
 # ==============================================================================
+# ------------------------------------------------------------------------------
+#  Create the Application
+# ------------------------------------------------------------------------------
 def create_application():
     """
-    Run main program loop. Detect changes to parking spaces and update 
-    appropriate availabity of the spaces to the server.
+    Create an instance of the MainApplication class defined in this module. 
+    Set the GUI to run in its mainloop().
     
     """
-    print "INFO: main()"
-    # setup camera
-    global camera
-    #camera = imageread.setup_camera(is_fullscreen = False)
+    if s.IS_VERBOSE: print "INFO: create_application() called. "
     
-    # create the application
+    # create the TKinter application
     root = tk.Tk()
-    app = MainApplication(master = root, camera = camera)
+    app = MainApplication(master = root)
     app.master.title("PiPark 2014")
     app.mainloop()
 
+# ------------------------------------------------------------------------------
+#  Run PiPark
+# ------------------------------------------------------------------------------
 def run():
-    print "INFO: run()"
-    global camera
+    """
+    Run the main PiPark program. This function periodically captures a new image
+    and then tests for changes in the parking space reference areas compared to
+    the control points as set during the setup procedure (./pipark_setup.py).
     
-    # image save location
-    image_location = "./images/pipark.jpeg"
+    When a change has been detected for 3 ticks the server (to which the pi is
+    registered) is updated to accordingly show whether the appropriate parking
+    spaces are filled or empty.
+    
+    This function is run mainly as an infinite loop until the application
+    is destroyed.
+    
+    """
+    if s.IS_VERBOSE: print "INFO: run() called. "
+    
+     # --- Pre-loop Setup ------------------------------------------------------
+    
+    # variables
+    global camera  # use global pi camera object!
+    image_location = "./images/pipark.jpeg"  # image save location
+    loop_delay = 5  # duration between each loop in seconds
         
-    # load data sets and count num spaces on control boxes
+    # load data sets and count the number of spaces and control boxes
     space_boxes, control_boxes = __setup_box_data()
-    
     num_spaces = len(space_boxes)
     num_controls = len(control_boxes)
-
-    print "Number of spaces:", num_spaces, "Number of Control boxes:", num_controls
+    if s.IS_VERBOSE: print "INFO: #Spaces:", num_spaces, "\t#CPs:", num_controls
     
+    # asserrt that the correct number of spaces and CPs are present in the data
     assert num_spaces > 0
     assert num_controls == 3
     
+    # set initial values for status and ticks
     last_status = [None for i in range(10)]
     last_ticks = [3 for i in range(10)]
     
-    # run centralised program loop
+    
     while True:
+        # --- Space and CP Average Calculation Phase ---------------------------
+        
+        # clear lists containing average colour values for spaces
         space_averages = []
         control_averages = []
         
-        # take new picture, save to specified location
+        # capture new image & save to specified location
         camera.capture(image_location)
-        print "INFO: New picture taken,", image_location
+        print "INFO: New image saved to:", image_location
 
-        # load image
         try:
+            # load image for processing
             image = imageread.Image.open(image_location)
             pixels = image.load()
         except:
-            print "ERROR: Image has failed to load."
+            print "ERROR: The image has failed to load. Check camera setup. "
+            sys.exit(1)
 
-        # setup spaces
+        # setup space dimensions and averages, and if verbose, print to terminal
         for space in space_boxes:
             space_x = space[2]
             space_y = space[3]
             space_w = abs(space[4] - space[2])
             space_h = abs(space[5] - space[3])
             
-            #space_x, space_y, space_w, space_h = __get_area_values(space)
+            if s.IS_VERBOSE: 
+                print "INFO: Space", space[0], "dimensions:"
+                print "      x:", space_x, "y:", space_y, "w:", space_w, "h:", space_h
             
-            print "Space dims:", "x", space_x, "y", space_y, "w", space_w, "h", space_h
+            # append space average pixel to list of averages
+            space_average = imageread.get_area_average(
+                pixels, 
+                space_x, 
+                space_y, 
+                space_w, 
+                space_h
+                )
+            space_averages.append(space_average)
+        
+        
+        if s.IS_VERBOSE: print ""  # line break
 
-            space_averages.append(imageread.get_area_average(pixels, space_x, space_y, space_w, space_h))
-
-        # setup control
+        # setup CP dimensions and averages and, if verbose, print to terminal
         for control in control_boxes:
-            
             control_x = control[2]
             control_y = control[3]
             control_w = abs(control[4] - control[2])
             control_h = abs(control[5] - control[3])
 
-            #control_x, control_y, control_w, control_h = __get_area_values(control)
-
-            print "Control dims:", "x", control_x, "y", control_y, "w", control_w, "h", control_h
-
-            control_averages.append(imageread.get_area_average(pixels, control_x, control_y, control_w, control_h))
+            if s.IS_VERBOSE: 
+                print "INFO: CP", control[0], "dimensions:"
+                print "      x:", control_x, "y:", control_y, "w:", control_w, "h:", control_h
             
-        print "\n\n"
-        # compare control points to spaces
+            # append control average pixel to list of averages
+            control_average = imageread.get_area_average(
+                pixels, 
+                control_x, 
+                control_y, 
+                control_w, 
+                control_h
+                )
+            control_averages.append(control_average)
+            
+            
+        # --- Average Comparisons and Data Upload Phase ------------------------
+        
+        # average pixel values now calculated for all Control Points and Parking
+        # Spaces. Now move on to comparison and upload phase.
+        if s.IS_VERBOSE: print "\n\n"  # doubleline break
+        
+        # compare control points averages to parking spaces averages
         for i, space in zip(space_boxes, space_averages):
-
+            
+            # number of control points that conflict with parking space reading
             num_controls = 0
+            
+            # for each control point (3 in total) compare each parking space
             for control in control_averages:
+                
+                # make comparison
                 if imageread.compare_area(space, control):
                     num_controls += 1
 
-            # Determine if occupied
+            # determine if parking space is occupied. If at least two CPs agree
+            # that the space is occupied, set the space to occupied.
             is_occupied = False
             if num_controls >= 2: is_occupied = True
             
-            print "INFO: Space", i[0], "is", ("occupied" if is_occupied else "vacant"), "\n"
+            if s.IS_VERBOSE and is_occupied:
+                print "INFO: Space", i[0], "is filled.\n"
+            elif s.IS_VERBOSE and not is_occupied:
+                print "INFO: Space", i[0], "is empty.\n"
             
+            # update the server with most recent space values after 3 ticks
             if last_status[i[0]] != is_occupied:
                 print "INFO: Detected change in space", i[0]
-                print "INFO: Space", i[0], "has been the", ("occupied" if is_occupied else "vacant"), "for", last_ticks[i[0]], "tick(s).\n"
+                print "INFO: Space", i[0], "has been", ("occupied" if is_occupied else "vacant"), "for", last_ticks[i[0]], "tick(s).\n"
+                
                 if last_ticks[i[0]] < 3:
                     last_ticks[i[0]] += 1
                 else:
@@ -242,72 +376,36 @@ def run():
                     print senddata.send_update(i[0], num), "\n"
             else:
                 last_ticks[i[0]] = 1
-                
-            # old version    
-            """if num_controls >= 2:
-               # last_status
-                print "INFO: Space", i[0], "occupied!"
-                print senddata.send_update(i[0], 1), "\n"
-            else:
-                print "INFO: Space", i[0], "vacant!"
-                print senddata.send_update(i[0], 0), "\n" """
 
-        print "INFO: Sleeping for 5s"
-        imageread.time.sleep(5)
+        if s.IS_VERBOSE: print "INFO: Sleep for", loop_delay, "seconds... Zzz."
+        imageread.time.sleep(loop_delay)
 
+
+# -----------------------------------------------------------------------------
+#  Main
+# -----------------------------------------------------------------------------
 def main():
-    # use global variables DUN DUN DUNNN!
+    """Start PiPark application and Smart Parking System loop. """
+    
+    # use global variables (Oh D-d-d-dear)!
     global has_quit
     global camera
     
+    # instantiate the camerea object to global camera variable
     camera = imageread.setup_camera(is_fullscreen = False)
     
-    # sleep for 3 seconds to ensure camera has loaded before continuing.
-    time.sleep(3)
+    # now create two threads, one in which to run the MainApplication and
+    # the other the run the main program loop.
     
     try:
-        # spin thread for the application and for the detection software
         thread.start_new_thread(create_application, ())
         thread.start_new_thread(run, ())
     except:
-    	print "ERROR: Failed to start new thread =("
+    	print "ERROR: Failed to start new thread. =("
         
-    # do not end main thread until user 
+    # do not end main thread until user has quit and destroyed the application
     while not has_quit:
     	pass
-
-
-# -----------------------------------------------------------------------------
-#  Get Area Values
-# -----------------------------------------------------------------------------
-def __get_area_values(area):
-    """
-    Calculate the co-ordinates and widths of the area values, from the 
-    resolution of the image used.
-    
-    Keyword Arguments:
-    area -- tuple in form (x1, y1, x2, y2) from setup.py
-
-    Returns:
-    x, y, width, height
-    """
-
-    try:
-        assert isinstance(area, tuple)
-    except AssertionError:
-        print "ERROR: Area must be tuple data type [__get_area_values()]."
-
-    min_x_percent = area[2] if area[2] < area[4] else area[4]
-    min_y_percent = area[3] if area[3] < area[5] else area[5]
-    width_percent = abs(area[2] - area[4])
-    height_percent = abs(area[3] - area[5])
-
-    min_x = int(min_x_percent * s.PICTURE_RESOLUTION[0])
-    min_y = int(min_y_percent * s.PICTURE_RESOLUTION[1])
-    width = int(width_percent * s.PICTURE_RESOLUTION[0])
-    height = int(height_percent * s.PICTURE_RESOLUTION[1])
-
-    return min_x, min_y, width, height
 
 # -----------------------------------------------------------------------------
 #  Setup Box Data
