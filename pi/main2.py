@@ -72,7 +72,7 @@ class MainApplication(tk.Frame):
         # create canvas to display logo
         self.logo = tk.Canvas(self, width = 400, height = 148)
         self.logo.grid(row = 0, column = 0, rowspan = 1, columnspan = 2)
-        self.loadImage("./images/logo_main.jpeg", self.logo, 400, 148)
+        self.loadImage("./images/logo_main.jpeg", self.logo, 400/2, 148/2)
         
         # create key-press handlers -> set focus to this frame
         self.bind("<Escape>", self.escapePressHandler)
