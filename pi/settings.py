@@ -29,7 +29,7 @@ IMAGE_THRESHOLD = 20
 # ----------------------------------------------------------------------------- 
 WINDOW_WIDTH = 1000
 WINDOW_HEIGHT = 800
-IS_VERBOSE = true
+IS_VERBOSE = True
 
 # -----------------------------------------------------------------------------
 #  Server Settings and Pi Identification
