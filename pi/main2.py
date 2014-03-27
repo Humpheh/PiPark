@@ -168,7 +168,7 @@ class MainApplication(tk.Frame):
         canvas.delete(tk.ALL)
         
         if self.__is_verbose:
-            print: "INFO: Tkinter Canvas cleared. Read to load new image. "
+            print "INFO: Tkinter Canvas cleared. Read to load new image. "
         
         try:
             # guard against incorrect argument datatypes
