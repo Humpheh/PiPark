@@ -13,7 +13,7 @@ to a central server.
 import urllib
 import urllib2
 import json
-import settings as s
+import data.settings as s
 
 def post_request(vals, url):
     """

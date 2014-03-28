@@ -16,7 +16,8 @@ import sys
 import time
 
 # PiPark
-import settings as s
+import data.settings as s
+    
 try: 
     import picamera
 except ImportError:
