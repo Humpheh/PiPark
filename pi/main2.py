@@ -385,9 +385,10 @@ def run():
                     
                     sendoutput = senddata.send_update(i[0], num)
                     if "success" in sendoutput.keys():
-                        print "      Sucess:", sendoutput["success"]
+                        print "      Success:", sendoutput["success"]
                     elif "error" in sendoutput.keys():
                         print "      Error:", sendoutput["error"]
+                    print ''
             else:
                 last_ticks[i[0]] = 1
 
