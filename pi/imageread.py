@@ -159,11 +159,6 @@ def compare_area(test, expected):
         if abs(test_value - expected_value) > s.IMAGE_THRESHOLD:
             is_different = True
     
-    # print results
-    #print "Test Values:", test
-    #print "Expected Value:", expected
-    print "INFO: Detected difference:", is_different
-    
     return is_different
 
 

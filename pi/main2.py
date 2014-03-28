@@ -349,12 +349,17 @@ def run():
             # number of control points that conflict with parking space reading
             num_controls = 0
             
+            print "INFO: Checking for differences...",
             # for each control point (3 in total) compare each parking space
             for control in control_averages:
                 
                 # make comparison
                 if imageread.compare_area(space, control):
                     num_controls += 1
+                    print "true",
+                else:
+                    print "false",
+            print ''
 
             # determine if parking space is occupied. If at least two CPs agree
             # that the space is occupied, set the space to occupied.
