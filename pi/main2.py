@@ -32,6 +32,7 @@ except ImportError:
 # global variables
 camera = None
 has_quit = False
+occupancy = None  # list of booleans. True for occupied, False for empty. None for no space.
 
 # ==============================================================================
 #
@@ -49,6 +50,8 @@ class MainApplication(tk.Frame):
     # pi camera
     __camera = None
     __preview_is_active = False
+    
+    __label = ""
     
     # --------------------------------------------------------------------------
     #  Constructor Method
@@ -74,11 +77,24 @@ class MainApplication(tk.Frame):
         self.logo = tk.Canvas(self, width = 400, height = 148)
         self.logo.grid(row = 0, column = 0, rowspan = 1, columnspan = 2)
         self.loadImage("./images/logo_main.jpeg", self.logo, 400/2, 148/2)
+        self.updateText()
         
         # create key-press handlers -> set focus to this frame
         self.bind("<Escape>", self.escapePressHandler)
         self.focus_set()
-      
+    
+    def updateText():
+        global occupancy
+        
+        for i in occupancy:
+            num_spaces += 1
+            if i = True: occupied += 1
+        
+        self.__label = "Parking Spaces Available:", occupied, "/", numspaces
+        
+        self.loadImage("./images/logo_main.jpeg", self.logo, 400/2, 148/2)
+        self.logo.create_text(text = self.__label)
+        
     # --------------------------------------------------------------------------
     #  Key Event Handlers
     # --------------------------------------------------------------------------
