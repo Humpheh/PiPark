@@ -32,7 +32,7 @@ except ImportError:
 # global variables
 camera = None
 has_quit = False
-occupancy = None  # list of booleans. True for occupied, False for empty. None for no space.
+occupancy = [None for i in range(10)]  # list of booleans. True for occupied, False for empty. None for no space.
 
 # ==============================================================================
 #
@@ -83,17 +83,21 @@ class MainApplication(tk.Frame):
         self.bind("<Escape>", self.escapePressHandler)
         self.focus_set()
     
-    def updateText():
+    def updateText(self):
+        num_spaces = 0
+        occupied = 0
+        
         global occupancy
         
+        
         for i in occupancy:
-            num_spaces += 1
+            if i != None: num_spaces += 1
             if i == True: occupied += 1
         
-        self.__label = "Parking Spaces Available:", occupied, "/", numspaces
+        self.__label = "Parking Spaces Available:", occupied, "/", num_spaces
         
         self.loadImage("./images/logo_main.jpeg", self.logo, 400/2, 148/2)
-        self.logo.create_text(text = self.__label)
+        self.logo.create_text((200, 130), text = self.__label, fill = "white")
         
     # --------------------------------------------------------------------------
     #  Key Event Handlers
@@ -271,6 +275,8 @@ def run():
     
     # variables
     global camera  # use global pi camera object!
+    global occupancy
+    
     image_location = "./images/pipark.jpeg"  # image save location
     loop_delay = s.PICTURE_DELAY  # duration between each loop in seconds
         
@@ -399,6 +405,7 @@ def run():
                     last_ticks[i[0]] = 1
                     print "      Space", i[0], "has changed status, sending update to server...\n"
                     num = 1 if is_occupied else 0
+                    occupancy = last_status
                     
                     sendoutput = senddata.send_update(i[0], num)
                     if "success" in sendoutput.keys():
