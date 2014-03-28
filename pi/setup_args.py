@@ -51,35 +51,25 @@ class Application(tk.Frame):
                      s.PICTURE_DELAY,
                      s.PICTURE_RESOLUTION[0],
                      s.PICTURE_RESOLUTION[1],
-                     s.CAMERA_WINDOW_SIZE[0],
-                     s.CAMERA_WINDOW_SIZE[1],
                      s.CAMERA_WINDOW_SIZE[2],
                      s.CAMERA_WINDOW_SIZE[3],
-                     s.MAX_PICTURES,
                      s.IMAGE_THRESHOLD,
-                     s.WINDOW_WIDTH,
-                     s.WINDOW_HEIGHT,
                      s.IS_VERBOSE,
                      s.PARK_ID,
                      s.SERVER_PASS,
                      s.SERVER_URL]
         except:
             # can't load, create a list of defaults
-            self.defaults = ['' for i in range(16)]
+            self.defaults = ['' for i in range(11)]
 
         # define the inputs
         self.inputs = [['Wakeup Delay', 'int', 'WAKEUP_DELAY'],
                  ['Picture Delay', 'int', 'PICTURE_DELAY'],
                  ['Picture Resolution W', 'int', 'PICTURE_RESOLUTION[0]'],
                  ['Picture Resolution H', 'int', 'PICTURE_RESOLUTION[1]'],
-                 ['Camera Window X', 'int', 'CAMERA_WINDOW_SIZE[0]'],
-                 ['Camera Window Y', 'int', 'CAMERA_WINDOW_SIZE[1]'],
                  ['Camera Window W', 'int', 'CAMERA_WINDOW_SIZE[2]'],
                  ['Camera Window H', 'int', 'CAMERA_WINDOW_SIZE[3]'],
-                 ['Max Pictures', 'int', 'MAX_PICTURES'],
                  ['Image Threshold', 'int', 'IMAGE_THRESHOLD'],
-                 ['Window Width', 'int', 'WINDOW_WIDTH'],
-                 ['Window Height', 'int', 'WINDOW_HEIGHT'],
                  ['Is Verbose?', 'check', 'IS_VERBOSE'],
                  ['Park ID', 'int', 'PARK_ID'],
                  ['Server Password', 'text', 'SERVER_PASS'],
