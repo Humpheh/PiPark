@@ -93,13 +93,15 @@ class Application(tk.Frame):
             self.options[i] = [0, 0, 0]
 
             # create the input label
-            self.options[i][0] = tk.Label(self, text = self.inputs[i][0], padx = PADDING, justify = tk.LEFT)
+            self.options[i][0] = tk.Label(self,
+                                          text = self.inputs[i][0] + ' (' + self.inputs[i][1] + ')',
+                                          padx = PADDING, justify = tk.LEFT)
             self.options[i][0].grid(row = i, column = 1, sticky = tk.W + tk.E + tk.N + tk.S)
 
             # if text or int, create a Entry box
             if self.inputs[i][1] == 'text' or self.inputs[i][1] == 'int':
                 self.options[i][2] = tk.StringVar()
-                self.options[i][1] = tk.Entry(self, width = 20, textvariable=self.options[i][2])
+                self.options[i][1] = tk.Entry(self, width = 30, textvariable=self.options[i][2])
                 self.options[i][2].set(self.defaults[i])
 
             # create a checkbutton if a check input
