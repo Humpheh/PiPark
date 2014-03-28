@@ -1,6 +1,6 @@
 """
-setup_classes2.py
-Update of setup_classes.py to work with new GUI.
+setup_classes.py
+Update of original setup_classes.py to work with new GUI.
 
 Author: Humphrey Shotton and Nicholas Sanders
 Version: 2.0 [2014/03/23]
@@ -368,7 +368,7 @@ class Boxes:
             self.current_box = 0
             self.boxes = [ControlPoint(j, canvas) for j in range(self.MAX_CPS)]
         else:
-            print "ERROR: setup_classes2.Boxes requires type 0 or 1."
+            print "ERROR: setup_classes.Boxes requires type 0 or 1."
         return
     
     #@staticmethod

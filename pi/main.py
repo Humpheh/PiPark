@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Authors: Nicholas Sanders & Humphrey Shotton
-Filename: main2.py
+Filename: main.py
 Version: 2.1 [2014/03/27]
 
 Main application. Two threads are created, one to deal with GUI and inputs, and

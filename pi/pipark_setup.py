@@ -16,9 +16,9 @@ import tkMessageBox
 from PIL import Image, ImageTk
 
 import imageread
-import main2
+import main
 import data.settings as s
-from setup_classes2 import ParkingSpace, Boxes
+from setup_classes import ParkingSpace, Boxes
 from ToggleButton import ToggleButton
 
 # ==============================================================================
@@ -208,9 +208,6 @@ class Application(tk.Frame):
     #   Load Data
     # --------------------------------------------------------------------------        
     def loadData(self):
-        # TODO: implement set methods in setup_classes2.py to set data loaded
-        # from setup_data.py
-        
         try:
             # load the setup data, reload to refresh the data
             import setup_data 
@@ -576,7 +573,7 @@ class Application(tk.Frame):
                     
             self.quit_button.invoke()
             if self.__is_verbose: print "INFO: Setup application terminated. "
-            main2.main()
+            main.main()
     
     def clickRegister(self):
         """Register the car park with the server. """
