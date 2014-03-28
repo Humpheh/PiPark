@@ -18,7 +18,7 @@ class Conf{
 	const URL_BASE = "/pipark/server/";
 	
 	// The password for the pi's to submit data.
-	const PI_PASSWORD = 'pi';
+	const PI_PASSWORD = 'exeterPiPark';
 	
 	// Title of the website.
 	const TITLE = 'PiPark';
