@@ -88,7 +88,7 @@ class MainApplication(tk.Frame):
         
         for i in occupancy:
             num_spaces += 1
-            if i = True: occupied += 1
+            if i == True: occupied += 1
         
         self.__label = "Parking Spaces Available:", occupied, "/", numspaces
         
