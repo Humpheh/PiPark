@@ -30,6 +30,7 @@ except ImportError:
     sys.exit(1)
 
 # global variables
+app = None
 camera = None
 has_quit = False
 occupancy = [None for i in range(10)]  # list of booleans. True for occupied, False for empty. None for no space.
@@ -246,6 +247,8 @@ def create_application():
     """
     if s.IS_VERBOSE: print "INFO: create_application() called. "
     
+    global app
+    
     # create the TKinter application
     root = tk.Tk()
     app = MainApplication(master = root)
@@ -276,6 +279,7 @@ def run():
     # variables
     global camera  # use global pi camera object!
     global occupancy
+    global app
     
     image_location = "./images/pipark.jpeg"  # image save location
     loop_delay = s.PICTURE_DELAY  # duration between each loop in seconds
@@ -406,6 +410,7 @@ def run():
                     print "      Space", i[0], "has changed status, sending update to server...\n"
                     num = 1 if is_occupied else 0
                     occupancy = last_status
+                    app.updateText()
                     
                     sendoutput = senddata.send_update(i[0], num)
                     if "success" in sendoutput.keys():
