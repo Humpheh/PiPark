@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Authors: Nicholas Sanders & Humphrey Shotton
 Filename: main2.py
