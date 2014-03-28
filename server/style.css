@@ -153,6 +153,12 @@ h1 .glyphicon{
     .piinfo {
         display: none;
     }
+    .breadcrumb{
+        display: none;
+    }
+    .block-spaces-header .image-float{
+	    height: 230px !important;
+    }
 }
 .block-spaces-header h1{
 	padding: 30px;
