@@ -410,7 +410,7 @@ def run():
                     print "      Space", i[0], "has changed status, sending update to server...\n"
                     num = 1 if is_occupied else 0
                     occupancy = last_status
-                    app.updateText()
+                    
                     
                     sendoutput = senddata.send_update(i[0], num)
                     if "success" in sendoutput.keys():
@@ -420,7 +420,8 @@ def run():
                     print ''
             else:
                 last_ticks[i[0]] = 1
-
+                
+        app.updateText()
         if s.IS_VERBOSE: print "INFO: Sleep for", loop_delay, "seconds... Zzz."
         imageread.time.sleep(loop_delay)
 
