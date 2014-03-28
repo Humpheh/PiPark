@@ -4,8 +4,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="<?php echo Conf::URL_BASE; ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<title><?php echo Conf::TITLE; ?></title>
-		<link href="<?php echo Conf::URL_BASE; ?>style.css" rel="stylesheet">
-		<link rel="icon" type="image/png" href="<?php echo Conf::URL_BASE; ?>favicon.png">
+		<link href="<?php echo Conf::URL_BASE; ?>assets/style.css" rel="stylesheet">
+		<link rel="icon" type="image/png" href="<?php echo Conf::URL_BASE; ?>assets/favicon.png">
 	</head>
 	<body>
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -18,7 +18,7 @@
 						<span class="icon-bar"></span>
 					</button>
 					<a href="<?php echo Conf::URL_BASE; ?>">
-                        <img src="<?php echo Conf::URL_BASE; ?>logo.png" class="logo" title="<?php echo Conf::TITLE; ?> - Car Parking Sensor" alt="<?php echo Conf::TITLE; ?>">
+                        <img src="<?php echo Conf::URL_BASE; ?>assets/logo.png" class="logo" title="<?php echo Conf::TITLE; ?> - Car Parking Sensor" alt="<?php echo Conf::TITLE; ?>">
                     </a>
 				</div>
 				<div class="collapse navbar-collapse">
