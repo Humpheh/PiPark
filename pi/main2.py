@@ -256,7 +256,7 @@ def run():
     # variables
     global camera  # use global pi camera object!
     image_location = "./images/pipark.jpeg"  # image save location
-    loop_delay = 5  # duration between each loop in seconds
+    loop_delay = s.PICTURE_DELAY  # duration between each loop in seconds
         
     # load data sets and count the number of spaces and control boxes
     space_boxes, control_boxes = __setup_box_data()
