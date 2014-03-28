@@ -18,7 +18,7 @@ from PIL import Image, ImageTk
 
 import senddata
 import imageread
-import settings as s
+import data.settings as s
 
 try:
     # check setup_data exists

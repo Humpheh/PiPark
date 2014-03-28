@@ -19,7 +19,7 @@ import imageread
 import main
 import main2
 import setup_selectarea as sa  # not currently used
-import settings as s
+import data.settings as s
 from setup_classes2 import ParkingSpace, Boxes
 from ToggleButton import ToggleButton
 
