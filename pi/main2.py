@@ -359,7 +359,6 @@ def run():
                     print "true",
                 else:
                     print "false",
-            print ''
 
             # determine if parking space is occupied. If at least two CPs agree
             # that the space is occupied, set the space to occupied.
@@ -367,9 +366,9 @@ def run():
             if num_controls >= 2: is_occupied = True
             
             if s.IS_VERBOSE and is_occupied:
-                print "INFO: Space", i[0], "is filled.\n"
+                print "=> Space", i[0], "is filled.\n"
             elif s.IS_VERBOSE and not is_occupied:
-                print "INFO: Space", i[0], "is empty.\n"
+                print "=> Space", i[0], "is empty.\n"
             
             # update the server with most recent space values after 3 ticks
             if last_status[i[0]] != is_occupied:
