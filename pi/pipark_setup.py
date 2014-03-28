@@ -16,9 +16,7 @@ import tkMessageBox
 from PIL import Image, ImageTk
 
 import imageread
-import main
 import main2
-import setup_selectarea as sa  # not currently used
 import data.settings as s
 from setup_classes2 import ParkingSpace, Boxes
 from ToggleButton import ToggleButton
