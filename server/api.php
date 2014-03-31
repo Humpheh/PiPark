@@ -23,13 +23,15 @@ echo '{
 foreach ($res as $row){
 	echo '{
         "id": '.intval($row['park_id']).',
-        "name": "'.$row['park_name'].'",
-        "desc": "'.$row['park_desc'].'",
+        "name": "'.($row['park_name']).'",
+        "desc": "'.($row['park_desc']).'",
         "totalspaces": '.intval($row['ps']).',
-        "usedspaces": '.intval($row['spaces']).'
+        "usedspaces": '.intval($row['spaces']).',
+        "location": "'.($row['park_location']).'"
     }';
 	if ($row != end($res)) echo ',';
 }
-echo ']}';
+echo ']
+}';
 
 ?>
