@@ -23,7 +23,7 @@ import data.settings as s
 
 try:
     # check setup_data exists
-    import setup_classes
+    import setup_data
 except ImportError:
     # oh noes, it doesn't =(
     print "ERROR: setup_data.py does not exist. Run ./pipark_setup.py first."
@@ -70,6 +70,8 @@ class MainApplication(tk.Frame):
         # give application a reference to the global camera object
         global camera
         self.__camera = camera
+        self.__camera.awb_mode = 'auto'
+        self.__camera.exposure_mode = 'auto'
         
         # populate the application WITH W-W-W-WWIDDDDGEETTSS
         self.__createWidgets()
@@ -132,12 +134,15 @@ class MainApplication(tk.Frame):
                 title = "Show Camera Feed",
                 message = "Press the ESCAPE key to exit preview mode"
                 )
+
+            #self.__camera.brightness = 70;
+            #self.__camera.awb_mode = 'auto';
             
             self.__camera.start_preview()
             self.__preview_is_active = True
             if self.__is_verbose: print "INFO: Camera preview started. "
             
-            # reset foucs to the application frame
+            # reset focus to the application frame
             self.focus_set()
     
     
@@ -290,7 +295,7 @@ def run():
     num_controls = len(control_boxes)
     if s.IS_VERBOSE: print "INFO: #Spaces:", num_spaces, "\t#CPs:", num_controls
     
-    # asserrt that the correct number of spaces and CPs are present in the data
+    # assert that the correct number of spaces and CPs are present in the data
     assert num_spaces > 0
     assert num_controls == 3
     
@@ -436,7 +441,7 @@ def main():
     global has_quit
     global camera
     
-    # instantiate the camerea object to global camera variable
+    # instantiate the camera object to global camera variable
     camera = imageread.setup_camera(is_fullscreen = False)
     
     # now create two threads, one in which to run the MainApplication and

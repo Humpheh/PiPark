@@ -158,6 +158,8 @@ class Application(tk.Frame):
         try:
             # initialise the camera using the settings in the imageread module
             self.__camera = imageread.setup_camera(is_fullscreen = True)
+            self.__camera.awb_mode = 'auto';
+            self.__camera.exposure_mode = 'auto';
             self.__camera.start_preview()
             self.__camera_is_active = True
             if self.__is_verbose: print "INFO: PiCam activated."
