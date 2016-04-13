@@ -23,7 +23,7 @@ import data.settings as s
 
 try:
     # check setup_data exists
-    import setup_classes
+    import setup_data
 except ImportError:
     # oh noes, it doesn't =(
     print "ERROR: setup_data.py does not exist. Run ./pipark_setup.py first."
